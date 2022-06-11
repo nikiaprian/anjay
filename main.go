@@ -34,6 +34,7 @@ func main() {
 
 	router := gin.Default()
 
+	router.POST("/auth/login", handler.UserLogin)
 	router.POST("/auth/register", handler.UserRegister)
 
 	srv := &http.Server{
