@@ -34,3 +34,8 @@ type UserLoginResponse struct {
 	User  *User  `json:"user"`
 	Token string `json:"token"`
 }
+
+type UserGoogleResponse struct {
+	Email    string `json:"email"`
+	GoogleId string `json:"id"`
+}

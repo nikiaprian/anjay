@@ -36,10 +36,12 @@ func main() {
 
 	router.POST("/auth/login", handler.UserLogin)
 	router.POST("/auth/register", handler.UserRegister)
+	router.GET("/auth/login/:provider", handler.UserLoginByProvider)
+	router.GET("/auth/callback/:provider", handler.UserLoginByProviderCallback)
 
 	srv := &http.Server{
 		Handler: router,
-		Addr:    "127.0.0.1:8000",
+		Addr:    "127.0.0.1:9090",
 		// Good practice: enforce timeouts for servers you create!
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
