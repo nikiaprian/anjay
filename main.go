@@ -39,9 +39,10 @@ func main() {
 	router.GET("/auth/login/:provider", handler.UserLoginByProvider)
 	router.GET("/auth/callback/:provider", handler.UserLoginByProviderCallback)
 	router.GET("/blogs", handler.GetAllBlog)
-	router.POST("/blogs/new", handler.CreateBlog)
-	router.PUT("/blogs/:id", handler.UpdateBlog)
-	router.DELETE("/blogs/:id", handler.DeleteBlog)
+	router.GET("/blog/:id/detail", handler.GetBlogById)
+	router.POST("/blog/new", handler.CreateBlog)
+	router.PUT("/blog/:id", handler.UpdateBlog)
+	router.DELETE("/blog/:id", handler.DeleteBlog)
 
 	srv := &http.Server{
 		Handler: router,

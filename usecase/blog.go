@@ -59,3 +59,17 @@ func (usecase *Usecase) DeleteBlog(c *gin.Context) error {
 
 	return nil
 }
+func (usecase *Usecase) GetBlogById(c *gin.Context) (*models.Blog, error) {
+	i := c.Param("id")
+	id, err := strconv.Atoi(i)
+	if err != nil {
+		return nil, err
+	}
+
+	blog, err := usecase.repository.GetBlogById(c, id)
+	if err != nil {
+		return nil, err
+	}
+
+	return blog, nil
+}

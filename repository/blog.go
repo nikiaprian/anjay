@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"database/sql"
+	"errors"
 	"kel15/models"
 	"time"
 
@@ -99,4 +101,23 @@ func (repository *Repository) DeleteBlog(c *gin.Context, id int) error {
 		return err
 	}
 	return nil
+}
+func (repository *Repository) GetBlogById(c *gin.Context, id int) (*models.Blog, error) {
+	query := "SELECT * FROM Blogs WHERE id = ?"
+	row := repository.db.QueryRow(query, id)
+
+	if row.Err() != nil {
+		return nil, row.Err()
+	}
+
+	var blog models.Blog
+	err := row.Scan(&blog.ID, &blog.Photo, &blog.Title, &blog.Content, &blog.CreatedAt, &blog.UpdatedAt)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return &blog, errors.New("Blog tidak ditemukan")
+		}
+		return nil, err
+	}
+
+	return &blog, nil
 }
