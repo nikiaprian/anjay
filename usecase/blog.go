@@ -14,3 +14,17 @@ func (usecase *Usecase) GetAllBlog(c *gin.Context) ([]models.Blog, error) {
 
 	return blogs, nil
 }
+func (usecase *Usecase) CreateBlog(c *gin.Context) (*models.BlogResponse, error) {
+	var payload models.BlogRequest
+	err := c.BindJSON(&payload)
+	if err != nil {
+		return nil, err
+	}
+
+	blog, err := usecase.repository.CreateBlog(c, payload)
+	if err != nil {
+		return nil, err
+	}
+
+	return blog, nil
+}

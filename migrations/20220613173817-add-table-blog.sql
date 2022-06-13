@@ -6,8 +6,7 @@ CREATE TABLE IF NOT EXISTS Blogs (
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
     created_at DATETIME,
-    updated_at DATETIME,
-    FOREIGN KEY id_user(id)REFERENCES categories(id)
+    updated_at DATETIME
 );
 
 CREATE INDEX IF NOT EXISTS idx_title ON Blogs(title);

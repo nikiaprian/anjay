@@ -40,7 +40,7 @@ func main() {
 	router.GET("/auth/callback/:provider", handler.UserLoginByProviderCallback)
 	router.GET("/blogs", handler.GetAllBlog)
 	router.POST("/blogs/new", handler.CreateBlog)
-	// router.PUT("/blogs/update/:id", handler.CreateBlog)
+	// router.PUT("/blogs/:id", handler.)
 
 	srv := &http.Server{
 		Handler: router,

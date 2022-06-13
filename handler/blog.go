@@ -17,7 +17,6 @@ func (blogHandler *Handler) GetAllBlog(c *gin.Context) {
 	c.JSON(http.StatusOK, sendResponseSuccess{Success: true, Code: 200, Data: data})
 	return
 }
-
 func (blogHandler *Handler) CreateBlog(c *gin.Context) {
 	data, err := blogHandler.Project.Usecase.CreateBlog(c)
 
@@ -27,27 +26,5 @@ func (blogHandler *Handler) CreateBlog(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, sendResponseSuccess{Success: true, Code: 201, Data: data})
-	return
-}
-func (blogHandler *Handler) UpdateBlog(c *gin.Context) {
-	data, err := blogHandler.Project.Usecase.UpdateBlog(c)
-
-	if err != nil {
-		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
-		return
-	}
-
-	c.JSON(http.StatusOK, sendResponseSuccess{Success: true, Code: 200, Data: data})
-	return
-}
-func (blogHandler *Handler) DeleteBlog(c *gin.Context) {
-	err := blogHandler.Project.Usecase.DeleteBlog(c)
-
-	if err != nil {
-		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
-		return
-	}
-
-	c.JSON(http.StatusOK, sendResponseSuccess{Success: true, Code: 200, Data: nil})
 	return
 }
