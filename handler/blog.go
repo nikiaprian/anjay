@@ -50,8 +50,9 @@ func (blogHandler *Handler) DeleteBlog(c *gin.Context) {
 	c.JSON(http.StatusOK, sendResponseSuccess{Success: true, Code: 200, Data: nil})
 	return
 }
-func (blogHandler *Handler) GetBlogById(c *gin.Context) {
-	data, err := blogHandler.Project.Usecase.GetBlogById(c)
+
+func (blogHandler *Handler) GetBlog(c *gin.Context) {
+	data, err := blogHandler.Project.Usecase.GetBlog(c)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
