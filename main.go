@@ -38,10 +38,12 @@ func main() {
 	router.POST("/auth/register", handler.UserRegister)
 	router.GET("/auth/login/:provider", handler.UserLoginByProvider)
 	router.GET("/auth/callback/:provider", handler.UserLoginByProviderCallback)
+	
 	router.GET("/blogs", handler.GetAllBlog)
 	router.POST("/blogs/new", handler.CreateBlog)
 	router.PUT("/blogs/:id", handler.UpdateBlog)
 	router.DELETE("/blogs/:id", handler.DeleteBlog)
+	router.GET("/blogs/:id", handler.GetBlog)
 
 	srv := &http.Server{
 		Handler: router,

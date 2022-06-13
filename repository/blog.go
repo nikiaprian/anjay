@@ -100,3 +100,23 @@ func (repository *Repository) DeleteBlog(c *gin.Context, id int) error {
 	}
 	return nil
 }
+
+func (repository *Repository) GetBlog(c *gin.Context, id int) (*models.BlogResponse, error) {
+	query := "SELECT * FROM Blogs WHERE id = ?"
+	row := repository.db.QueryRow(query, id)
+	if row.Err() != nil {
+		return nil, row.Err()
+	}
+
+	var blog models.Blog
+
+	err := row.Scan(&blog.ID, &blog.Photo, &blog.Title, &blog.Content, &blog.CreatedAt, &blog.UpdatedAt)
+	if err != nil {
+		return nil, err
+	}
+
+	return &models.BlogResponse{
+		Blog:    &blog,
+		Message: "Blog berhasil ditemukan",
+	}, nil
+}
