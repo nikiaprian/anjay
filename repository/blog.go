@@ -61,3 +61,33 @@ func (repository *Repository) CreateBlog(c *gin.Context, req models.BlogRequest)
 		Message: "Blog berhasil ditambahkan",
 	}, nil
 }
+func (repository *Repository) UpdateBlog(c *gin.Context, req models.BlogRequest, id int) (*models.BlogResponse, error) {
+	photo := req.Photo
+	title := req.Title
+	content := req.Content
+
+	query := "UPDATE Blogs SET photo = ?, title = ?, content = ?,updated_at = ? WHERE id= ?"
+	_, err := repository.db.Exec(query, photo, title, content, time.Now(), id)
+	if err != nil {
+		return nil, err
+	}
+
+	query = "SELECT * FROM Blogs WHERE id = ?"
+	row := repository.db.QueryRow(query, id)
+
+	if row.Err() != nil {
+		return nil, row.Err()
+	}
+
+	var blog models.Blog
+
+	err = row.Scan(&blog.ID, &blog.Photo, &blog.Title, &blog.Content, &blog.CreatedAt, &blog.UpdatedAt)
+	if err != nil {
+		return nil, err
+	}
+
+	return &models.BlogResponse{
+		Blog:    &blog,
+		Message: "Blog berhasil diubah",
+	}, nil
+}
