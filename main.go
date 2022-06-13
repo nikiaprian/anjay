@@ -41,6 +41,7 @@ func main() {
 	router.GET("/blogs", handler.GetAllBlog)
 	router.POST("/blogs/new", handler.CreateBlog)
 	router.PUT("/blogs/:id", handler.UpdateBlog)
+	router.DELETE("/blogs/:id", handler.DeleteBlog)
 
 	srv := &http.Server{
 		Handler: router,

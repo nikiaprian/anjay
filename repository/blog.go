@@ -91,3 +91,12 @@ func (repository *Repository) UpdateBlog(c *gin.Context, req models.BlogRequest,
 		Message: "Blog berhasil diubah",
 	}, nil
 }
+
+func (repository *Repository) DeleteBlog(c *gin.Context, id int) error {
+	query := "DELETE from Blogs where id=?"
+	_, err := repository.db.Exec(query, id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
