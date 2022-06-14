@@ -45,6 +45,8 @@ func main() {
 	router.DELETE("/blogs/:id", handler.DeleteBlog)
 	router.GET("/blogs/:id", handler.GetBlog)
 
+	router.GET("/forums", handler.GetAllForum)
+
 	srv := &http.Server{
 		Handler: router,
 		Addr:    "127.0.0.1:9090",
