@@ -46,10 +46,6 @@ func main() {
 	router.GET("/blogs/:id", handler.GetBlog)
 
 	router.GET("/forums", handler.GetAllForum)
-	router.POST("/forums/new", handler.CreateForum)
-	router.PUT("/forums/:id", handler.UpdateForum)
-	router.DELETE("/forums/:id", handler.DeleteForum)
-	router.GET("/forums/:id", handler.GetForum)
 
 	srv := &http.Server{
 		Handler: router,
