@@ -47,6 +47,7 @@ func main() {
 
 	router.GET("/forums", handler.GetAllForum)
 	router.POST("/forums/new", handler.CreateForum)
+	router.PUT("/forums/:id", handler.UpdateForum)
 
 	srv := &http.Server{
 		Handler: router,
