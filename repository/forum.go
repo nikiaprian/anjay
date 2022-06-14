@@ -93,3 +93,12 @@ func (repository *Repository) UpdateForum(c *gin.Context, req models.ForumReques
 		Message: "Forum Berhasil Diubah",
 	}, nil
 }
+
+func (repository *Repository) DeleteForum(c *gin.Context, id int) error {
+	query := "DELETE from Forums where id=?"
+	_, err := repository.db.Exec(query, id)
+	if err != nil {
+		return err
+	}
+	return nil
+}

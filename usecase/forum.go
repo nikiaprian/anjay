@@ -47,3 +47,18 @@ func (usecase *Usecase) UpdateForum(c *gin.Context) (*models.ForumResponse, erro
 
 	return forum, nil
 }
+
+func (usecase *Usecase) DeleteForum(c *gin.Context) error {
+	i := c.Param("id")
+	id, err := strconv.Atoi(i)
+	if err != nil {
+		return err
+	}
+
+	err = usecase.repository.DeleteForum(c, id)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
