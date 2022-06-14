@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"kel15/models"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -23,6 +24,23 @@ func (usecase *Usecase) CreateForum(c *gin.Context) (*models.ForumResponse, erro
 	}
 
 	forum, err := usecase.repository.CreateForum(c, payload)
+	if err != nil {
+		return nil, err
+	}
+
+	return forum, nil
+}
+
+func (usecase *Usecase) UpdateForum(c *gin.Context) (*models.ForumResponse, error) {
+	var payload models.ForumRequest
+	err := c.BindJSON(&payload)
+	i := c.Param("id")
+	id, _ := strconv.Atoi(i)
+	if err != nil {
+		return nil, err
+	}
+
+	forum, err := usecase.repository.UpdateForum(c, payload, id)
 	if err != nil {
 		return nil, err
 	}
