@@ -37,6 +37,8 @@ func main() {
 	router.POST("/auth/login", handler.UserLogin)
 	router.POST("/auth/register", handler.UserRegister)
 	router.GET("/auth/login/:provider", handler.UserLoginByProvider)
+	router.GET("/testing-middleware-user", handler.CheckUserRole, handler.TestingMiddlewareUser)
+	router.GET("/testing-middleware-admin", handler.CheckAdminRole, handler.TestingMiddlewareAdmin)
 	router.GET("/auth/callback/:provider", handler.UserLoginByProviderCallback)
 
 	srv := &http.Server{
