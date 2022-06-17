@@ -1,8 +1,9 @@
 import React from 'react';
 import profile from '../../../Assets/fotoProfil.jpg';
+import LikeUnlike from '../LikeUnlike';
+//import { ChatAltIcon } from '@heroicons/react/outline';
 // import icon from '../../../Assets/Vector.svg';
-import { HeartIcon, ChatAltIcon } from '@heroicons/react/outline';
-function HeadContentBlog() {
+function HeadContentBlog(props) {
   return (
     <>
       <div className="flex items-center justify-between ">
@@ -13,20 +14,17 @@ function HeadContentBlog() {
             alt=""
           />
           <div className="">
-            <p className="text-md font-semibold">Agung</p>
-            <p className="text-xs">Dibuat 7 juni 2022</p>
+            <p className="text-md font-semibold">{props.user}</p>
+            <p className="text-xs">Dibuat {props.date}</p>
           </div>
         </div>
         <div>
-          <div className='flex items-center gap-6'>
-            <div className="flex items-center gap-1">
-              <HeartIcon className="h-5 w-5" />
-              <p className="">10</p>
-            </div>
-            <div className="flex items-center gap-1">
-              <ChatAltIcon className="h-5 w-5" />
-              <p className="">5</p>
-            </div>
+          <div className="flex items-center gap-6">
+            <LikeUnlike like={props.like} />
+            {/* <div className="flex items-center gap-1">
+              <ChatAltIcon className="h-5 w-5 text-red-600" />
+              <p className="">{props.comment}</p>
+            </div> */}
           </div>
         </div>
       </div>

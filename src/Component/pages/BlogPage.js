@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import ContentBlog from '../molecules/CodeBlogIn/ContentBlog';
 import Footer from '../molecules/Footer';
 import Head from '../molecules/Head';
 import Navbar from '../molecules/Navbar';
 import ScrollButton from '../atoms/ScrollButton';
 
-function BlogPage() {
+function BlogPage(props) {
+  const [api, setApi] = useState([]);
+  const [filter, setFilter] = useState('');
+  useEffect(() => {
+    setApi(props.data);
+  }, [props.data]);
   return (
     <>
       <div className="w-screen h-screen">
@@ -16,8 +21,9 @@ function BlogPage() {
             contentHead="Tempat para programmer menulis seputar wawasan dunia teknologi dan komputer"
             nameButton="Create Blog"
             path="/blogin/createblog"
+            setFilter={setFilter}
           />
-          <ContentBlog />
+          <ContentBlog dataApi={api} filter={filter} />
         </div>
         <ScrollButton />
         <Footer />

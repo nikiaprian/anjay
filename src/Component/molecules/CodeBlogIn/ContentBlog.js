@@ -1,11 +1,27 @@
 import React from 'react';
-import { isiBlog } from '../../../Api/dataBlogStatic';
 import CardBlog from './CardBlog';
-function ContentBlog() {
+function ContentBlog(props) {
+  const { dataApi, filter } = props;
+
+  let temp;
+  if (filter === '') {
+    temp = dataApi;
+  } else {
+    let tempData = [];
+    dataApi &&
+      dataApi.map((item) => {
+        return item?.tags.forEach((element) => {
+          if (element.text.toLowerCase() === filter.toLowerCase()) {
+            tempData.push(item);
+          }
+        });
+      });
+    temp = tempData;
+  }
   return (
     <>
         <div className="my-3 flex flex-col items-center gap-4">
-          {isiBlog.map((data, index) => (
+          {temp && temp.map((data, index) => (
             <CardBlog
               key={index}
               id={data.id}
@@ -17,6 +33,7 @@ function ContentBlog() {
               img={data.img}
               profileImg={data.profileImg}
               user={data.user}
+              tags={data.tags}
             />
           ))}
         </div>

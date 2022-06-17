@@ -12,7 +12,6 @@ import ScrollButton from '../atoms/ScrollButton';
 
 function CreateBlogPage() {
   const [editorState, setEditorState] = useState({ html: '', md: '' });
-  console.log(typeof editorState.html, editorState.html);
   return (
     <>
       <div className="w-screen h-screen">

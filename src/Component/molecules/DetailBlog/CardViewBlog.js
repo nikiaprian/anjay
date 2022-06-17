@@ -3,7 +3,7 @@ import React from 'react';
 function CardViewBlog(props) {
   return (
     <>
-      <div className="border-2 border-gray-900 rounded-md shadow-lg font-poppins p-3">
+      <div className="border-2 bg-[#f2f2f2] border-gray-300 rounded-md shadow-lg font-poppins p-3">
         <p className="xl:w-72 mb-4">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquam

@@ -2,10 +2,16 @@ import React from 'react';
 import './App.css';
 import './output.css';
 import Spiner from './Assets/Spinners/Spiner';
+import { isiContent } from '../src/Api/dataForumStatic';
+import { isiBlog } from '../src/Api/dataBlogStatic';
 
 //Routing
 import { Routes, Route } from 'react-router-dom';
-import HomePage from './Component/pages/HomePage';
+import AboutPage from './Component/pages/AboutPage';
+
+const HomePage = React.lazy(() =>
+  import('./Component/pages/HomePage')
+);
 const DetailForumPage = React.lazy(() =>
   import('./Component/pages/DetailForumPage')
 );
@@ -21,6 +27,7 @@ const ForumPage = React.lazy(() => import('./Component/pages/ForumPage'));
 const CreateForumPage = React.lazy(() =>
   import('./Component/pages/CreateForumPage')
 );
+const FaqPage = React.lazy(() => import('./Component/pages/FaqPage'));
 
 function App() {
   return (
@@ -53,7 +60,7 @@ function App() {
                   </div>
                 }
               >
-                <ForumPage />
+                <ForumPage data={isiContent} />
               </React.Suspense>
             }
           />
@@ -81,7 +88,7 @@ function App() {
                   </div>
                 }
               >
-                <DetailForumPage />
+                <DetailForumPage data={isiContent} />
               </React.Suspense>
             }
           />
@@ -99,7 +106,7 @@ function App() {
                   </div>
                 }
               >
-                <BlogPage />
+                <BlogPage data={isiBlog}/>
               </React.Suspense>
             }
           />
@@ -127,11 +134,41 @@ function App() {
                   </div>
                 }
               >
-                <DetailBlogPage />
+                <DetailBlogPage data={isiBlog} />
               </React.Suspense>
             }
           />
         </Route>
+
+        <Route
+          path="aboutpage"
+          element={
+            <React.Suspense
+              fallback={
+                <div>
+                  <Spiner />
+                </div>
+              }
+            >
+              <AboutPage />
+            </React.Suspense>
+          }
+        />
+
+        <Route
+          path="faqpage"
+          element={
+            <React.Suspense
+              fallback={
+                <div>
+                  <Spiner />
+                </div>
+              }
+            >
+              <FaqPage />
+            </React.Suspense>
+          }
+        />
 
         <Route
           path="*"

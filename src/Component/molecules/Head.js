@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { PencilAltIcon } from '@heroicons/react/solid';
 
 function Head(props) {
+  const [input, setInput] = useState('');
+  const handleChange = (event) => {
+    setInput(event.target.value);
+  };
+  const handleClick = (event) => {
+    props.setFilter(input);
+  };
   return (
     <>
       <div className=" w-full h-full flex justify-center items-start gap-6 flex-col md:items-center md:justify-between md:flex-row ">
@@ -14,8 +22,9 @@ function Head(props) {
           </p>
         </div>
         <Link to={props.path}>
-          <button className="shadow-md px-6 py-1.5 bg-orange-500 rounded-lg border-neutral-700 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-black">
-            {props.nameButton}
+          <button className="shadow-md flex flex-row items-center gap-3  px-6 py-1.5 bg-orange-500 rounded-lg border-neutral-300 border-2 text-white font-bold hover:bg-orange-600 hover:text-white ">
+            <p>{props.nameButton}</p>
+            <PencilAltIcon className='w-5 h-5'/>
           </button>
         </Link>
       </div>
@@ -23,9 +32,13 @@ function Head(props) {
         <input
           type="text"
           placeholder="Cari berdasarkan Tag"
-          className="shadow-md font-poppins rounded-2xl text-lg px-3 border-2 w-full max-w-md border-slate-800 bg-transparent h-9"
+          className="shadow-md font-poppins rounded-3xl text-lg px-3 border-2 w-full max-w-md border-slate-300 bg-transparent h-9"
+          onChange={handleChange}
         />
-        <button className="px-6 py-1.5 shadow-lg bg-orange-500 rounded-2xl border-neutral-700 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-black">
+        <button
+          onClick={handleClick}
+          className="px-6 py-1.5 shadow-lg bg-orange-500 rounded-3xl border-neutral-300 border-2 text-white font-bold hover:bg-orange-600 hover:text-white"
+        >
           Telusuri
         </button>
       </div>

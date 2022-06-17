@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ScrollButton from '../atoms/ScrollButton';
 import ContentForum from '../molecules/CodeForumIn/ContentForum';
 //eslint-disable-next-line
@@ -6,7 +6,12 @@ import Footer from '../molecules/Footer';
 import Head from '../molecules/Head';
 import Navbar from '../molecules/Navbar';
 
-function ForumPage() {
+function ForumPage(props) {
+  const [api, setApi] = useState([]);
+  const [filter, setFilter] = useState('');
+  useEffect(() => {
+    setApi(props.data);
+  }, [props.data]);
   return (
     <>
       <div className="w-screen h-screen">
@@ -17,8 +22,9 @@ function ForumPage() {
             contentHead="Tempat berkomunikasi para programmer dengan cara mengajukan dan menjawab sebuah pertanyaan"
             nameButton="Create Pertanyaan"
             path="/forumin/createforum"
+            setFilter={setFilter}
           />
-          <ContentForum />
+          <ContentForum dataApi={api} filter={filter} />
         </div>
         <ScrollButton />
         <Footer />
