@@ -41,6 +41,22 @@ func main() {
 	router.GET("/testing-middleware-admin", handler.CheckAdminRole, handler.TestingMiddlewareAdmin)
 	router.GET("/auth/callback/:provider", handler.UserLoginByProviderCallback)
 
+	router.GET("/blogs", handler.GetAllBlog)
+	router.POST("/blogs/new", handler.CreateBlog)
+	router.PUT("/blogs/:id", handler.UpdateBlog)
+	router.DELETE("/blogs/:id", handler.DeleteBlog)
+	router.GET("/blogs/:id", handler.GetBlog)
+
+	router.GET("/forums", handler.GetAllForum)
+	router.POST("/forums/new", handler.CreateForum)
+	router.PUT("/forums/:id", handler.UpdateForum)
+	router.DELETE("/forums/:id", handler.DeleteForum)
+	router.GET("/forums/:id", handler.GetForum)
+
+	router.POST("/comments/:id", handler.CheckUserRole, handler.CreateCommentBlog)
+	router.GET("/comments/:id", handler.CheckUserRole, handler.GetAllCommentByBlogID)
+	router.DELETE("/comments/:id", handler.CheckUserRole, handler.DeleteCommentByID)
+
 	srv := &http.Server{
 		Handler: router,
 		Addr:    "127.0.0.1:9090",
