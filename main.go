@@ -53,6 +53,8 @@ func main() {
 	router.DELETE("/forums/:id", handler.DeleteForum)
 	router.GET("/forums/:id", handler.GetForum)
 
+	router.POST("/comments/:id", handler.CheckUserRole, handler.CreateCommentBlog)
+
 	srv := &http.Server{
 		Handler: router,
 		Addr:    "127.0.0.1:9090",
