@@ -8,10 +8,9 @@ import { isiBlog } from '../src/Api/dataBlogStatic';
 //Routing
 import { Routes, Route } from 'react-router-dom';
 import AboutPage from './Component/pages/AboutPage';
+import ProfilePage from './Component/pages/ProfilePage';
 
-const HomePage = React.lazy(() =>
-  import('./Component/pages/HomePage')
-);
+const HomePage = React.lazy(() => import('./Component/pages/HomePage'));
 const DetailForumPage = React.lazy(() =>
   import('./Component/pages/DetailForumPage')
 );
@@ -106,7 +105,7 @@ function App() {
                   </div>
                 }
               >
-                <BlogPage data={isiBlog}/>
+                <BlogPage data={isiBlog} />
               </React.Suspense>
             }
           />
@@ -166,6 +165,21 @@ function App() {
               }
             >
               <FaqPage />
+            </React.Suspense>
+          }
+        />
+
+        <Route
+          path="profilepage"
+          element={
+            <React.Suspense
+              fallback={
+                <div>
+                  <Spiner />
+                </div>
+              }
+            >
+              <ProfilePage />
             </React.Suspense>
           }
         />

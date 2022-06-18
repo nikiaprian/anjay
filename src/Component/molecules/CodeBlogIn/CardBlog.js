@@ -8,7 +8,7 @@ function CardBlog(props) {
       <div className="border-2 p-3 bg-[#f2f2f2] border-gray-300 w-full rounded-md shadow-md flex flex-col gap-3">
         <Link to={`/blogin/detailblog/${props.id}`}>
           <div className="flex flex-col  md:flex-row  m-2 gap-2 ">
-            <div className="w-50 mr-3 shadow-md">
+            <div className="w-50 mr-3 shadow-md md:max-h-24">
               <img
                 src={props.img}
                 className="rounded-md shadow-md object-cover w-full h-full"

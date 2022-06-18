@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { XCircleIcon as XCircleIconOutline } from '@heroicons/react/outline';
 import { CheckCircleIcon as CheckCircleIconSolid } from '@heroicons/react/solid';
 function CheckedCard() {
   let fakeApi = {
@@ -26,8 +25,8 @@ function CheckedCard() {
             onClick={handleChecked}
           />
         ) : (
-          <XCircleIconOutline
-            className="h-7 w-7 text-red-700 cursor-pointer"
+          <CheckCircleIconSolid
+            className="h-7 w-7 text-gray-400 cursor-pointer"
             onClick={handleChecked}
           />
         )}

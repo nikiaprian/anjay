@@ -3,19 +3,22 @@ import { Link, NavLink } from 'react-router-dom';
 import logo from '../../Assets/logo.svg';
 import icon from '../../Assets/bars-solid.svg';
 import iconX from '../../Assets/x.svg';
+import gambar from '../../Assets/fotoProfil.jpg';
 
 function Navbar() {
+  const [open, setOpen] = useState(false);
+  //eslint-disable-next-line
+  const [isLogin, setIsLogin] = useState(true);
+
+  let activeStyle = {
+    color: '#0A5D31',
+  };
   const Links = [
     { name: 'ForumIn', link: '/forumin' },
     { name: 'BlogIn', link: '/blogin' },
     { name: 'Tentang', link: '/aboutpage' },
     { name: 'FaQ', link: '/faqpage' },
   ];
-  const [open, setOpen] = useState(false);
-
-  let activeStyle = {
-    color:"#0A5D31",
-  };
 
   return (
     <>
@@ -50,14 +53,31 @@ function Navbar() {
                   </NavLink>
                 </li>
               ))}
-              <div className="flex mb-8 flex-col gap-6 items-center mx-auto md:hidden">
-                <button className="px-6 py-1.5 w-2/3 bg-orange-500 rounded-3xl border-neutral-700 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-500">
-                  Register
-                </button>
-                <button className="px-4 py-1.5 w-2/3 bg-white rounded-3xl border-orange-500 border-2 text-orange-500 font-bold hover:bg-orange-600 hover:text-white hover:border-neutral-700">
-                  Login
-                </button>
-              </div>
+              {isLogin ? (
+                <div className="flex mb-8 flex-col gap-6 items-center mx-auto md:hidden">
+                  <button className="px-4 py-1.5 w-2/3 bg-white rounded-3xl border-orange-500 border-2 text-orange-500 font-bold hover:bg-orange-600 hover:text-white hover:border-neutral-700">
+                    Logout
+                  </button>
+                  <div>
+                    <Link to="/profilepage">
+                      <img
+                        className="w-10 h-10 object-cover border-2 border-white rounded-full shadow-md"
+                        src={gambar}
+                        alt=""
+                      />
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex mb-8 flex-col gap-6 items-center mx-auto md:hidden">
+                  <button className="px-6 py-1.5 w-2/3 bg-orange-500 rounded-3xl border-neutral-700 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-500">
+                    Register
+                  </button>
+                  <button className="px-4 py-1.5 w-2/3 bg-white rounded-3xl border-orange-500 border-2 text-orange-500 font-bold hover:bg-orange-600 hover:text-white hover:border-neutral-700">
+                    Login
+                  </button>
+                </div>
+              )}
             </ul>
           </div>
 
@@ -71,15 +91,31 @@ function Navbar() {
               <img src={icon} alt="icon" className="w-6 py-0.5" />
             )}
           </div>
-
-          <div className="hidden md:flex md:items-center md:justify-between md:gap-3 md:mr-5">
-            <button className="px-4 shadow-md py-1.5 bg-white rounded-md border-orange-500 border-2 text-orange-500 font-bold hover:bg-orange-500 hover:text-white hover:border-orange-500">
-              Register
-            </button>
-            <button className="px-6 shadow-md py-1.5 bg-orange-500 rounded-md border-orange-500 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-500">
-              Login
-            </button>
-          </div>
+          {isLogin ? (
+            <div className="hidden md:flex md:items-center md:justify-between md:gap-3 md:mr-5">
+              <button className="px-6 shadow-md py-1.5 bg-orange-500 rounded-md border-orange-500 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-500">
+                Logout
+              </button>
+              <div>
+                <Link to="/profilepage">
+                  <img
+                    className="w-10 h-10 object-cover border-2 border-orange-500 rounded-full shadow-md"
+                    src={gambar}
+                    alt=""
+                  />
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <div className="hidden md:flex md:items-center md:justify-between md:gap-3 md:mr-5">
+              <button className="px-4 shadow-md py-1.5 bg-white rounded-md border-orange-500 border-2 text-orange-500 font-bold hover:bg-orange-500 hover:text-white hover:border-orange-500">
+                Register
+              </button>
+              <button className="px-6 shadow-md py-1.5 bg-orange-500 rounded-md border-orange-500 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-500">
+                Login
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </>
