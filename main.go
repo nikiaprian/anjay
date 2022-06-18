@@ -53,9 +53,9 @@ func main() {
 	router.DELETE("/forums/:id", handler.DeleteForum)
 	router.GET("/forums/:id", handler.GetForum)
 
-	router.POST("/comments/:id", handler.CheckUserRole, handler.CreateCommentBlog)
-	router.GET("/comments/:id", handler.CheckUserRole, handler.GetAllCommentByBlogID)
-	router.DELETE("/comments/:id", handler.CheckUserRole, handler.DeleteCommentByID)
+	router.POST("/commentsforum/:id", handler.CheckUserRole, handler.CreateCommentForum)
+	router.GET("/commentsforum/:id", handler.CheckUserRole, handler.GetAllCommentByForumID)
+	router.DELETE("/commentsforum/:id", handler.CheckUserRole, handler.DeleteCommentForum)
 
 	srv := &http.Server{
 		Handler: router,

@@ -6,8 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (handler *Handler) CreateCommentBlog(c *gin.Context) {
-	data, err := handler.Project.Usecase.CreateCommentBlog(c)
+func (handler *Handler) CreateCommentForum(c *gin.Context) {
+	data, err := handler.Project.Usecase.CreateCommentForum(c)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
@@ -18,8 +18,8 @@ func (handler *Handler) CreateCommentBlog(c *gin.Context) {
 	return
 }
 
-func (handler *Handler) GetAllCommentByBlogID(c *gin.Context) {
-	data, err := handler.Project.Usecase.GetAllCommentByBlogID(c)
+func (handler *Handler) GetAllCommentByForumID(c *gin.Context) {
+	data, err := handler.Project.Usecase.GetAllCommentByForumID(c)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
@@ -30,8 +30,8 @@ func (handler *Handler) GetAllCommentByBlogID(c *gin.Context) {
 	return
 }
 
-func (handler *Handler) DeleteCommentByID(c *gin.Context) {
-	err := handler.Project.Usecase.DeleteCommentByID(c)
+func (handler *Handler) DeleteCommentForum(c *gin.Context) {
+	err := handler.Project.Usecase.DeleteCommentForum(c)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})

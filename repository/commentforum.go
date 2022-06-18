@@ -7,11 +7,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (repository *Repository) CreateCommentBlog(c *gin.Context, comment string, blog_id, user_id int) (*models.CommentBlog, error) {
-	
-	query := `INSERT INTO CommentBlog (comment, blog_id, user_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?);`
+func (repository *Repository) CreateCommentForum(c *gin.Context, comment string, forum_id, user_id int) (*models.CommentForum, error) {
 
-	result, err := repository.db.Exec(query, comment, blog_id, user_id, time.Now(), time.Now())
+	query := `INSERT INTO CommentForum (comment, forum_id, user_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?);`
+
+	result, err := repository.db.Exec(query, comment, forum_id, user_id, time.Now(), time.Now())
 	if err != nil {
 		return nil, err
 	}
@@ -26,7 +26,7 @@ func (repository *Repository) CreateCommentBlog(c *gin.Context, comment string, 
 		return nil, err
 	}
 
-	return &models.CommentBlog{
+	return &models.CommentForum{
 		ID:        int(id),
 		Comment:   comment,
 		User: 	*user,
@@ -35,14 +35,13 @@ func (repository *Repository) CreateCommentBlog(c *gin.Context, comment string, 
 	}, nil
 }
 
-func (repository *Repository) GetAllCommentByBlogID(c *gin.Context, id int) ([]models.CommentBlog, error) {
-	// var comments []models.CommentBlog
+func (repository *Repository) GetAllCommentByForumID(c *gin.Context, id int) ([]models.CommentForum, error) {
 
 	query := `SELECT Comments.id, Comments.comment, Comments.created_at, Comments.updated_at,
 			 Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at
-		 	 FROM CommentBlog as Comments 
-			 JOIN Users ON Comments.user_id = Users.id 
-			 WHERE Comments.blog_id = ?;`
+		 	 FROM CommentForum as Comments 
+			JOIN Users ON Comments.user_id = Users.id
+			WHERE Comments.forum_id = ?;`
 
 	rows, err := repository.db.Query(query, c.Param("id"))
 	if err != nil {
@@ -51,15 +50,14 @@ func (repository *Repository) GetAllCommentByBlogID(c *gin.Context, id int) ([]m
 
 	defer rows.Close()
 
-	var comment models.CommentBlog
-	var comments []models.CommentBlog
+	var comment models.CommentForum
+	var comments []models.CommentForum
 	var User models.User
-	
+
 	for rows.Next() {
-		
+
 		err := rows.Scan(&comment.ID, &comment.Comment, &comment.CreatedAt, &comment.UpdatedAt,
 			&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
-
 		if err != nil {
 			return nil, err
 		}
@@ -70,8 +68,9 @@ func (repository *Repository) GetAllCommentByBlogID(c *gin.Context, id int) ([]m
 	return comments, nil
 }
 
-func (repository *Repository) DeleteCommentByID(c *gin.Context, id int) error {
-	query := `DELETE FROM CommentBlog WHERE id = ?;`
+func (repository *Repository) DeleteCommentForum(c *gin.Context, id int) error {
+
+	query := `DELETE FROM CommentForum WHERE id = ?;`
 
 	_, err := repository.db.Exec(query, id)
 	if err != nil {
