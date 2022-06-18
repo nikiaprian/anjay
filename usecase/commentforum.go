@@ -35,3 +35,19 @@ func (usecase *Usecase) CreateCommentForum(c *gin.Context) (*models.CommentForum
 
 	return commentForumResponse, nil
 }
+
+func (usecase *Usecase) GetAllCommentByForumID(c *gin.Context) ([]models.CommentForum, error) {
+	id := c.Param("id")
+	Convid, err := strconv.Atoi(id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	comments, err := usecase.repository.GetAllCommentByForumID(c, Convid)
+	if err != nil {
+		return nil, err
+	}
+
+	return comments, nil
+}

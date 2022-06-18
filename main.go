@@ -57,7 +57,7 @@ func main() {
 	router.GET("/comments/:id", handler.CheckUserRole, handler.GetAllCommentByBlogID)
 
 	router.POST("/commentsforum/:id", handler.CheckUserRole, handler.CreateCommentForum)
-	
+	router.GET("/commentsforum/:id", handler.CheckUserRole, handler.GetAllCommentByForumID)
 
 	srv := &http.Server{
 		Handler: router,
