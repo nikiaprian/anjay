@@ -29,3 +29,15 @@ func (handler *Handler) GetAllCommentByForumID(c *gin.Context) {
 	c.JSON(http.StatusOK, sendResponseSuccess{Success: true, Code: 200, Data: data})
 	return
 }
+
+func (handler *Handler) DeleteCommentForum(c *gin.Context) {
+	err := handler.Project.Usecase.DeleteCommentForum(c)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, sendResponseSuccess{Success: true, Code: 200, Data: nil})
+	return
+}

@@ -55,6 +55,7 @@ func main() {
 
 	router.POST("/commentsforum/:id", handler.CheckUserRole, handler.CreateCommentForum)
 	router.GET("/commentsforum/:id", handler.CheckUserRole, handler.GetAllCommentByForumID)
+	router.DELETE("/commentsforum/:id", handler.CheckUserRole, handler.DeleteCommentForum)
 
 	srv := &http.Server{
 		Handler: router,

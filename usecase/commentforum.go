@@ -51,3 +51,19 @@ func (usecase *Usecase) GetAllCommentByForumID(c *gin.Context) ([]models.Comment
 
 	return comments, nil
 }
+
+func (usecase *Usecase) DeleteCommentForum(c *gin.Context) error {
+	id := c.Param("id")
+	Convid, err := strconv.Atoi(id)
+
+	if err != nil {
+		return err
+	}
+
+	err = usecase.repository.DeleteCommentForum(c, Convid)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
