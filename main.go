@@ -56,6 +56,9 @@ func main() {
 	router.POST("/comments/:id", handler.CheckUserRole, handler.CreateCommentBlog)
 	router.GET("/comments/:id", handler.CheckUserRole, handler.GetAllCommentByBlogID)
 
+	router.POST("/commentsforum/:id", handler.CheckUserRole, handler.CreateCommentForum)
+	
+
 	srv := &http.Server{
 		Handler: router,
 		Addr:    "127.0.0.1:9090",
