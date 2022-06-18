@@ -69,3 +69,14 @@ func (repository *Repository) GetAllCommentByBlogID(c *gin.Context, id int) ([]m
 
 	return comments, nil
 }
+
+func (repository *Repository) DeleteCommentByID(c *gin.Context, id int) error {
+	query := `DELETE FROM CommentBlog WHERE id = ?;`
+
+	_, err := repository.db.Exec(query, id)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

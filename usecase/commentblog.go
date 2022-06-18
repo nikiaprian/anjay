@@ -53,3 +53,18 @@ func (usecase *Usecase) GetAllCommentByBlogID(c *gin.Context) ([]models.CommentB
 
 	return comments, nil
 }
+
+func (usecase *Usecase) DeleteCommentByID(c *gin.Context) error {
+	id := c.Param("id")
+	Convid, err := strconv.Atoi(id)
+	if err != nil {
+		return err
+	}
+
+	err = usecase.repository.DeleteCommentByID(c, Convid)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
