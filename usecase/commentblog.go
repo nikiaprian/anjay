@@ -38,3 +38,18 @@ func (usecase *Usecase) CreateCommentBlog(c *gin.Context) (*models.CommentBlog, 
 
 	return commentBlogResponse, nil
 }
+
+func (usecase *Usecase) GetAllCommentByBlogID(c *gin.Context) ([]models.CommentBlog, error) {
+	id := c.Param("id")
+	Convid, err := strconv.Atoi(id) 
+	if err != nil {
+		return nil, err
+	}
+
+	comments, err := usecase.repository.GetAllCommentByBlogID(c, Convid)
+	if err != nil {
+		return nil, err
+	}
+
+	return comments, nil
+}
