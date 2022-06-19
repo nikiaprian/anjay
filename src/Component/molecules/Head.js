@@ -17,7 +17,7 @@ function Head(props) {
           <p className="font-poppins font-semibold text-3xl">
             {props.titleHead}
           </p>
-          <p className="text-md font-poppins text-slate-800">
+          <p className="text-md md:text-md font-poppins text-slate-800">
             {props.contentHead}
           </p>
         </div>
@@ -32,7 +32,7 @@ function Head(props) {
         <input
           type="text"
           placeholder="Cari berdasarkan Tag"
-          className="shadow-md font-poppins rounded-3xl text-lg px-3 border-2 w-full max-w-md border-slate-300 bg-transparent h-9"
+          className="shadow-md font-poppins rounded-3xl text-xs md:text-lg px-3 border-2 w-full max-w-md border-slate-300 bg-transparent h-9"
           onChange={handleChange}
         />
         <button

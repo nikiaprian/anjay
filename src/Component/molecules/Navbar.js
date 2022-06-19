@@ -40,14 +40,14 @@ function Navbar() {
               {Links.map((link) => (
                 <li
                   key={link.name}
-                  className="drop-shadow-lg md:ml-8 text-xl md:my-0 my-7 text-center"
+                  className="drop-shadow-lg md:ml-8 text-xl md:my-0 my-4 text-center"
                 >
                   <NavLink
                     style={({ isActive }) =>
                       isActive ? activeStyle : undefined
                     }
                     to={link.link}
-                    className="text-black cursor-pointer  hover:text-white md:hover:text-orange-500 duration-500 font-poppins font-bold md:text-base"
+                    className="text-black cursor-pointer text-sm md:text-md hover:text-white md:hover:text-orange-500 duration-500 font-poppins font-bold md:text-base"
                   >
                     {link.name}
                   </NavLink>

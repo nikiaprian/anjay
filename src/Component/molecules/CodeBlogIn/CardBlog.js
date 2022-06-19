@@ -16,7 +16,7 @@ function CardBlog(props) {
               />
             </div>
             <div className="w-11/12 md:w-10/12 flex flex-col gap-2">
-              <p className="font-bold text-lg font-poppins">{props.title}</p>
+              <p className="font-bold text-md md:text-lg font-poppins">{props.title}</p>
               <p className="text-sm font-poppins truncate w-11/12">
                 {props.content}
               </p>

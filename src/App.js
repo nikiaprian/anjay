@@ -27,6 +27,8 @@ const CreateForumPage = React.lazy(() =>
   import('./Component/pages/CreateForumPage')
 );
 const FaqPage = React.lazy(() => import('./Component/pages/FaqPage'));
+const LoginPage = React.lazy(() => import('./Component/pages/LoginPage'));
+const RegisterPage = React.lazy(() => import('./Component/pages/RegisterPage'));
 
 function App() {
   return (
@@ -138,7 +140,7 @@ function App() {
             }
           />
         </Route>
-
+      {/* AboutPage */}
         <Route
           path="aboutpage"
           element={
@@ -153,7 +155,7 @@ function App() {
             </React.Suspense>
           }
         />
-
+        {/* FaqPage */}
         <Route
           path="faqpage"
           element={
@@ -168,7 +170,7 @@ function App() {
             </React.Suspense>
           }
         />
-
+        {/* ProfilePage */}
         <Route
           path="profilepage"
           element={
@@ -180,6 +182,37 @@ function App() {
               }
             >
               <ProfilePage />
+            </React.Suspense>
+          }
+        />
+
+        {/* LoginPage */}
+        <Route
+          path="loginpage"
+          element={
+            <React.Suspense
+              fallback={
+                <div>
+                  <Spiner />
+                </div>
+              }
+            >
+              <LoginPage />
+            </React.Suspense>
+          }
+        />
+        {/* RegisterPage */}
+        <Route
+          path="registerpage"
+          element={
+            <React.Suspense
+              fallback={
+                <div>
+                  <Spiner />
+                </div>
+              }
+            >
+              <RegisterPage />
             </React.Suspense>
           }
         />

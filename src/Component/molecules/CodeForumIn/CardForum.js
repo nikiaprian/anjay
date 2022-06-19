@@ -23,7 +23,7 @@ function CardForum(props) {
               </div>
             </div>
             <div className="w-10/12 xl:w-full pt-10  flex flex-col gap-2">
-              <p className="font-bold text-lg font-poppins w-10/12">
+              <p className="font-bold text-md md:text-lg font-poppins w-10/12">
                 {props.title}
               </p>
               <p className="text-sm font-poppins truncate w-10/12 ">

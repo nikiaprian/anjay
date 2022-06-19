@@ -9,7 +9,7 @@ function ViewTag(props) {
   return (
     <>
     
-      <div className="flex flex-row items-center justify-start gap-3">
+      <div className="flex flex-row items-center justify-start gap-3 flex-wrap">
         {tags && tags.map((tag) => {
           return (
             <div key={tag.id} className="bg-orange-500 w-25  text-xs md:text-sm font-poppins  opacity-90 text-white px-2 py-1.5 rounded-md shadow-md">
