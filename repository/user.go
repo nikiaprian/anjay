@@ -3,6 +3,7 @@ package repository
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"kel15/models"
 	"kel15/utils"
 	"strings"
@@ -10,6 +11,56 @@ import (
 
 	"github.com/gin-gonic/gin"
 )
+
+func (repository *Repository) UserTotal(c *gin.Context, pagination models.Pagination) int {
+	var total int
+	search := pagination.Search
+	query := `
+		SELECT COUNT(*) as total FROM Users 
+		WHERE email LIKE ? OR username LIKE ?
+	`
+	err := repository.db.QueryRow(query, search, search).Scan(&total)
+	fmt.Println(err, total)
+
+	return total
+}
+
+func (repository *Repository) UserList(c *gin.Context, pagination models.Pagination) ([]models.User, error) {
+	var users []models.User
+
+	search := pagination.Search
+	pagination.Count = repository.UserTotal(c, pagination)
+
+	pagination = utils.SetTotalPagePagination(c, pagination)
+
+	utils.SetPaginationNew(c, pagination)
+
+	offset := (pagination.PageActive - 1) * pagination.Limit
+	query := `
+		SELECT id, email, username, created_at, updated_at FROM Users 
+		WHERE email LIKE ? OR username LIKE ?
+		ORDER BY created_at DESC
+		LIMIT ? 
+		OFFSET ?
+	`
+	rows, err := repository.db.Query(query, search, search, pagination.Limit, offset)
+	// defer rows.Close()
+
+	if err != nil && err != sql.ErrNoRows {
+		return users, err
+	}
+
+	for rows.Next() {
+		var user models.User
+		err := rows.Scan(&user.ID, &user.Email, &user.Username, &user.CreatedAt, &user.UpdatedAt)
+		if err != nil {
+			return nil, err
+		}
+		users = append(users, user)
+	}
+
+	return users, nil
+}
 
 func (repository *Repository) GetUserById(c *gin.Context, id int64) (*models.User, error) {
 	query := `SELECT id, email, username, created_at, updated_at FROM Users WHERE id = ? limit 1`
