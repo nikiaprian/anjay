@@ -5,6 +5,7 @@ import (
 	"kel15/handler"
 	"kel15/project"
 	"kel15/repository"
+	"kel15/storage"
 	"kel15/usecase"
 	"log"
 	"net/http"
@@ -26,11 +27,11 @@ func main() {
 
 	repository := repository.NewRepository(db)
 	usecase := usecase.NewUsecase(&repository)
+	storage := storage.NewS3()
 
-	newProject := project.Project{
-		Usecase: usecase,
-	}
-	handler := handler.NewHandler(&newProject)
+	newProject := project.NewProject(usecase, *storage)
+
+	handler := handler.NewHandler(newProject)
 
 	router := gin.Default()
 
@@ -42,6 +43,7 @@ func main() {
 	router.GET("/auth/callback/:provider", handler.UserLoginByProviderCallback)
 
 	router.GET("/users", handler.UserList)
+	router.POST("/users/:id", handler.UserProfileUpdate)
 
 	router.GET("/blogs", handler.GetAllBlog)
 	router.POST("/blogs/new", handler.CreateBlog)
