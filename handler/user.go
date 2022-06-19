@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"kel15/utils"
 	"net/http"
 
@@ -71,4 +72,24 @@ func (handler *Handler) UserLoginByProviderCallback(c *gin.Context) {
 	c.JSON(http.StatusCreated, sendResponseSuccess{Success: true, Code: http.StatusCreated, Message: "Success created Account", Data: data})
 	return
 
+}
+
+func (handler *Handler) UserProfileUpdate(c *gin.Context) {
+	file, fileHeader, err := utils.GetFileUpload(c)
+
+	fmt.Println(handler.Project.Storage.BucketName)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
+		return
+	}
+
+	fileName, err := utils.UploadToS3(1, handler.Project.Storage, file, fileHeader)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, sendResponseSuccess{Success: true, Code: http.StatusOK, Message: "", Data: fileName})
 }
