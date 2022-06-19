@@ -15,6 +15,18 @@ import (
 	utils "kel15/utils"
 )
 
+func (usecase *Usecase) UserList(c *gin.Context) ([]models.User, error) {
+	pagination := utils.GetPagination(c)
+
+	users, err := usecase.repository.UserList(c, pagination)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return users, nil
+}
+
 func (usecase *Usecase) UserLogin(c *gin.Context) (*models.UserLoginResponse, error) {
 	var payload models.UserLoginRequest
 	validate := utils.NewValidator()

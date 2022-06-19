@@ -41,6 +41,8 @@ func main() {
 	router.GET("/testing-middleware-admin", handler.CheckAdminRole, handler.TestingMiddlewareAdmin)
 	router.GET("/auth/callback/:provider", handler.UserLoginByProviderCallback)
 
+	router.GET("/users", handler.UserList)
+
 	router.GET("/blogs", handler.GetAllBlog)
 	router.POST("/blogs/new", handler.CreateBlog)
 	router.PUT("/blogs/:id", handler.UpdateBlog)
