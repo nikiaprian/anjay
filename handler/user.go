@@ -2,6 +2,7 @@ package handler
 
 import (
 	"fmt"
+	"kel15/models"
 	"kel15/utils"
 	"net/http"
 
@@ -78,7 +79,10 @@ func (handler *Handler) UserProfileUpdate(c *gin.Context) {
 	file, fileHeader, err := utils.GetFileUpload(c)
 
 	fmt.Println(handler.Project.Storage.BucketName)
-
+	var User models.UserRegisterRequest
+	User.Email = c.Request.FormValue("email")
+	User.Password = c.Request.FormValue("password")
+	User.Username = c.Request.FormValue("username")
 	if err != nil {
 		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
 		return

@@ -1,6 +1,9 @@
 package handler
 
 import (
+	"fmt"
+	"kel15/models"
+	"kel15/utils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -18,8 +21,21 @@ func (blogHandler *Handler) GetAllBlog(c *gin.Context) {
 	return
 }
 func (blogHandler *Handler) CreateBlog(c *gin.Context) {
-	data, err := blogHandler.Project.Usecase.CreateBlog(c)
+	user, _ := c.Get("user")
+	userData := user.(*models.User)
+	file, fileHeader, err := utils.GetFileUpload(c)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
+	}
 
+	fileName, err := utils.UploadToS3(userData.ID, blogHandler.Project.Storage, file, fileHeader)
+	fmt.Println("filename", fileName)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
+	}
+	c.Set("file", fileName)
+	data, err := blogHandler.Project.Usecase.CreateBlog(c)
+	fmt.Println(err)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
 		return

@@ -30,8 +30,7 @@ func (repository *Repository) GetAllBlog(c *gin.Context) ([]models.Blog, error) 
 
 	return blogs, nil
 }
-func (repository *Repository) CreateBlog(c *gin.Context, req models.BlogRequest) (*models.BlogResponse, error) {
-	photo := req.Photo
+func (repository *Repository) CreateBlog(c *gin.Context, req models.BlogRequest, photo string) (*models.BlogResponse, error) {
 	title := req.Title
 	content := req.Content
 
@@ -61,8 +60,7 @@ func (repository *Repository) CreateBlog(c *gin.Context, req models.BlogRequest)
 		Message: "Blog berhasil ditambahkan",
 	}, nil
 }
-func (repository *Repository) UpdateBlog(c *gin.Context, req models.BlogRequest, id int) (*models.BlogResponse, error) {
-	photo := req.Photo
+func (repository *Repository) UpdateBlog(c *gin.Context, req models.BlogRequest, id int, photo string) (*models.BlogResponse, error) {
 	title := req.Title
 	content := req.Content
 
