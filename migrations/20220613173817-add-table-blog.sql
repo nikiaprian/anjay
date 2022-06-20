@@ -12,6 +12,8 @@ CREATE TABLE IF NOT EXISTS Blogs (
     FOREIGN KEY (user_id) REFERENCES Users (id),
 );
 
+
+
 CREATE INDEX IF NOT EXISTS idx_title ON Blogs(title);
 -- +migrate Down
 DROP TABLE IF EXISTS Blogs;
