@@ -60,6 +60,30 @@ func (repository *Repository) CreateForum(c *gin.Context, title, contents string
 	}, nil
 }
 
+func (repository *Repository) UpdateForum(c *gin.Context, id int, title, contents string) (*models.Forum, error) {
+	query := `UPDATE Forums SET title = ?, content = ?, updated_at = ? WHERE id = ?`
+
+	_, err := repository.db.Exec(query, title, contents, time.Now(), id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	user, err := repository.GetUserById(c, int64(id))
+	if err != nil {
+		return nil, err
+	}
+
+	return &models.Forum{
+		ID:        id,
+		User:      *user,
+		Title:     title,
+		Content:   contents,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+	}, nil
+}
+
 func (repository *Repository) DeleteForum(c *gin.Context, id int) error {
 	query := `DELETE FROM Forums WHERE id = ?`
 
