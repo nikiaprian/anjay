@@ -93,3 +93,32 @@ func (repository *Repository) UpdateForum(c *gin.Context, req models.ForumReques
 		Message: "Forum Berhasil Diubah",
 	}, nil
 }
+
+func (repository *Repository) DeleteForum(c *gin.Context, id int) error {
+	query := "DELETE from Forums where id=?"
+	_, err := repository.db.Exec(query, id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (repository *Repository) GetForum(c *gin.Context, id int) (*models.ForumResponse, error) {
+	query := "SELECT * FROM Forums WHERE id = ?"
+	row := repository.db.QueryRow(query, id)
+	if row.Err() != nil {
+		return nil, row.Err()
+	}
+
+	var forum models.Forum
+
+	err := row.Scan(&forum.ID, &forum.Title, &forum.Tag, &forum.Content, &forum.CreatedAt, &forum.UpdatedAt)
+	if err != nil {
+		return nil, err
+	}
+
+	return &models.ForumResponse{
+		Forum:   &forum,
+		Message: "Forum Berhasil Ditemukan",
+	}, nil
+}

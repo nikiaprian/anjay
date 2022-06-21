@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"kel15/models"
 	"os"
 	"time"
@@ -27,6 +28,8 @@ func ComparePassword(payloadPassword, password string) error {
 
 func GenerateToken(user *models.User) (string, error) {
 	key := os.Getenv("JWT_KEY")
+
+	fmt.Println(os.Getenv("JWT_KEY"))
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"id":    &user.ID,
 		"email": &user.Email,
