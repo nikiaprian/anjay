@@ -50,10 +50,6 @@ func main() {
 	router.GET("/blogs/:id", handler.GetBlog)
 
 	router.GET("/forums", handler.GetAllForum)
-	router.POST("/forums/new", handler.CreateForum)
-	router.PUT("/forums/:id", handler.UpdateForum)
-	router.DELETE("/forums/:id", handler.DeleteForum)
-	router.GET("/forums/:id", handler.GetForum)
 
 	router.POST("/commentsforum/:id", handler.CheckUserRole, handler.CreateCommentForum)
 	router.GET("/commentsforum/:id", handler.CheckUserRole, handler.GetAllCommentByForumID)
