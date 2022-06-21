@@ -59,3 +59,15 @@ func (repository *Repository) CreateForum(c *gin.Context, title, contents string
 		UpdatedAt: time.Now(),
 	}, nil
 }
+
+func (repository *Repository) DeleteForum(c *gin.Context, id int) error {
+	query := `DELETE FROM Forums WHERE id = ?`
+
+	_, err := repository.db.Exec(query, id)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

@@ -3,6 +3,7 @@ package usecase
 import (
 	"errors"
 	"kel15/models"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -47,4 +48,21 @@ func (usecase *Usecase) CreateForum(c *gin.Context) (*models.Forum, error) {
 
 	return forumResponse, nil
 
+}
+
+func (usecase *Usecase) DeleteForum(c *gin.Context) (*models.Forum, error) {
+	id := c.Param("id")
+	Convid, err := strconv.Atoi(id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = usecase.repository.DeleteForum(c, Convid)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return nil, nil
 }
