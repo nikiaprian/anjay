@@ -24,6 +24,7 @@ func (blogHandler *Handler) CreateBlog(c *gin.Context) {
 	user, _ := c.Get("user")
 	userData := user.(*models.User)
 	file, fileHeader, err := utils.GetFileUpload(c)
+
 	if err != nil {
 		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
 	}
@@ -44,17 +45,33 @@ func (blogHandler *Handler) CreateBlog(c *gin.Context) {
 	c.JSON(http.StatusCreated, sendResponseSuccess{Success: true, Code: 201, Data: data})
 	return
 }
-func (blogHandler *Handler) UpdateBlog(c *gin.Context) {
-	data, err := blogHandler.Project.Usecase.UpdateBlog(c)
+// func (blogHandler *Handler) UpdateBlog(c *gin.Context) {
+// 	user, _ := c.Get("user")
+// 	userData := user.(*models.User)
+// 	file, fileHeader, err := utils.GetFileUpload(c)
 
-	if err != nil {
-		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
-		return
-	}
+// 	if err != nil {
+// 		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
+// 	}
 
-	c.JSON(http.StatusOK, sendResponseSuccess{Success: true, Code: 200, Data: data})
-	return
-}
+// 	fileName, err := utils.UploadToS3(userData.ID, blogHandler.Project.Storage, file, fileHeader)
+// 	fmt.Println("filename", fileName)
+// 	if err != nil {
+// 		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
+// 	}
+// 	c.Set("file", fileName)
+
+// 	data, err := blogHandler.Project.Usecase.UpdateBlog(c)
+
+// 	if err != nil {
+// 		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
+// 		return
+// 	}
+
+// 	c.JSON(http.StatusOK, sendResponseSuccess{Success: true, Code: 200, Data: data})
+// 	return
+// }
+
 func (blogHandler *Handler) DeleteBlog(c *gin.Context) {
 	err := blogHandler.Project.Usecase.DeleteBlog(c)
 

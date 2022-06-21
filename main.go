@@ -47,7 +47,7 @@ func main() {
 
 	router.GET("/blogs", handler.GetAllBlog)
 	router.POST("/blogs/new", handler.CheckUserRole, handler.CreateBlog)
-	router.PUT("/blogs/:id", handler.CheckUserRole, handler.UpdateBlog)
+	// router.PUT("/blogs/:id", handler.CheckUserRole, handler.UpdateBlog)
 	router.DELETE("/blogs/:id", handler.CheckUserRole, handler.DeleteBlog)
 	router.GET("/blogs/:id", handler.GetBlog)
 

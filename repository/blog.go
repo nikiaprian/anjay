@@ -8,9 +8,11 @@ import (
 )
 
 func (repository *Repository) GetAllBlog(c *gin.Context) ([]models.Blog, error) {
-	var blogs []models.Blog
-
-	query := "SELECT * FROM Blogs"
+	
+	query := `SELECT Blogs.id, Blogs.photo, Blogs.title, Blogs.content, Blogs.created_at, Blogs.updated_at,
+			  Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at
+			  FROM Blogs 
+			  JOIN Users ON Blogs.user_id = Users.id`
 
 	rows, err := repository.db.Query(query)
 	if err != nil {
@@ -19,23 +21,29 @@ func (repository *Repository) GetAllBlog(c *gin.Context) ([]models.Blog, error) 
 
 	defer rows.Close()
 
+	var blog models.Blog
+	var blogs []models.Blog
+	var User models.User
+
 	for rows.Next() {
-		var blog models.Blog
-		err := rows.Scan(&blog.ID, &blog.Photo, &blog.Title, &blog.Content, &blog.CreatedAt, &blog.UpdatedAt)
+		
+		err := rows.Scan(&blog.ID, &blog.Photo, &blog.Title, &blog.Content, &blog.CreatedAt, &blog.UpdatedAt,
+				&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
 		if err != nil {
 			return nil, err
 		}
+		blog.User = User
 		blogs = append(blogs, blog)
 	}
-
 	return blogs, nil
 }
-func (repository *Repository) CreateBlog(c *gin.Context, req models.BlogRequest, photo string) (*models.BlogResponse, error) {
+
+func (repository *Repository) CreateBlog(c *gin.Context, req models.BlogRequest, photo string, user_id int) (*models.Blog, error) {
 	title := req.Title
 	content := req.Content
 
-	query := "INSERT INTO Blogs (photo, title, content, created_at, updated_at) VALUES (?, ?, ?, ?, ?)"
-	row1, err := repository.db.Exec(query, photo, title, content, time.Now(), time.Now())
+	query := "INSERT INTO Blogs (photo, user_id, title, content, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)"
+	row1, err := repository.db.Exec(query, photo, user_id, title, content, time.Now(), time.Now())
 	if err != nil {
 		return nil, err
 	}
@@ -43,52 +51,52 @@ func (repository *Repository) CreateBlog(c *gin.Context, req models.BlogRequest,
 	if err != nil {
 		return nil, err
 	}
-	query = "SELECT * FROM Blogs WHERE id = ?"
-	row2 := repository.db.QueryRow(query, id)
+
+	user, err := repository.GetUserById(c, int64(user_id))
 	if err != nil {
 		return nil, err
 	}
 
-	var blog models.Blog
-	err = row2.Scan(&blog.ID, &blog.Photo, &blog.Title, &blog.Content, &blog.CreatedAt, &blog.UpdatedAt)
-	if err != nil {
-		return nil, err
-	}
-
-	return &models.BlogResponse{
-		Blog:    &blog,
-		Message: "Blog berhasil ditambahkan",
+	return &models.Blog{
+		ID:        uint(id),
+		User:      *user,
+		Photo:     photo,
+		Title:     title,
+		Content:   content,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
 	}, nil
 }
-func (repository *Repository) UpdateBlog(c *gin.Context, req models.BlogRequest, id int, photo string) (*models.BlogResponse, error) {
-	title := req.Title
-	content := req.Content
 
-	query := "UPDATE Blogs SET photo = ?, title = ?, content = ?,updated_at = ? WHERE id= ?"
-	_, err := repository.db.Exec(query, photo, title, content, time.Now(), id)
-	if err != nil {
-		return nil, err
-	}
+// func (repository *Repository) UpdateBlog(c *gin.Context, req models.BlogRequest, id int, photo string, user_id int) (*models.Blog, error) {
+// 	title := req.Title
+// 	content := req.Content
 
-	query = "SELECT * FROM Blogs WHERE id = ?"
-	row := repository.db.QueryRow(query, id)
+// 	query := `UPDATE Blogs INNER JOIN Users ON Blogs.user_id = Users.id
+// 			  SET photo = ?, user_id = ?, title = ?, content = ?, created_at = ?, updated_at = ?
+// 			  WHERE Blogs.id = ?`
 
-	if row.Err() != nil {
-		return nil, row.Err()
-	}
+// 	_, err := repository.db.Exec(query, photo, user_id, title, content, time.Now(), time.Now(), id)
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-	var blog models.Blog
+// 	user, err := repository.GetUserById(c, int64(id))
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-	err = row.Scan(&blog.ID, &blog.Photo, &blog.Title, &blog.Content, &blog.CreatedAt, &blog.UpdatedAt)
-	if err != nil {
-		return nil, err
-	}
+// 	return &models.Blog{
+// 		ID:        uint(id),
+// 		User:      *user,
+// 		Photo:     photo,
+// 		Title:     title,
+// 		Content:   content,
+// 		CreatedAt: time.Now(),
+// 		UpdatedAt: time.Now(),
+// 	}, nil
+// }
 
-	return &models.BlogResponse{
-		Blog:    &blog,
-		Message: "Blog berhasil diubah",
-	}, nil
-}
 
 func (repository *Repository) DeleteBlog(c *gin.Context, id int) error {
 	query := "DELETE from Blogs where id=?"
@@ -98,22 +106,35 @@ func (repository *Repository) DeleteBlog(c *gin.Context, id int) error {
 	}
 	return nil
 }
-func (repository *Repository) GetBlog(c *gin.Context, id int) (*models.BlogResponse, error) {
-	query := "SELECT * FROM Blogs WHERE id = ?"
-	row := repository.db.QueryRow(query, id)
-	if row.Err() != nil {
-		return nil, row.Err()
-	}
 
-	var blog models.Blog
+func (repository *Repository) GetBlog(c *gin.Context, id int) ([]models.Blog, error) {
+	query := `SELECT Blogs.id, Blogs.photo, Blogs.title, Blogs.content, Blogs.created_at, Blogs.updated_at,
+			  Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at
+			  FROM Blogs
+			  JOIN Users ON Blogs.user_id = Users.id
+			  WHERE Blogs.id = ?`
 
-	err := row.Scan(&blog.ID, &blog.Photo, &blog.Title, &blog.Content, &blog.CreatedAt, &blog.UpdatedAt)
+	row, err := repository.db.Query(query, c.Param("id"))
 	if err != nil {
 		return nil, err
 	}
 
-	return &models.BlogResponse{
-		Blog:    &blog,
-		Message: "Blog berhasil ditemukan",
-	}, nil
+	defer row.Close()
+
+	var blog models.Blog
+	var blogs []models.Blog
+	var User models.User
+
+	for row.Next() {
+		err := row.Scan(&blog.ID, &blog.Photo, &blog.Title, &blog.Content, &blog.CreatedAt, &blog.UpdatedAt,
+				&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
+
+		if err != nil {
+			return nil, err
+		}
+		blog.User = User
+		blogs = append(blogs, blog)
+
+	}
+	return blogs, nil
 }
