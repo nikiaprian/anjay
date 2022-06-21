@@ -9,7 +9,7 @@ import (
 
 func (repository *Repository) GetAllBlog(c *gin.Context) ([]models.Blog, error) {
 	
-	query := `SELECT Blogs.id, Blogs.photo, Blogs.title, Blogs.content, Blogs.created_at, Blogs.updated_at,
+	query := `SELECT Blogs.id, Blogs.photo, Blogs.title, Blogs.created_at, Blogs.updated_at,
 			  Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at
 			  FROM Blogs 
 			  JOIN Users ON Blogs.user_id = Users.id`
@@ -21,20 +21,32 @@ func (repository *Repository) GetAllBlog(c *gin.Context) ([]models.Blog, error) 
 
 	defer rows.Close()
 
-	var blog models.Blog
 	var blogs []models.Blog
 	var User models.User
 
 	for rows.Next() {
-		
-		err := rows.Scan(&blog.ID, &blog.Photo, &blog.Title, &blog.Content, &blog.CreatedAt, &blog.UpdatedAt,
+		var blog models.Blog
+		err := rows.Scan(&blog.ID, &blog.Photo, &blog.Title, &blog.CreatedAt, &blog.UpdatedAt,
 				&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
 		if err != nil {
 			return nil, err
 		}
 		blog.User = User
+
+		blog_tags, err := repository.GetBlogTagByBlogID(c, int64(blog.ID))
+		if err != nil {
+			continue
+		}
+		for _, blog_tag := range *blog_tags {
+			tag, err := repository.GetTagByID(c, int64(blog_tag.TagID))
+			if err != nil {
+				continue
+			}
+			blog.Tags = append(blog.Tags, *tag)
+		}
 		blogs = append(blogs, blog)
 	}
+
 	return blogs, nil
 }
 
@@ -107,34 +119,34 @@ func (repository *Repository) DeleteBlog(c *gin.Context, id int) error {
 	return nil
 }
 
-func (repository *Repository) GetBlog(c *gin.Context, id int) ([]models.Blog, error) {
+func (repository *Repository) GetBlogByID(c *gin.Context, id int) (*models.Blog, error) {
+	var blog models.Blog
+	var User models.User
+
 	query := `SELECT Blogs.id, Blogs.photo, Blogs.title, Blogs.content, Blogs.created_at, Blogs.updated_at,
 			  Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at
 			  FROM Blogs
 			  JOIN Users ON Blogs.user_id = Users.id
 			  WHERE Blogs.id = ?`
 
-	row, err := repository.db.Query(query, c.Param("id"))
+	row := repository.db.QueryRow(query, id)
+	err := row.Scan(&blog.ID, &blog.Photo, &blog.Title, &blog.Content, &blog.CreatedAt, &blog.UpdatedAt,
+		&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
+	
 	if err != nil {
 		return nil, err
 	}
 
-	defer row.Close()
-
-	var blog models.Blog
-	var blogs []models.Blog
-	var User models.User
-
-	for row.Next() {
-		err := row.Scan(&blog.ID, &blog.Photo, &blog.Title, &blog.Content, &blog.CreatedAt, &blog.UpdatedAt,
-				&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
-
+	blog_tags, _ := repository.GetBlogTagByBlogID(c, int64(blog.ID))
+	for _, blog_tag := range *blog_tags {
+		tag, err := repository.GetTagByID(c, int64(blog_tag.TagID))
 		if err != nil {
-			return nil, err
+			continue
 		}
-		blog.User = User
-		blogs = append(blogs, blog)
-
+		blog.Tags = append(blog.Tags, *tag)
 	}
-	return blogs, nil
+
+	blog.User = User
+
+	return &blog, nil
 }

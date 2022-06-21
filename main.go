@@ -49,13 +49,13 @@ func main() {
 	router.POST("/blogs/new", handler.CheckUserRole, handler.CreateBlog)
 	// router.PUT("/blogs/:id", handler.CheckUserRole, handler.UpdateBlog)
 	router.DELETE("/blogs/:id", handler.CheckUserRole, handler.DeleteBlog)
-	router.GET("/blogs/:id", handler.GetBlog)
+	router.GET("/blogs/:id", handler.GetBlogByID)
 
 	router.GET("/forums", handler.GetAllForum)
-	router.POST("/forums/new", handler.CreateForum)
-	router.PUT("/forums/:id", handler.UpdateForum)
-	router.DELETE("/forums/:id", handler.DeleteForum)
-	router.GET("/forums/:id", handler.GetForum)
+	router.POST("/forums/new", handler.CheckUserRole, handler.CreateForum)
+	router.PUT("/forums/:id", handler.CheckUserRole, handler.UpdateForum)
+	router.DELETE("/forums/:id", handler.CheckUserRole, handler.DeleteForum)
+	router.GET("/forums/:id", handler.GetForumById)
 
 	router.POST("/commentsforum/:id", handler.CheckUserRole, handler.CreateCommentForum)
 	router.GET("/commentsforum/:id", handler.CheckUserRole, handler.GetAllCommentByForumID)
