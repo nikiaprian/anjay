@@ -37,7 +37,11 @@ func main() {
 	router.POST("/auth/login", handler.UserLogin)
 	router.POST("/auth/register", handler.UserRegister)
 	router.GET("/auth/login/:provider", handler.UserLoginByProvider)
+	router.GET("/testing-middleware-user", handler.CheckUserRole, handler.TestingMiddlewareUser)
+	router.GET("/testing-middleware-admin", handler.CheckAdminRole, handler.TestingMiddlewareAdmin)
 	router.GET("/auth/callback/:provider", handler.UserLoginByProviderCallback)
+
+	router.GET("/users", handler.UserList)
 
 	router.GET("/blogs", handler.GetAllBlog)
 	router.POST("/blogs/new", handler.CreateBlog)
@@ -46,10 +50,15 @@ func main() {
 	router.GET("/blogs/:id", handler.GetBlog)
 
 	router.GET("/forums", handler.GetAllForum)
-	router.POST("/forums/new", handler.CreateForum)
-	router.PUT("/forums/:id", handler.UpdateForum)
-	router.DELETE("/forums/:id", handler.DeleteForum)
-	router.GET("/forums/:id", handler.GetForum)
+	router.POST("/forums/new", handler.CheckUserRole, handler.CreateForum)
+
+	router.POST("/commentsforum/:id", handler.CheckUserRole, handler.CreateCommentForum)
+	router.GET("/commentsforum/:id", handler.CheckUserRole, handler.GetAllCommentByForumID)
+	router.DELETE("/commentsforum/:id", handler.CheckUserRole, handler.DeleteCommentForum)
+
+	router.POST("/comments/:id", handler.CheckUserRole, handler.CreateCommentBlog)
+	router.GET("/comments/:id", handler.CheckUserRole, handler.GetAllCommentByBlogID)
+	router.DELETE("/comments/:id", handler.CheckUserRole, handler.DeleteCommentByID)
 
 	srv := &http.Server{
 		Handler: router,
