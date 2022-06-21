@@ -6,8 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (forumHandler *Handler) GetAllForum(c *gin.Context) {
-	data, err := forumHandler.Project.Usecase.GetAllForum(c)
+func (handler *Handler) CreateCommentForum(c *gin.Context) {
+	data, err := handler.Project.Usecase.CreateCommentForum(c)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
@@ -18,8 +18,8 @@ func (forumHandler *Handler) GetAllForum(c *gin.Context) {
 	return
 }
 
-func (forumHandler *Handler) CreateForum(c *gin.Context) {
-	data, err := forumHandler.Project.Usecase.CreateForum(c)
+func (handler *Handler) GetAllCommentByForumID(c *gin.Context) {
+	data, err := handler.Project.Usecase.GetAllCommentByForumID(c)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
@@ -27,18 +27,17 @@ func (forumHandler *Handler) CreateForum(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, sendResponseSuccess{Success: true, Code: 200, Data: data})
-
 	return
 }
 
-func (forumHandler *Handler) DeleteForum(c *gin.Context) {
-	data, err := forumHandler.Project.Usecase.DeleteForum(c)
+func (handler *Handler) DeleteCommentForum(c *gin.Context) {
+	err := handler.Project.Usecase.DeleteCommentForum(c)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, sendResponseSuccess{Success: true, Code: 200, Data: data})
+	c.JSON(http.StatusOK, sendResponseSuccess{Success: true, Code: 200, Data: nil})
 	return
 }

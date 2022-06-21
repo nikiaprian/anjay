@@ -1,6 +1,9 @@
 package handler
 
-import "kel15/project"
+import (
+	"kel15/models"
+	"kel15/project"
+)
 
 type Handler struct {
 	Project *project.Project
@@ -19,8 +22,9 @@ type sendResponseError struct {
 }
 
 type sendResponseSuccess struct {
-	Success bool        `json:"success"`
-	Code    int         `json:"code"`
-	Message string      `json:"message,omitempty"`
-	Data    interface{} `json:"data"`
+	Success    bool               `json:"success"`
+	Code       int                `json:"code"`
+	Message    string             `json:"message,omitempty"`
+	Data       interface{}        `json:"data"`
+	Pagination *models.Pagination `json:"pagination,omitempty"`
 }

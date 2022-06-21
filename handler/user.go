@@ -1,10 +1,27 @@
 package handler
 
 import (
+	"kel15/utils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
+
+func (handler *Handler) UserList(c *gin.Context) {
+	utils.SetPaginationDefault(c)
+
+	data, err := handler.Project.Usecase.UserList(c)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
+		return
+	}
+
+	pagination := utils.GetPagination(c)
+
+	c.JSON(200, sendResponseSuccess{Success: true, Code: 200, Message: "", Data: data, Pagination: &pagination})
+	return
+}
 
 func (handler *Handler) UserLogin(c *gin.Context) {
 	data, err := handler.Project.Usecase.UserLogin(c)
