@@ -95,3 +95,32 @@ func (repository *Repository) DeleteForum(c *gin.Context, id int) error {
 
 	return nil
 }
+
+func (repository *Repository) GetForumById(c *gin.Context, id int) (*models.Forum, error) {
+	var forum models.Forum
+
+	query := `SELECT Forums.ID, Forums.Title, Forums.Content, Forums.user_id, Forums.created_at, Forums.updated_at FROM Forums WHERE id = ?`
+
+	rows, err := repository.db.Query(query, id)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		err := rows.Scan(&forum.ID, &forum.Title, &forum.Content, &forum.User.ID, &forum.CreatedAt, &forum.UpdatedAt)
+		if err != nil {
+			return nil, err
+		}
+
+		user, err := repository.GetUserById(c, int64(forum.User.ID))
+		if err != nil {
+			return nil, err
+		}
+
+		forum.User = *user
+	}
+
+	return &forum, nil
+}

@@ -109,3 +109,21 @@ func (usecase *Usecase) DeleteForum(c *gin.Context) (*models.Forum, error) {
 
 	return nil, nil
 }
+
+func (usecase *Usecase) GetForumById(c *gin.Context) (*models.Forum, error) {
+	id := c.Param("id")
+
+	Convid, err := strconv.Atoi(id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	forum, err := usecase.repository.GetForumById(c, Convid)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return forum, nil
+}
