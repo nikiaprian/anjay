@@ -51,6 +51,11 @@ func (usecase *Usecase) CreateForum(c *gin.Context) (*models.Forum, error) {
 }
 
 func (usecase *Usecase) DeleteForum(c *gin.Context) (*models.Forum, error) {
+	user := c.MustGet("user").(*models.User)
+	if user == nil {
+		return nil, errors.New("user not found")
+	}
+
 	id := c.Param("id")
 	Convid, err := strconv.Atoi(id)
 
