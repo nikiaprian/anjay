@@ -53,7 +53,7 @@ func main() {
 
 	router.GET("/forums", handler.GetAllForum)
 	router.POST("/forums/new", handler.CheckUserRole, handler.CreateForum)
-	router.PUT("/forums/:id", handler.CheckUserRole, handler.UpdateForum)
+	// router.PUT("/forums/:id", handler.CheckUserRole, handler.UpdateForum)
 	router.DELETE("/forums/:id", handler.CheckUserRole, handler.DeleteForum)
 	router.GET("/forums/:id", handler.GetForumById)
 
