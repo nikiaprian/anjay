@@ -67,11 +67,11 @@ func main() {
 	router.GET("/forums/:id", handler.GetForumById)
 
 	router.POST("/commentsforum/:id", handler.CheckUserRole, handler.CreateCommentForum)
-	router.GET("/commentsforum/:id", handler.CheckUserRole, handler.GetAllCommentByForumID)
+	router.GET("/commentsforum/:id", handler.GetAllCommentByForumID)
 	router.DELETE("/commentsforum/:id", handler.CheckUserRole, handler.DeleteCommentForum)
 
 	router.POST("/comments/:id", handler.CheckUserRole, handler.CreateCommentBlog)
-	router.GET("/comments/:id", handler.CheckUserRole, handler.GetAllCommentByBlogID)
+	router.GET("/comments/:id", handler.GetAllCommentByBlogID)
 	router.DELETE("/comments/:id", handler.CheckUserRole, handler.DeleteCommentByID)
 
 	srv := &http.Server{
