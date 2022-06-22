@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -34,6 +35,14 @@ func main() {
 	handler := handler.NewHandler(newProject)
 
 	router := gin.Default()
+
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:3000", "https://fe.codein.studio"},
+		AllowMethods:     []string{http.MethodGet, http.MethodPatch, http.MethodPost, http.MethodHead, http.MethodDelete, http.MethodOptions},
+		AllowHeaders:     []string{"Content-Type", "X-XSRF-TOKEN", "Accept", "Origin", "X-Requested-With", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+	}))
 
 	router.POST("/auth/login", handler.UserLogin)
 	router.POST("/auth/register", handler.UserRegister)
