@@ -8,9 +8,10 @@ import (
 )
 
 func (repository *Repository) GetAllForum(c *gin.Context) ([]models.Forum, error) {
-	var forums []models.Forum
-
-	query := `SELECT Forums.ID, Forums.Title, Forums.Content, Forums.user_id, Forums.created_at, Forums.updated_at FROM Forums`
+	query := `SELECT Forums.id, Forums.title, Forums.content, Forums.created_at, Forums.updated_at,
+			  Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at
+			  FROM Forums 
+			  JOIN Users ON Forums.user_id = Users.id`
 
 	rows, err := repository.db.Query(query)
 	if err != nil {
@@ -19,30 +20,44 @@ func (repository *Repository) GetAllForum(c *gin.Context) ([]models.Forum, error
 
 	defer rows.Close()
 
+	var forums []models.Forum
+	var User models.User
+
 	for rows.Next() {
 		var forum models.Forum
-		err := rows.Scan(&forum.ID, &forum.Title, &forum.Content, &forum.User.ID, &forum.CreatedAt, &forum.UpdatedAt)
+		err := rows.Scan(&forum.ID, &forum.Title, &forum.Content, &forum.CreatedAt, &forum.UpdatedAt,
+			&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
+
 		if err != nil {
 			return nil, err
 		}
 
-		user, err := repository.GetUserById(c, int64(forum.User.ID))
+		forum.User = User
+
+		forum_tags, err := repository.GetForumTagByForumID(c, int64(forum.ID))
 		if err != nil {
-			return nil, err
+			continue
 		}
 
-		forum.User = *user
+		for _, forum_tag := range *forum_tags {
+			tag, err := repository.GetTagByID(c, int64(forum_tag.TagID))
+			if err != nil {
+				continue
+			}
+
+			forum.Tags = append(forum.Tags, *tag)
+		}
+
 		forums = append(forums, forum)
 	}
 
 	return forums, nil
 }
 
-func (repository *Repository) CreateForum(c *gin.Context, title, contents string, user_id int) (*models.Forum, error) {
+func (repository *Repository) CreateForum(c *gin.Context, title, content string, user_id int) (*models.Forum, error) {
 	query := `INSERT INTO Forums (title, content, user_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?)`
 
-	result, err := repository.db.Exec(query, title, contents, user_id, time.Now(), time.Now())
-
+	result, err := repository.db.Exec(query, title, content, user_id, time.Now(), time.Now())
 	if err != nil {
 		return nil, err
 	}
@@ -61,35 +76,35 @@ func (repository *Repository) CreateForum(c *gin.Context, title, contents string
 		ID:        int(id),
 		User:      *user,
 		Title:     title,
-		Content:   contents,
+		Content:   content,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}, nil
 }
 
-func (repository *Repository) UpdateForum(c *gin.Context, id int, title, contents string) (*models.Forum, error) {
-	query := `UPDATE Forums SET title = ?, content = ?, updated_at = ? WHERE id = ?`
+// func (repository *Repository) UpdateForum(c *gin.Context, id int, title, contents string) (*models.Forum, error) {
+// 	query := `UPDATE Forums SET title = ?, content = ?, updated_at = ? WHERE id = ?`
 
-	_, err := repository.db.Exec(query, title, contents, time.Now(), id)
+// 	_, err := repository.db.Exec(query, title, contents, time.Now(), id)
 
-	if err != nil {
-		return nil, err
-	}
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-	user, err := repository.GetUserById(c, int64(id))
-	if err != nil {
-		return nil, err
-	}
+// 	user, err := repository.GetUserById(c, int64(id))
+// 	if err != nil {
+// 		return nil, err
+// 	}
 
-	return &models.Forum{
-		ID:        id,
-		User:      *user,
-		Title:     title,
-		Content:   contents,
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
-	}, nil
-}
+// 	return &models.Forum{
+// 		ID:        id,
+// 		User:      *user,
+// 		Title:     title,
+// 		Content:   contents,
+// 		CreatedAt: time.Now(),
+// 		UpdatedAt: time.Now(),
+// 	}, nil
+// }
 
 func (repository *Repository) DeleteForum(c *gin.Context, id int) error {
 	query := `DELETE FROM Forums WHERE id = ?`
@@ -105,29 +120,33 @@ func (repository *Repository) DeleteForum(c *gin.Context, id int) error {
 
 func (repository *Repository) GetForumById(c *gin.Context, id int) (*models.Forum, error) {
 	var forum models.Forum
+	var User models.User
 
-	query := `SELECT Forums.ID, Forums.Title, Forums.Content, Forums.user_id, Forums.created_at, Forums.updated_at FROM Forums WHERE id = ?`
+	query := `SELECT Forums.id, Forums.title, Forums.content, Forums.created_at, Forums.updated_at,
+			  Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at
+			  FROM Forums
+			  JOIN Users ON Forums.user_id = Users.id
+			  WHERE Forums.id = ?`
 
-	rows, err := repository.db.Query(query, id)
+	row := repository.db.QueryRow(query, id)
+	err := row.Scan(&forum.ID, &forum.Title, &forum.Content, &forum.CreatedAt, &forum.UpdatedAt,
+					&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
+
 	if err != nil {
 		return nil, err
 	}
 
-	defer rows.Close()
-
-	for rows.Next() {
-		err := rows.Scan(&forum.ID, &forum.Title, &forum.Content, &forum.User.ID, &forum.CreatedAt, &forum.UpdatedAt)
+	forum_tags, _ := repository.GetForumTagByForumID(c, int64(forum.ID))
+	for _, forum_tag := range *forum_tags {
+		tag, err := repository.GetTagByID(c, int64(forum_tag.TagID))
 		if err != nil {
-			return nil, err
+			continue
 		}
 
-		user, err := repository.GetUserById(c, int64(forum.User.ID))
-		if err != nil {
-			return nil, err
-		}
-
-		forum.User = *user
+		forum.Tags = append(forum.Tags, *tag)
 	}
+
+	forum.User = User
 
 	return &forum, nil
 }
