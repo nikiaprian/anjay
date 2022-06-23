@@ -151,6 +151,7 @@ func (repository *Repository) GetForumById(c *gin.Context, id int) (*models.Foru
 
 	forum_likes, _ := repository.GetAllLikeByForumID(c, forum.ID)
 	forum.TotalLikes = len(*forum_likes)
+	forum.ForumsLikes = *forum_likes
 
 	for _, forum_like := range *forum_likes {
 		if forum_like.User.ID == User.ID {
