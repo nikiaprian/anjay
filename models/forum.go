@@ -8,6 +8,7 @@ type Forum struct {
 	Title       string                `json:"title"`
 	Tags        []Tag                 `json:"tag"`
 	ForumsLikes []ForumsLikesResponse `json:"forum_likes"`
+	TotalLikes  int                   `json:"total_likes"`
 	Content     string                `json:"content"`
 	IsYouLike   bool                  `json:"is_you_like"`
 	CreatedAt   time.Time             `json:"created_at"`

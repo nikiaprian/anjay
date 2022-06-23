@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"database/sql"
 	"kel15/models"
 	"time"
 
@@ -50,6 +51,7 @@ func (repository *Repository) GetAllForum(c *gin.Context) ([]models.Forum, error
 		}
 
 		forum_likes, _ := repository.GetAllLikeByForumID(c, forum.ID)
+		forum.TotalLikes = len(*forum_likes)
 
 		for _, forum_like := range *forum_likes {
 			if forum_like.User.ID == User.ID {
@@ -144,8 +146,23 @@ func (repository *Repository) GetForumById(c *gin.Context, id int) (*models.Foru
 	err := row.Scan(&forum.ID, &forum.Title, &forum.Content, &forum.CreatedAt, &forum.UpdatedAt,
 		&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
 
+	if err == sql.ErrNoRows {
+		return nil, nil
+	}
+
 	if err != nil {
 		return nil, err
+	}
+
+	forum_likes, _ := repository.GetAllLikeByForumID(c, forum.ID)
+	forum.TotalLikes = len(*forum_likes)
+	forum.ForumsLikes = *forum_likes
+
+	for _, forum_like := range *forum_likes {
+		if forum_like.User.ID == User.ID {
+			forum.IsYouLike = true
+			break
+		}
 	}
 
 	forum_tags, _ := repository.GetForumTagByForumID(c, int64(forum.ID))
