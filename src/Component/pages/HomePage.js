@@ -8,7 +8,7 @@ import gambar from '../../Assets/gambarUtama.png';
 import gambar2 from '../../Assets/forumin.png';
 import gambar3 from '../../Assets/blogin.png';
 import gambar4 from '../../Assets/comment2.png';
-import { faqList } from '../../Api/dataFaqStatic';
+import { faqList } from '../../ApiFake/dataFaqStatic';
 import RightIcons from '../../Assets/righticon.svg';
 //import Sliders from '../molecules/Sliders';
 // import { Swiper, SwiperSlide } from 'swiper/react';

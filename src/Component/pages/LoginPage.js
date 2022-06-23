@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import Navbar from '../molecules/Navbar';
 import Footer from '../molecules/Footer';
-import loginImage from '../../Assets/login.png';
+import loginImage from '../../Assets/login.svg';
 import logo from '../../Assets/logo.svg';
 import google from '../../Assets/google.svg';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import validator from 'validator';
+import useAuthStore from "../store/AuthStore";
 
 const LoginPage = () => {
   const baseUrl = 'https://be.codein.studio/auth/login';
   const [login, setLogin] = useState({ email: '', password: '' });
-  const [state, setState] = useState(null);
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  //eslint-disable-next-line
   const [loading, setLoading] = useState(true);
+  const { setUser, setIsLoggedIn } = useAuthStore();
   const [emailError, setEmailError] = useState({ message: '', status: false });
   const handleChange = (e, type) => {
     if (type === 'email') {
@@ -38,9 +42,19 @@ const LoginPage = () => {
       await axios
         .post(baseUrl, login, { withCredentials: false })
         .then((res) => {
-          setState(res.data);
+          setUser(res.data.data);
+          setIsLoggedIn(true);
+          window.localStorage.setItem('key', res.data.data.token);
           setLoading(false);
-          Swal.fire('Berhasil!', 'Login Telah Berhasil!', 'success');
+          Swal.fire('Berhasil!', 'Anda Telah Berhasil Login!', 'success');
+          navigate(searchParams.get('redirect') ?? '/');
+          // .then(
+          //   (result) => {
+          //     if (result.isConfirmed) {
+          //       navigate(searchParams.get('redirect') ?? '/');
+          //     }
+          //   }
+          // );
         })
         .catch((error) => {
           console.log(error);
@@ -61,13 +75,12 @@ const LoginPage = () => {
       });
     }
   };
-  console.log(state);
   return (
     <>
       <Navbar />
-      <div className="flex py-44 items-center flex-col-reverse justify-center w-full md:gap-x-80  lg:flex-row">
-        <div className="hidden md:flex">
-          <img src={loginImage} alt="logo" className="max-w-4/5" />
+      <div className="flex py-44 items-center flex-col-reverse justify-center gap-10 w-full md:gap-x-80  lg:flex-row">
+        <div className="hidden md:flex max-w-2xl">
+          <img src={loginImage} alt="logo" className="w-full" />
         </div>
         <div className=" border-slate-200 rounded-xl  shadow-md p-12 w-96 sm:w-86 h-auto">
           <form
@@ -123,7 +136,7 @@ const LoginPage = () => {
 
             <p className="text-center mt-4">
               Belum Punya Account ?{' '}
-              <Link to="/registerpage" className="font-bold">
+              <Link to="/register" className="font-bold">
                 Daftar
               </Link>
             </p>

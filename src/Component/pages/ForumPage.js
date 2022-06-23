@@ -5,10 +5,12 @@ import ContentForum from '../molecules/CodeForumIn/ContentForum';
 import Footer from '../molecules/Footer';
 import Head from '../molecules/Head';
 import Navbar from '../molecules/Navbar';
-
+import { useForumStore } from '../store/ProductStore';
 function ForumPage(props) {
   const [api, setApi] = useState([]);
   const [filter, setFilter] = useState('');
+  const forums=useForumStore((state)=>state.forums);
+  console.log(forums); 
   useEffect(() => {
     setApi(props.data);
   }, [props.data]);
@@ -21,7 +23,7 @@ function ForumPage(props) {
             titleHead="Code ForumIn"
             contentHead="Tempat berkomunikasi para programmer dengan cara mengajukan dan menjawab sebuah pertanyaan"
             nameButton="Create Pertanyaan"
-            path="/forumin/createforum"
+            path="/forum/createforum"
             setFilter={setFilter}
           />
           <ContentForum dataApi={api} filter={filter} />

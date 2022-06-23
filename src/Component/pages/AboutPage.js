@@ -1,75 +1,11 @@
 import React from 'react';
 import imgAbout from '../../Assets/img-about.svg';
-import github from '../../Assets/github.svg';
-import linkedin from '../../Assets/linkedIn.svg';
 import Navbar from '../molecules/Navbar';
 import Footer from '../molecules/Footer';
-import fahmi from '../../Assets/About/fahmi.jpg';
-import rachmat from '../../Assets/About/rachmat.jpg';
-import nico from '../../Assets/About/nico.jpg';
-import kevin from '../../Assets/About/kevin.jpg';
-import winnie from '../../Assets/About/winnie.jpg';
-import yusuf from '../../Assets/About/yusuf.jpg';
+import ScrollButton from '../atoms/ScrollButton';
+import listTeam from "../../ApiFake/dataAboutStatic"
 
 function AboutPage() {
-  const listTeam = [
-    {
-      name: 'Muhammad Fahmi Ady Susilo',
-      role: 'Frontend Developer',
-      image: fahmi,
-      github: github,
-      linkedin: linkedin,
-      linkGithub: 'https://github.com/Fahmiady11/',
-      linkLinkedin:
-        'https://www.linkedin.com/in/muhammad-fahmi-ady-susilo-ba05a41b0/',
-    },
-    {
-      name: 'Nicolas Sanjaya',
-      role: 'Frontend Developer',
-      image: nico,
-      github: github,
-      linkedin: linkedin,
-      linkGithub: 'https://github.com/nicolsan',
-      linkLinkedin: 'https://www.linkedin.com/in/nicolas-sanjaya/',
-    },
-    {
-      name: 'Rachmat Agung Ananda',
-      role: 'Backend Developer',
-      image: rachmat,
-      github: github,
-      linkedin: linkedin,
-      linkGithub: 'https://github.com/rchmatagung',
-      linkLinkedin:
-        'https://www.linkedin.com/in/rachmat-agung-ananda-013725173/',
-    },
-    {
-      name: 'Kevin Maulana Nasrullah',
-      role: 'Backend Developer',
-      image: kevin,
-      github: github,
-      linkedin: linkedin,
-      linkGithub: 'https://github.com/kevinmaulanan',
-      linkLinkedin: 'https://www.linkedin.com/in/kevin-maulana-nasrullah/',
-    },
-    {
-      name: 'Winnie Monica',
-      role: 'Backend Developer',
-      image: winnie,
-      github: github,
-      linkedin: linkedin,
-      linkGithub: 'https://github.com/winniemonica',
-      linkLinkedin: 'https://www.linkedin.com/in/winnie-monica-87b280207/',
-    },
-    {
-      name: 'Yusuf Supriadi',
-      role: 'Backend Developer',
-      image: yusuf,
-      github: github,
-      linkedin: linkedin,
-      linkGithub: 'https://github.com/cupyusuf/',
-      linkLinkedin: 'https://www.linkedin.com/in/yusuf-supriadi/',
-    },
-  ];
 
   return (
     <>
@@ -100,7 +36,7 @@ function AboutPage() {
             <div className="flex flex-row mb-10 flex-wrap items-center justify-center gap-5 mt-5 max-w-6xl">
               {listTeam.map((item, index) => {
                 return (
-                  <div className="border-2 gap-3 flex flex-col items-center justify-center w-72 bg-[#f2f2f2] border-gray-300 rounded-md shadow-lg font-poppins px-3 py-10 ">
+                  <div key={index} className="border-2 gap-3 flex flex-col items-center justify-center w-72 bg-[#f2f2f2] border-gray-300 rounded-md shadow-lg font-poppins px-3 py-10 ">
                     <img
                       className="w-28 h-28 drop-shadow-md rounded-full border-2 border-slate-300 object-cover object-top"
                       src={item.image}
@@ -134,6 +70,7 @@ function AboutPage() {
             </div>
           </div>
         </div>
+        <ScrollButton />
         <Footer />
       </div>
     </>

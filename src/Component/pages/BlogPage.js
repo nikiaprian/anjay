@@ -1,16 +1,17 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ContentBlog from '../molecules/CodeBlogIn/ContentBlog';
 import Footer from '../molecules/Footer';
 import Head from '../molecules/Head';
 import Navbar from '../molecules/Navbar';
 import ScrollButton from '../atoms/ScrollButton';
+import { useBlogStore } from '../store/ProductStore';
 
-function BlogPage(props) {
-  const [api, setApi] = useState([]);
+function BlogPage() {
   const [filter, setFilter] = useState('');
+  const fetchBlogs = useBlogStore((state) => state.fetchBlogs);
   useEffect(() => {
-    setApi(props.data);
-  }, [props.data]);
+    fetchBlogs('https://be.codein.studio/blogs');
+  }, [fetchBlogs]);
   return (
     <>
       <div className="w-screen h-screen">
@@ -20,10 +21,10 @@ function BlogPage(props) {
             titleHead="Code BlogIn"
             contentHead="Tempat para programmer menulis seputar wawasan dunia teknologi dan komputer"
             nameButton="Create Blog"
-            path="/blogin/createblog"
+            path="/blog/createblog"
             setFilter={setFilter}
           />
-          <ContentBlog dataApi={api} filter={filter} />
+          <ContentBlog filter={filter} />
         </div>
         <ScrollButton />
         <Footer />

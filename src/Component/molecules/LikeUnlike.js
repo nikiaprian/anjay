@@ -9,6 +9,8 @@ function LikeUnlike(props) {
 
   const [like, setLike] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+  let key = window.localStorage.getItem('key');
+
   useEffect(() => {
     setLike(fakeApi.like);
     setLikeCount(fakeApi.totalLike);
@@ -30,7 +32,7 @@ function LikeUnlike(props) {
         <div className="flex items-center gap-2">
           <HeartIconSolid
             className="h-8 w-8 text-red-500 cursor-pointer"
-            onClick={handleLike}
+            onClick={key && handleLike}
           />
           <p className="text-xl wl-8 font-medium font-poppins">{likeCount}</p>
         </div>
@@ -38,7 +40,7 @@ function LikeUnlike(props) {
         <div className="flex items-center gap-2">
           <HeartIconOutline
             className="h-8 w-8 text-red-500 cursor-pointer"
-            onClick={handleLike}
+            onClick={key && handleLike}
           />
           <p className="text-xl wl-8 font-medium font-poppins">{likeCount}</p>
         </div>

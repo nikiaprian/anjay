@@ -1,6 +1,10 @@
 import React from 'react';
 
-function InputFile() {
+function InputFile(props) {
+  const handleChange = (e) => {
+    props.input(e.target.files[0]);
+  };
+
   return (
     <>
       <div className="">
@@ -17,7 +21,7 @@ function InputFile() {
           >
             <div className="flex flex-col justify-center items-center pt-5 pb-6">
               <svg
-                class="mb-3 w-10 h-10 text-gray-400"
+                className="mb-3 w-10 h-10 text-gray-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -31,8 +35,8 @@ function InputFile() {
                 ></path>
               </svg>
               <p className="mb-2 text-sm text-gray-500">
-                <span className="font-semibold">Click to upload</span> or drag and
-                drop
+                <span className="font-semibold">Click to upload</span> or drag
+                and drop
               </p>
               <p className="text-xs text-gray-500 ">
                 PNG, JPG (MAX. 800x400px)
@@ -41,8 +45,9 @@ function InputFile() {
             <input
               id="dropzone-file"
               type="file"
-              class="hidden"
+              className="hidden"
               accept="image/png, image/jpeg"
+              onChange={handleChange}
             />
           </label>
         </div>

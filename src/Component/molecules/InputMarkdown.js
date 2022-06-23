@@ -1,6 +1,6 @@
-import React,{useState} from 'react';
+import React from 'react';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import { Editor} from '@toast-ui/react-editor';
+import { Editor } from '@toast-ui/react-editor';
 ///codeSyntaxHighlight
 import Prism from 'prismjs';
 import 'prismjs/themes/prism.css';
@@ -14,20 +14,25 @@ import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 function InputMarkdown(props) {
   const editorRef = React.createRef(props);
   //eslint-disable-next-line
-  const [editorState, setEditorState] = useState({ html: '', md: '' });
+  //const [editorState, setEditorState] = useState({ html: '', md: '' });
 
   const handleChange = (e) => {
-    const getMark = editorRef.current.getInstance().getMarkdown();
+    //const getMark = editorRef.current.getInstance().getMarkdown();
     const getHtml = editorRef.current.getInstance().getHTML();
-    setEditorState({ html: getHtml, md: getMark });
-    props.setEditorState({ html: getHtml, md: getMark });
-    console.log(getHtml);
+    //setEditorState({ html: getHtml, md: getMark });
+    if (props?.type === 'comment') {
+      props.setEditorState(JSON.stringify({ comment: getHtml }));
+    }else if(props?.type==='createBlog'){
+      props.setEditorState(getHtml);
+    }
   };
 
   return (
     <>
       <div className="">
-        <p className="block mb-2 text-sm text-gray-900 font-bold">{props.deskripsi}</p>
+        <p className="block mb-2 text-sm text-gray-900 font-bold">
+          {props.deskripsi}
+        </p>
         <div className="border-2 bg-[#f2f2f2] border-gray-300 p-0 font-poppins rounded-md shadow-lg">
           <Editor
             ref={editorRef}
@@ -39,9 +44,10 @@ function InputMarkdown(props) {
             initialEditType={props.mode}
             useCommandShortcut={true}
             onChange={handleChange}
-            plugins={
-              [[colorSyntax],[codeSyntaxHighlight, { highlighter: Prism }]]
-            }
+            plugins={[
+              [colorSyntax],
+              [codeSyntaxHighlight, { highlighter: Prism }],
+            ]}
           />
         </div>
       </div>

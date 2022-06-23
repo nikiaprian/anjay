@@ -2,14 +2,15 @@ import React from 'react';
 import './App.css';
 import './output.css';
 import Spiner from './Assets/Spinners/Spiner';
-import { isiContent } from '../src/Api/dataForumStatic';
-import { isiBlog } from '../src/Api/dataBlogStatic';
+//fakeDataStatic
+import { isiContent } from './ApiFake/dataForumStatic';
+import { isiBlog } from './ApiFake/dataBlogStatic';
 
 //Routing
 import { Routes, Route } from 'react-router-dom';
 import AboutPage from './Component/pages/AboutPage';
 import ProfilePage from './Component/pages/ProfilePage';
-
+import ProtectedRoute from './Component/protected/ProtectedRoute';
 const HomePage = React.lazy(() => import('./Component/pages/HomePage'));
 const DetailForumPage = React.lazy(() =>
   import('./Component/pages/DetailForumPage')
@@ -29,6 +30,7 @@ const CreateForumPage = React.lazy(() =>
 const FaqPage = React.lazy(() => import('./Component/pages/FaqPage'));
 const LoginPage = React.lazy(() => import('./Component/pages/LoginPage'));
 const RegisterPage = React.lazy(() => import('./Component/pages/RegisterPage'));
+
 
 function App() {
   return (
@@ -50,7 +52,7 @@ function App() {
         />
 
         {/* forumPage */}
-        <Route path="forumin">
+        <Route path="forum">
           <Route
             index
             element={
@@ -65,20 +67,22 @@ function App() {
               </React.Suspense>
             }
           />
-          <Route
-            path="createforum"
-            element={
-              <React.Suspense
-                fallback={
-                  <div>
-                    <Spiner />
-                  </div>
-                }
-              >
-                <CreateForumPage />
-              </React.Suspense>
-            }
-          />
+          <Route element={<ProtectedRoute />}>
+            <Route
+              path="createforum"
+              element={
+                <React.Suspense
+                  fallback={
+                    <div>
+                      <Spiner />
+                    </div>
+                  }
+                >
+                  <CreateForumPage />
+                </React.Suspense>
+              }
+            />
+          </Route>
           <Route
             path="detailforum/:idforum"
             element={
@@ -96,7 +100,7 @@ function App() {
         </Route>
 
         {/* blogPage */}
-        <Route path="blogin">
+        <Route path="blog">
           <Route
             index
             element={
@@ -111,20 +115,22 @@ function App() {
               </React.Suspense>
             }
           />
-          <Route
-            path="createblog"
-            element={
-              <React.Suspense
-                fallback={
-                  <div>
-                    <Spiner />
-                  </div>
-                }
-              >
-                <CreateBlogPage />
-              </React.Suspense>
-            }
-          />
+          <Route element={<ProtectedRoute />}>
+            <Route
+              path="createblog"
+              element={
+                <React.Suspense
+                  fallback={
+                    <div>
+                      <Spiner />
+                    </div>
+                  }
+                >
+                  <CreateBlogPage />
+                </React.Suspense>
+              }
+            />
+          </Route>
           <Route
             path="detailblog/:idblog"
             element={
@@ -140,9 +146,9 @@ function App() {
             }
           />
         </Route>
-      {/* AboutPage */}
+        {/* AboutPage */}
         <Route
-          path="aboutpage"
+          path="about"
           element={
             <React.Suspense
               fallback={
@@ -157,7 +163,7 @@ function App() {
         />
         {/* FaqPage */}
         <Route
-          path="faqpage"
+          path="faq"
           element={
             <React.Suspense
               fallback={
@@ -172,7 +178,7 @@ function App() {
         />
         {/* ProfilePage */}
         <Route
-          path="profilepage"
+          path="profile"
           element={
             <React.Suspense
               fallback={
@@ -188,7 +194,7 @@ function App() {
 
         {/* LoginPage */}
         <Route
-          path="loginpage"
+          path="login"
           element={
             <React.Suspense
               fallback={
@@ -203,7 +209,7 @@ function App() {
         />
         {/* RegisterPage */}
         <Route
-          path="registerpage"
+          path="register"
           element={
             <React.Suspense
               fallback={

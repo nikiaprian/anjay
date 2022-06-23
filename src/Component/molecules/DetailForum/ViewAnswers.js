@@ -1,5 +1,5 @@
 import React from 'react';
-import { isiBlog } from '../../../Api/dataBlogStatic';
+import { isiBlog } from '../../../ApiFake/dataBlogStatic';
 import CardViewForum from './CardViewForum';
 
 function ViewAnswers(props) {

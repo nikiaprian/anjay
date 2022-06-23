@@ -2,7 +2,8 @@ import React from 'react';
 import RightIcons from '../../Assets/righticon.svg';
 import Footer from '../molecules/Footer';
 import Navbar from '../molecules/Navbar';
-import { faqList } from '../../Api/dataFaqStatic';
+import { faqList } from '../../ApiFake/dataFaqStatic';
+import ScrollButton from '../atoms/ScrollButton';
 
 function FaqPage() {
   return (
@@ -41,6 +42,7 @@ function FaqPage() {
           ))}
         </div>
       </div>
+      <ScrollButton/>
       <Footer />
     </>
   );

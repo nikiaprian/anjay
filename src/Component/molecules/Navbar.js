@@ -1,25 +1,42 @@
 import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../Assets/logo.svg';
 import icon from '../../Assets/bars-solid.svg';
 import iconX from '../../Assets/x.svg';
 import gambar from '../../Assets/fotoProfil.jpg';
+import Swal from 'sweetalert2';
+import useAuthStore from '../store/AuthStore';
 
 function Navbar() {
   const [open, setOpen] = useState(false);
   //eslint-disable-next-line
-  const [isLogin, setIsLogin] = useState(true);
+  const { isLoggedIn, setIsLoggedIn, setUser } = useAuthStore();
+  let key = window.localStorage.getItem('key');
+  const navigate = useNavigate();
 
   let activeStyle = {
     color: '#0A5D31',
   };
   const Links = [
-    { name: 'ForumIn', link: '/forumin' },
-    { name: 'BlogIn', link: '/blogin' },
-    { name: 'Tentang', link: '/aboutpage' },
-    { name: 'FaQ', link: '/faqpage' },
+    { name: 'ForumIn', link: '/forum' },
+    { name: 'BlogIn', link: '/blog' },
+    { name: 'Tentang', link: '/about' },
+    { name: 'FaQ', link: '/faq' },
   ];
 
+  const handleLogout = () => {
+    console.log('test');
+    setIsLoggedIn(false);
+    setUser({});
+    window.localStorage.removeItem('key');
+    Swal.fire('Berhasil!', 'Anda Telah Berhasil Logout!', 'success').then(
+      (result) => {
+        if (result.isConfirmed) {
+          navigate('/');
+        }
+      }
+    );
+  };
   return (
     <>
       <div className="shadow-lg w-full fixed top-0 left-0 border-b-2  border-orange-400 z-50">
@@ -53,13 +70,16 @@ function Navbar() {
                   </NavLink>
                 </li>
               ))}
-              {isLogin ? (
+              {isLoggedIn || key ? (
                 <div className="flex mb-8 flex-col gap-6 items-center mx-auto md:hidden">
-                  <button className="px-4 py-1.5 w-2/3 bg-white rounded-3xl border-orange-500 border-2 text-orange-500 font-bold hover:bg-orange-600 hover:text-white hover:border-neutral-700">
+                  <button
+                    onClick={() => handleLogout()}
+                    className="px-4 py-1.5 w-2/3 bg-white rounded-3xl border-orange-500 border-2 text-orange-500 font-bold hover:bg-orange-600 hover:text-white hover:border-neutral-700"
+                  >
                     Logout
                   </button>
                   <div>
-                    <Link to="/profilepage">
+                    <Link to="/profile">
                       <img
                         className="w-10 h-10 object-cover border-2 border-white rounded-full shadow-md"
                         src={gambar}
@@ -70,12 +90,16 @@ function Navbar() {
                 </div>
               ) : (
                 <div className="flex mb-8 flex-col gap-6 items-center mx-auto md:hidden">
-                  <button className="px-6 py-1.5 w-2/3 bg-orange-500 rounded-3xl border-neutral-700 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-500">
-                    Register
-                  </button>
-                  <button className="px-4 py-1.5 w-2/3 bg-white rounded-3xl border-orange-500 border-2 text-orange-500 font-bold hover:bg-orange-600 hover:text-white hover:border-neutral-700">
-                    Login
-                  </button>
+                  <Link to="/register" className='flex justify-center px-6 py-1.5 w-2/3 bg-orange-600 rounded-3xl border-orange-600 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-700'>
+                    <button className='font-bold'>
+                      Register
+                    </button>
+                  </Link>
+                  <Link to="/login" className="flex justify-center px-4 py-1.5 w-2/3 bg-white rounded-3xl border-orange-500 border-2 text-orange-500 font-bold hover:bg-orange-600 hover:text-white hover:border-orange-700">
+                    <button className='font-bold'>
+                      Login
+                    </button>
+                  </Link>
                 </div>
               )}
             </ul>
@@ -91,13 +115,16 @@ function Navbar() {
               <img src={icon} alt="icon" className="w-6 py-0.5" />
             )}
           </div>
-          {isLogin ? (
+          {isLoggedIn || key ? (
             <div className="hidden md:flex md:items-center md:justify-between md:gap-3 md:mr-5">
-              <button className="px-6 shadow-md py-1.5 bg-orange-500 rounded-md border-orange-500 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-500">
+              <button
+                onClick={() => handleLogout()}
+                className="px-6 shadow-md py-1.5 bg-orange-500 rounded-md border-orange-500 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-500"
+              >
                 Logout
               </button>
               <div>
-                <Link to="/profilepage">
+                <Link to="/profile">
                   <img
                     className="w-10 h-10 object-cover border-2 border-orange-500 rounded-full shadow-md"
                     src={gambar}
@@ -108,12 +135,16 @@ function Navbar() {
             </div>
           ) : (
             <div className="hidden md:flex md:items-center md:justify-between md:gap-3 md:mr-5">
-              <button className="px-4 shadow-md py-1.5 bg-white rounded-md border-orange-500 border-2 text-orange-500 font-bold hover:bg-orange-500 hover:text-white hover:border-orange-500">
-                Register
-              </button>
-              <button className="px-6 shadow-md py-1.5 bg-orange-500 rounded-md border-orange-500 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-500">
-                Login
-              </button>
+              <Link to="/register">
+                <button className="px-4 shadow-md py-1.5 bg-white rounded-md border-orange-500 border-2 text-orange-500 font-bold hover:bg-orange-500 hover:text-white hover:border-orange-500">
+                  Register
+                </button>
+              </Link>
+              <Link to="/login">
+                <button className="px-6 shadow-md py-1.5 bg-orange-500 rounded-md border-orange-500 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-500">
+                  Login
+                </button>
+              </Link>
             </div>
           )}
         </div>

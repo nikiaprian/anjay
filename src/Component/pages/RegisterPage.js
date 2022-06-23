@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import registerImage from '../../Assets/signup.png';
+import React, { useState} from 'react';
+import { Link,useNavigate } from 'react-router-dom';
+import registerImage from '../../Assets/signup.svg';
 import logo from '../../Assets/logo.svg';
 import Navbar from '../molecules/Navbar';
 import Footer from '../molecules/Footer';
@@ -8,16 +8,19 @@ import google from '../../Assets/google.svg';
 import axios from 'axios';
 import validator from 'validator';
 import Swal from 'sweetalert2';
-
+//import useAuthStore from "../store/AuthStore";
 const RegisterPage = (props) => {
   const baseUrl = 'https://be.codein.studio/auth/register';
+  const navigate = useNavigate();
   const [register, setRegister] = useState({
     email: '',
     username: '',
     password: '',
     //confirmPassword: '',
   });
+  //eslint-disable-next-line
   const [state, setState] = useState(null);
+  //eslint-disable-next-line
   const [loading, setLoading] = useState(true);
 
   //handleRegister
@@ -74,11 +77,11 @@ const RegisterPage = (props) => {
       setRegister({ ...register, username: e.target.value });
     } else if (type === 'password') {
       if (e.target.value.length > 8 && e.target.value.length < 16) {
-        setPasswordError({ message: 'Username sudah benar', status: true });
+        setPasswordError({ message: 'Password sudah benar', status: true });
       } else {
         if (e.target.value.length !== 0) {
           setPasswordError({
-            message: 'Username harus 8-16 karakter',
+            message: 'Password harus 8-16 karakter',
             status: false,
           });
         } else {
@@ -99,7 +102,8 @@ const RegisterPage = (props) => {
         .then((res) => {
           setState(res.data);
           setLoading(false);
-          Swal.fire('Berhasil!', 'Register Telah Berhasil!', 'success');
+          Swal.fire('Berhasil!', 'Anda telah berhasil Registrasi', 'success');
+          navigate('/login');
         })
         .catch((error) => {
           console.log(error);
@@ -125,8 +129,8 @@ const RegisterPage = (props) => {
     <>
       <Navbar />
       <div className="flex py-44 items-center flex-col-reverse justify-center w-full md:gap-x-80  lg:flex-row">
-        <div className="hidden md:flex">
-          <img src={registerImage} alt="logo" className="max-w-4/5" />
+        <div className="hidden md:flex max-w-2xl">
+          <img src={registerImage} alt="logo" className="w-full" />
         </div>
         <div className="border-slate-200 rounded-xl shadow-md p-12 w-96">
           <form
@@ -216,8 +220,8 @@ const RegisterPage = (props) => {
             />
 
             <p className="text-center mt-4">
-              Sudah Punya Account ?{' '}
-              <Link to="/loginpage" className="font-bold">
+              Sudah Punya Account ?
+              <Link to="/login" className="font-bold">
                 Login
               </Link>
             </p>

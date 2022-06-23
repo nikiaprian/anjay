@@ -9,9 +9,49 @@ import Footer from '../molecules/Footer';
 import Navbar from '../molecules/Navbar';
 import PreviewMarkdown from '../molecules/PreviewMarkdown';
 import ScrollButton from '../atoms/ScrollButton';
-
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
+//import { useBlogStore } from '../store/ProductStore';
+import axios from 'axios';
 function CreateBlogPage() {
-  const [editorState, setEditorState] = useState({ html: '', md: '' });
+  //const fetchCreateBlog = useBlogStore((state) => state.fetchCreateBlog);
+  const [inputTag, setInputTag] = useState([]);
+  const [inputJudul, setInputJudul] = useState('');
+  const [inputFile, setInputFile] = useState('');
+  const [inputMarkdowon, setInputMarkdown] = useState('');
+  console.log(inputJudul, inputTag, inputFile, inputMarkdowon);
+
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem('key');
+  const handleClick = async (e) => {
+    let data = new FormData();
+    data.append('file', inputFile);
+    data.append('title', inputJudul);
+    data.append('content', inputMarkdowon);
+    inputTag.forEach((tag) => data.append('tags', tag?.text));
+
+    await axios
+      .post('https://be.codein.studio/blogs/new', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        Swal.fire('Berhasil!', 'Anda Telah Berhasil membuat Blog', 'success');
+        navigate('/blog');
+      })
+      .catch((error) => {
+        Swal.fire({
+          title: 'Gagal!',
+          text: 'Anda Tidak Berhasil membuat Blog',
+          icon: 'error',
+          confirmButtonText: 'ya, saya mencoba kembali',
+        });
+      });
+  };
+
   return (
     <>
       <div className="w-screen h-screen">
@@ -19,17 +59,22 @@ function CreateBlogPage() {
         <div className=" mt-40 w-10/12 md:w-8/12 mx-auto flex flex-col gap-4">
           <BreadCrumbs prev="BlogIn" current="Buat Blog" />
           <div className="my-10 flex flex-col gap-6 ">
-            <InputJudul label="Judul Blog" placeholder="Masukkan judul Blog" />
-            <InputTags />
-            <InputFile />
+            <InputJudul
+              setInputJudul={setInputJudul}
+              label="Judul Blog"
+              placeholder="Masukkan judul Blog"
+            />
+            <InputTags tag={inputTag} setTags={setInputTag} />
+            <InputFile input={setInputFile} />
             <InputMarkdown
-              setEditorState={setEditorState}
+              setEditorState={setInputMarkdown}
               deskripsi="Deskripsi"
               mode="wysiwyg"
               placeholder="Tulis deskripsi anda disini"
+              type="createBlog"
             />
-            <PreviewMarkdown editorState={editorState} />
-            <BackSubmit />
+            <PreviewMarkdown editorState={inputMarkdowon} />
+            <BackSubmit handleClick={handleClick} />
           </div>
         </div>
         <ScrollButton />

@@ -13,7 +13,7 @@ function ViewTag(props) {
         {tags && tags.map((tag) => {
           return (
             <div key={tag.id} className="bg-orange-500 w-25  text-xs md:text-sm font-poppins  opacity-90 text-white px-2 py-1.5 rounded-md shadow-md">
-              #{tag.text}
+              #{tag.tag}
             </div>
           );
         })}

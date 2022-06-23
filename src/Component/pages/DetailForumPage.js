@@ -15,6 +15,7 @@ function DetailForumPage(props) {
   let { idforum } = useParams();
   const [api, setApi] = useState([]);
   const dataFind = props && props.data.filter((data) => data.id === +idforum);
+  const key = window.localStorage.getItem('key');
   useEffect(() => {
     setApi(dataFind[0]);
     //eslint-disable-next-line
@@ -40,16 +41,20 @@ function DetailForumPage(props) {
                 dangerouslySetInnerHTML={{ __html: api.isicontent }}
               ></div>
               <ViewAnswers deskripsi="Jawaban" total={5} />
-              <InputMarkdown
-                deskripsi="Tulis Jawaban Di sini"
-                mode="markdown"
-                placeholder="Tulis Jawaban anda disini"
-              />
-              <div className="flex justify-end">
-                <button className="shadow-lg px-6 py-1.5 bg-orange-500 rounded-md border-neutral-300 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-500">
-                  Kirim
-                </button>
-              </div>
+              {key && key ? (
+                <div>
+                  <InputMarkdown
+                    deskripsi="Tulis Komentar Di sini"
+                    mode="markdown"
+                    placeholder="Tulis Komentar anda disini"
+                  />
+                  <div className="flex justify-end mt-4">
+                    <button className="shadow-lg px-6 py-1.5 bg-orange-500 rounded-md border-neutral-300 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-500">
+                      Kirim
+                    </button>
+                  </div>
+                </div>
+              ) : null}
             </div>
           </div>
           <ScrollButton />

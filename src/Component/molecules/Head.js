@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PencilAltIcon } from '@heroicons/react/solid';
+import useAuthStore from '../store/AuthStore';
 
 function Head(props) {
   const [input, setInput] = useState('');
+  const { isLoggedIn } = useAuthStore();
+  let key = window.localStorage.getItem('key');
+
   const handleChange = (event) => {
     setInput(event.target.value);
   };
@@ -21,12 +25,19 @@ function Head(props) {
             {props.contentHead}
           </p>
         </div>
-        <Link to={props.path}>
-          <button className="shadow-md flex flex-row items-center gap-3  px-6 py-1.5 bg-orange-500 rounded-lg border-neutral-300 border-2 text-white font-bold hover:bg-orange-600 hover:text-white ">
-            <p>{props.nameButton}</p>
-            <PencilAltIcon className='w-5 h-5'/>
-          </button>
-        </Link>
+
+        <button className="shadow-md flex flex-row items-center gap-3  px-6 py-1.5 bg-orange-500 rounded-lg border-neutral-300 border-2 text-white font-bold hover:bg-orange-600 hover:text-white ">
+          <Link
+            to={
+              isLoggedIn || key ? props.path : `/login?redirect=${props.path}`
+            }
+          >
+            <div className="flex flex-row items-center gap-3">
+              <p>{props.nameButton}</p>
+              <PencilAltIcon className="w-5 h-5" />
+            </div>
+          </Link>
+        </button>
       </div>
       <div className=" flex gap-5 items-center w-full justify-end">
         <input
