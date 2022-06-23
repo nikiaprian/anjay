@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"encoding/json"
 	"errors"
 	"kel15/models"
 	"strconv"
@@ -66,4 +67,27 @@ func (usecase *Usecase) DeleteCommentForum(c *gin.Context) error {
 	}
 
 	return nil
+}
+
+func (usecase *Usecase) SelectedCommentAnswer(c *gin.Context) (*models.CommentForum, error) {
+	id := c.Param("id")
+	Convid, err := strconv.Atoi(id)
+	var body models.SelectedCommentAnswerRequest
+
+	err = json.NewDecoder(c.Request.Body).Decode(&body)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if err != nil {
+		return nil, err
+	}
+
+	comment, err := usecase.repository.SelectedCommentAnswer(c, Convid, body.IsAnswer)
+	if err != nil {
+		return nil, err
+	}
+
+	return comment, nil
 }

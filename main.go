@@ -69,6 +69,8 @@ func main() {
 	router.DELETE("/forums/:id", handler.CheckUserRole, handler.DeleteForum)
 	router.GET("/forums/:id", handler.GetForumById)
 
+	router.PATCH("/forum/comment/:id/selected-answer", handler.CheckUserRole, handler.SelectedCommentAnswer)
+
 	router.POST("/commentsforum/:id", handler.CheckUserRole, handler.CreateCommentForum)
 	router.GET("/commentsforum/:id", handler.GetAllCommentByForumID)
 	router.DELETE("/commentsforum/:id", handler.CheckUserRole, handler.DeleteCommentForum)

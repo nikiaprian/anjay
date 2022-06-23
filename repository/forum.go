@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"database/sql"
 	"kel15/models"
 	"time"
 
@@ -144,6 +145,10 @@ func (repository *Repository) GetForumById(c *gin.Context, id int) (*models.Foru
 	row := repository.db.QueryRow(query, id)
 	err := row.Scan(&forum.ID, &forum.Title, &forum.Content, &forum.CreatedAt, &forum.UpdatedAt,
 		&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
+
+	if err == sql.ErrNoRows {
+		return nil, nil
+	}
 
 	if err != nil {
 		return nil, err
