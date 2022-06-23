@@ -9,7 +9,7 @@ function FaqPage() {
   return (
     <>
       <Navbar />
-      <div className="bg-white flex flex-col md:flex-row justify-center md:gap-28 items-center my-28 md:my-72">
+      <div className="bg-white flex flex-col md:flex-row justify-center md:gap-28 items-center my-28 md:my-72 overflow-x-hidden">
         <div className="flex flex-col items-center justify-center max-w-md md:max-w-lg text-center">
           <h1 className="text-3xl font-bold mb-4 text-green-800">FaQ CodeIn</h1>
           <h1 className="text-sm font-medium w-10/12">

@@ -10,15 +10,11 @@ function CardForum(props) {
           <div className="flex mt-2 ml-2 gap-2  pr-8 md:pr-0">
             <div className="flex flex-col pt-10 pr-5">
               <div className="flex flex-col items-center ">
-                <p className="font-bold text-xl text-black">
-                  {props.like}
-                </p>
+                <p className="font-bold text-xl text-black">{props.like}</p>
                 <HeartIcon className="h-6 w-6 text-red-600" />
               </div>
               <div className="flex flex-col items-center">
-                <p className="font-bold text-xl text-black">
-                  {props.answer}
-                </p>
+                <p className="font-bold text-xl text-black">{props.answer}</p>
                 <ChatAltIcon className="h-6 w-6 text-blue-600" />
               </div>
             </div>
@@ -26,9 +22,10 @@ function CardForum(props) {
               <p className="font-bold text-md md:text-lg font-poppins w-10/12">
                 {props.title}
               </p>
-              <p className="text-sm font-poppins break-words text-ellipsis overflow-hidden max-h-10 w-10/12 ">
-                {props.content}
-              </p>
+              <p
+                className="text-sm font-poppins break-words text-ellipsis overflow-hidden max-h-10 w-10/12 "
+                dangerouslySetInnerHTML={{ __html: props.content }}
+              ></p>
               <div className="">
                 <ViewTag tags={props.tags} />
               </div>

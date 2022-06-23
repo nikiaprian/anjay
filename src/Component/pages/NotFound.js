@@ -8,7 +8,7 @@ function NotFound() {
     <>
       <div>
         <Navbar />
-        <div className="w-full h-full mt-40">
+        <div className="w-full h-full mt-40 overflow-x-hidden">
             <img className=" w-10/12 md:w-1/3 mx-auto" src={gambar} alt="404" />
         </div>
         <ScrollButton/>

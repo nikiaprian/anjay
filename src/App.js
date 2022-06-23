@@ -2,9 +2,7 @@ import React from 'react';
 import './App.css';
 import './output.css';
 import Spiner from './Assets/Spinners/Spiner';
-//fakeDataStatic
-import { isiContent } from './ApiFake/dataForumStatic';
-import { isiBlog } from './ApiFake/dataBlogStatic';
+
 
 //Routing
 import { Routes, Route } from 'react-router-dom';
@@ -63,7 +61,7 @@ function App() {
                   </div>
                 }
               >
-                <ForumPage data={isiContent} />
+                <ForumPage />
               </React.Suspense>
             }
           />
@@ -93,7 +91,7 @@ function App() {
                   </div>
                 }
               >
-                <DetailForumPage data={isiContent} />
+                <DetailForumPage  />
               </React.Suspense>
             }
           />
@@ -111,7 +109,7 @@ function App() {
                   </div>
                 }
               >
-                <BlogPage data={isiBlog} />
+                <BlogPage />
               </React.Suspense>
             }
           />
@@ -141,7 +139,7 @@ function App() {
                   </div>
                 }
               >
-                <DetailBlogPage data={isiBlog} />
+                <DetailBlogPage />
               </React.Suspense>
             }
           />

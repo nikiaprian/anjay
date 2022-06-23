@@ -9,7 +9,7 @@ function AboutPage() {
 
   return (
     <>
-      <div className="w-screen h-screen">
+      <div className="w-screen h-screen overflow-x-hidden">
         <Navbar />
         <div>
           <div className=" bg-gradient-to-b from-[#EF8F00] to-[#EF5B00] py-20 px-10 mt-16 w-full lg:px-32 lg:py-16 ">

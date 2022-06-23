@@ -62,7 +62,7 @@ function DetailBlogPage() {
   return (
     <>
       <div>
-        <div className="w-screen h-screen">
+        <div className="w-screen h-screen overflow-x-hidden">
           <Navbar />
           <div className=" mt-40 w-10/12 md:w-8/12 mx-auto flex flex-col gap-4 ">
             <BreadCrumbs prev="BlogIn" current="Detail Blog" />

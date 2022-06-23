@@ -14,8 +14,8 @@ function HeadContentForum(props) {
             alt=""
           />
           <div className="">
-            <p className="text-md font-semibold">{props.user}</p>
-            <p className="text-xs">Dibuat {props.date}</p>
+            <p className="text-md font-semibold">{props?.user}</p>
+            <p className="text-xs">Dibuat {(props?.date)?.substring(0, 10)}</p>
           </div>
         </div>
         <div>

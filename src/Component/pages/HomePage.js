@@ -18,7 +18,7 @@ import RightIcons from '../../Assets/righticon.svg';
 function HomePage() {
   return (
     <>
-      <div className="w-screen h-screen">
+      <div className="w-screen h-screen overflow-x-hidden">
         <Navbar />
         <div className=" bg-gradient-to-b from-[#233A5A] to-[#111924] py-20 px-10 mt-16 w-full lg:px-32 lg:py-16 flex flex-col items-center md:justify-around md:flex-row">
           <div className=" flex flex-col items-start gap-5 text-center md:text-left">

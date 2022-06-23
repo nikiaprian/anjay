@@ -6,17 +6,15 @@ import Footer from '../molecules/Footer';
 import Head from '../molecules/Head';
 import Navbar from '../molecules/Navbar';
 import { useForumStore } from '../store/ProductStore';
-function ForumPage(props) {
-  const [api, setApi] = useState([]);
+function ForumPage() {
   const [filter, setFilter] = useState('');
-  const forums=useForumStore((state)=>state.forums);
-  console.log(forums); 
+  const fetchForums = useForumStore((state) => state.fetchForums);
   useEffect(() => {
-    setApi(props.data);
-  }, [props.data]);
+    fetchForums('https://be.codein.studio/forums');
+  }, [fetchForums]);
   return (
     <>
-      <div className="w-screen h-screen">
+      <div className="w-screen h-screen overflow-x-hidden">
         <Navbar />
         <div className=" mt-40 w-10/12 md:w-8/12 mx-auto flex flex-col gap-4">
           <Head
@@ -26,7 +24,7 @@ function ForumPage(props) {
             path="/forum/createforum"
             setFilter={setFilter}
           />
-          <ContentForum dataApi={api} filter={filter} />
+          <ContentForum filter={filter} />
         </div>
         <ScrollButton />
         <Footer />

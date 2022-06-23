@@ -29,7 +29,7 @@ function ProfilePage() {
   console.log(isForum);
   return (
     <>
-      <div className="w-screen h-screen">
+      <div className="w-screen h-screen overflow-x-hidden">
         <Navbar />
         <div className="  mt-40 w-7/12  mx-auto flex flex-col items-center gap-10 justify-center">
           <div className="w-full">

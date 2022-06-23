@@ -78,7 +78,7 @@ const LoginPage = () => {
   return (
     <>
       <Navbar />
-      <div className="flex py-44 items-center flex-col-reverse justify-center gap-10 w-full md:gap-x-80  lg:flex-row">
+      <div className="overflow-x-hidden flex py-44 items-center flex-col-reverse justify-center gap-10 w-full md:gap-x-80  lg:flex-row">
         <div className="hidden md:flex max-w-2xl">
           <img src={loginImage} alt="logo" className="w-full" />
         </div>

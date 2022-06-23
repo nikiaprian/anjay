@@ -1126,6 +1126,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   overflow-y: auto;
 }
 
+.overflow-x-hidden{
+  overflow-x: hidden;
+}
+
 .truncate{
   overflow: hidden;
   text-overflow: ellipsis;

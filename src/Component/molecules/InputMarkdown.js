@@ -20,9 +20,9 @@ function InputMarkdown(props) {
     //const getMark = editorRef.current.getInstance().getMarkdown();
     const getHtml = editorRef.current.getInstance().getHTML();
     //setEditorState({ html: getHtml, md: getMark });
-    if (props?.type === 'comment') {
+    if (props?.type === 'comment' || props.type === 'answer') {
       props.setEditorState(JSON.stringify({ comment: getHtml }));
-    }else if(props?.type==='createBlog'){
+    } else if (props?.type === 'createBlog' || props?.type === 'createForum') {
       props.setEditorState(getHtml);
     }
   };
