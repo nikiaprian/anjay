@@ -2,7 +2,6 @@ package handler
 
 import (
 	"errors"
-	"fmt"
 	"kel15/models"
 	"strings"
 
@@ -11,9 +10,18 @@ import (
 
 func (handler *Handler) GetToken(c *gin.Context) (*string, error) {
 	headers := c.Request.Header["Authorization"]
+
+	if len(headers) == 0 {
+		return nil, errors.New("Invalid token")
+	}
+
 	splitToken := strings.Split(headers[0], " ")
 
 	if len(splitToken) != 2 {
+		return nil, errors.New("Invalid token")
+	}
+
+	if splitToken[0] != "Bearer" {
 		return nil, errors.New("Invalid token")
 	}
 
@@ -23,14 +31,12 @@ func (handler *Handler) GetToken(c *gin.Context) (*string, error) {
 }
 
 func (handler *Handler) GetUserByToken(c *gin.Context) (*models.User, error) {
-	tokenString, err := handler.Project.Usecase.GetToken(c)
-	fmt.Println(*tokenString, err, "Token")
+	tokenString, err := handler.GetToken(c)
 	if err != nil {
 		return nil, err
 	}
 	user, err := handler.Project.Usecase.GetUserByToken(c, *tokenString)
 
-	fmt.Println(user, err, "User")
 	if err != nil {
 		return nil, err
 	}
@@ -51,8 +57,8 @@ func (handler *Handler) CheckAdminRole(c *gin.Context) {
 		return
 	}
 
-	if user.Role != "admin" {
-		c.JSON(401, gin.H{
+	if *user.Role != "admin" {
+		c.JSON(403, gin.H{
 			"message": "You don't have permission to access this resource",
 			"code":    401,
 			"success": false,
