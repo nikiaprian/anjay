@@ -44,6 +44,7 @@ func main() {
 		AllowCredentials: true,
 	}))
 
+	router.GET("/auth/check-token", handler.CheckToken)
 	router.POST("/auth/login", handler.UserLogin)
 	router.POST("/auth/register", handler.UserRegister)
 	router.GET("/auth/login/:provider", handler.UserLoginByProvider)

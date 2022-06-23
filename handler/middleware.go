@@ -45,7 +45,6 @@ func (handler *Handler) GetUserByToken(c *gin.Context) (*models.User, error) {
 }
 
 func (handler *Handler) CheckAdminRole(c *gin.Context) {
-
 	user, err := handler.GetUserByToken(c)
 	if err != nil {
 		c.JSON(401, gin.H{
