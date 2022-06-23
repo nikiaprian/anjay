@@ -50,6 +50,7 @@ func (repository *Repository) GetAllForum(c *gin.Context) ([]models.Forum, error
 		}
 
 		forum_likes, _ := repository.GetAllLikeByForumID(c, forum.ID)
+		forum.TotalLikes = len(*forum_likes)
 
 		for _, forum_like := range *forum_likes {
 			if forum_like.User.ID == User.ID {
@@ -146,6 +147,16 @@ func (repository *Repository) GetForumById(c *gin.Context, id int) (*models.Foru
 
 	if err != nil {
 		return nil, err
+	}
+
+	forum_likes, _ := repository.GetAllLikeByForumID(c, forum.ID)
+	forum.TotalLikes = len(*forum_likes)
+
+	for _, forum_like := range *forum_likes {
+		if forum_like.User.ID == User.ID {
+			forum.IsYouLike = true
+			break
+		}
 	}
 
 	forum_tags, _ := repository.GetForumTagByForumID(c, int64(forum.ID))
