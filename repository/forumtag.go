@@ -30,7 +30,7 @@ func (repository *Repository) GetForumTagByForumID(c *gin.Context, id int64) (*[
 
 	for rows.Next() {
 		var forum_tag models.Forumtag
-		
+
 		err := rows.Scan(&forum_tag.ID, &forum_tag.ForumID, &forum_tag.TagID)
 		if err != nil {
 			return nil, err

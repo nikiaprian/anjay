@@ -11,7 +11,9 @@ func (repository *Repository) GetAllForum(c *gin.Context) ([]models.Forum, error
 	query := `SELECT Forums.id, Forums.title, Forums.content, Forums.created_at, Forums.updated_at,
 			  Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at
 			  FROM Forums 
-			  JOIN Users ON Forums.user_id = Users.id`
+			  JOIN Users ON Forums.user_id = Users.id
+			  ORDER BY Forums.id DESC
+			  `
 
 	rows, err := repository.db.Query(query)
 	if err != nil {
@@ -25,6 +27,8 @@ func (repository *Repository) GetAllForum(c *gin.Context) ([]models.Forum, error
 
 	for rows.Next() {
 		var forum models.Forum
+		forum.IsYouLike = false
+
 		err := rows.Scan(&forum.ID, &forum.Title, &forum.Content, &forum.CreatedAt, &forum.UpdatedAt,
 			&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
 
@@ -34,10 +38,7 @@ func (repository *Repository) GetAllForum(c *gin.Context) ([]models.Forum, error
 
 		forum.User = User
 
-		forum_tags, err := repository.GetForumTagByForumID(c, int64(forum.ID))
-		if err != nil {
-			continue
-		}
+		forum_tags, _ := repository.GetForumTagByForumID(c, int64(forum.ID))
 
 		for _, forum_tag := range *forum_tags {
 			tag, err := repository.GetTagByID(c, int64(forum_tag.TagID))
@@ -47,6 +48,17 @@ func (repository *Repository) GetAllForum(c *gin.Context) ([]models.Forum, error
 
 			forum.Tags = append(forum.Tags, *tag)
 		}
+
+		forum_likes, _ := repository.GetAllLikeByForumID(c, forum.ID)
+
+		for _, forum_like := range *forum_likes {
+			if forum_like.User.ID == User.ID {
+				forum.IsYouLike = true
+				break
+			}
+		}
+
+		forum.ForumsLikes = *forum_likes
 
 		forums = append(forums, forum)
 	}
@@ -130,7 +142,7 @@ func (repository *Repository) GetForumById(c *gin.Context, id int) (*models.Foru
 
 	row := repository.db.QueryRow(query, id)
 	err := row.Scan(&forum.ID, &forum.Title, &forum.Content, &forum.CreatedAt, &forum.UpdatedAt,
-					&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
+		&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
 
 	if err != nil {
 		return nil, err

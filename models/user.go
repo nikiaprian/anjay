@@ -5,14 +5,14 @@ import (
 )
 
 type User struct {
-	ID        int       `json:"id"`
-	Email     string    `json:"email"`
-	Password  string    `json:"password,omitempty"`
-	Username  string    `json:"username"`
-	Name      string    `json:"name"`
-	Role      string    `json:"role,omitempty"`
-	CreatedAt time.Time `json:"created_at,omitempty"`
-	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	ID        int        `json:"id"`
+	Email     string     `json:"email"`
+	Password  string     `json:"password,omitempty"`
+	Username  string     `json:"username"`
+	Name      *string    `json:"name,omitempty"`
+	Role      *string    `json:"role,omitempty"`
+	CreatedAt *time.Time `json:"created_at,omitempty"`
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 }
 
 type UserLoginRequest struct {

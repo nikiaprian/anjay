@@ -29,19 +29,19 @@ func GetFileUpload(c *gin.Context) (multipart.File, *multipart.FileHeader, error
 	if err != nil {
 		return nil, nil, errors.New("Could not get uploaded file")
 	}
-	defer file.Close()
 
 	return file, fileHeader, nil
 }
 
 func UploadToS3(user_id int, s *storage.StorageS3Stuct, file multipart.File, fileHeader *multipart.FileHeader) (string, error) {
+	defer file.Close()
 	uuid_generate := uuid.New()
 	size := fileHeader.Size
 	buffer := make([]byte, size)
 	file.Read(buffer)
 
 	// create a unique file name for the file
-	tempFileName := fmt.Sprintf("user/user-%d/profile/%d-%s-%s", user_id, user_id, uuid_generate, fileHeader.Filename)
+	tempFileName := fmt.Sprintf("user/user-%d/profile/%d-%s", user_id, user_id, uuid_generate)
 
 	// config settings: this is where you choose the bucket,
 	// filename, content-type and storage class of the file

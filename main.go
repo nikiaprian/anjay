@@ -60,6 +60,9 @@ func main() {
 	router.DELETE("/blogs/:id", handler.CheckUserRole, handler.DeleteBlog)
 	router.GET("/blogs/:id", handler.GetBlogByID)
 
+	router.POST("/like/forum/:id", handler.CheckUserRole, handler.CreateLikeByForumId)
+	router.DELETE("/like/forum/:id", handler.CheckUserRole, handler.DeleteLikeByForumId)
+
 	router.GET("/forums", handler.GetAllForum)
 	router.POST("/forums/new", handler.CheckUserRole, handler.CreateForum)
 	// router.PUT("/forums/:id", handler.CheckUserRole, handler.UpdateForum)
