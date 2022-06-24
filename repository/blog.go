@@ -12,7 +12,8 @@ func (repository *Repository) GetAllBlog(c *gin.Context) ([]models.Blog, error) 
 	query := `SELECT Blogs.id, Blogs.photo, Blogs.title, Blogs.content, Blogs.created_at, Blogs.updated_at,
 			  Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at
 			  FROM Blogs 
-			  JOIN Users ON Blogs.user_id = Users.id`
+			  JOIN Users ON Blogs.user_id = Users.id
+			  ORDER BY Blogs.id DESC`
 
 	rows, err := repository.db.Query(query)
 	if err != nil {
