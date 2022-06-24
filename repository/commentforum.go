@@ -64,7 +64,7 @@ func (repository *Repository) CreateCommentForum(c *gin.Context, comment string,
 }
 
 func (repository *Repository) GetAllCommentByForumID(c *gin.Context, id int) ([]models.CommentForum, error) {
-
+	var comments = make([]models.CommentForum, 0)
 	query := `SELECT Comments.id, Comments.comment, Comments.is_answer, Comments.created_at, Comments.updated_at,
 			 Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at
 		 	 FROM CommentForum as Comments 
@@ -72,24 +72,46 @@ func (repository *Repository) GetAllCommentByForumID(c *gin.Context, id int) ([]
 			WHERE Comments.forum_id = ?
 			ORDER BY Comments.is_answer desc, Comments.created_at DESC;`
 
-	rows, err := repository.db.Query(query, c.Param("id"))
-	if err != nil {
+	rows, err := repository.db.Query(query, id)
+
+	if err != nil && err != sql.ErrNoRows {
 		return nil, err
 	}
 
 	defer rows.Close()
 
-	var comment models.CommentForum
-	var comments []models.CommentForum
-	var User models.User
+	var UserDataLogin models.User
+	userLogin, isUser := c.Get("user")
+
+	if isUser == true {
+		UserDataLogin = *userLogin.(*models.User)
+	}
 
 	for rows.Next() {
+		var User models.User
+		var comment models.CommentForum
 
 		err := rows.Scan(&comment.ID, &comment.Comment, &comment.IsAnswer, &comment.CreatedAt, &comment.UpdatedAt,
 			&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
+
 		if err != nil {
 			return nil, err
 		}
+
+		forum_comment_likes, err := repository.GetAllLikeByForumCommentID(c, comment.ID)
+		comment.TotalLikes = len(*forum_comment_likes)
+
+		for _, forum_like := range *forum_comment_likes {
+			if isUser == true {
+				if forum_like.User.ID == UserDataLogin.ID {
+					comment.IsYouLike = true
+					break
+				}
+			}
+		}
+
+		comment.ForumCommentLikes = *forum_comment_likes
+
 		comment.User = User
 		comments = append(comments, comment)
 	}

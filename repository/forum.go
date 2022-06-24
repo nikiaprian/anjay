@@ -192,5 +192,8 @@ func (repository *Repository) GetForumById(c *gin.Context, id int) (*models.Foru
 
 	forum.User = User
 
+	forum_comments, _ := repository.GetAllCommentByForumID(c, forum.ID)
+	forum.TotalComment = len(forum_comments)
+
 	return &forum, nil
 }

@@ -73,14 +73,17 @@ func main() {
 	// router.PUT("/forums/:id", handler.CheckUserRole, handler.UpdateForum)
 	router.DELETE("/forums/:id", handler.CheckUserRole, handler.DeleteForum)
 
+	router.POST("/like/forum/comment/:id", handler.CheckUserRole, handler.CreateLikeByForumCommentId)
+	router.DELETE("/like/forum/comment/:id", handler.CheckUserRole, handler.DeleteLikeByForumCommentId)
+
 	router.PATCH("/forum/comment/:id/selected-answer", handler.CheckUserRole, handler.SelectedCommentAnswer)
 
+	router.GET("/commentsforum/:id", handler.CheckUserLoginOptional, handler.GetAllCommentByForumID)
 	router.POST("/commentsforum/:id", handler.CheckUserRole, handler.CreateCommentForum)
-	router.GET("/commentsforum/:id", handler.GetAllCommentByForumID)
 	router.DELETE("/commentsforum/:id", handler.CheckUserRole, handler.DeleteCommentForum)
 
+	router.GET("/comments/:id", handler.CheckUserLoginOptional, handler.GetAllCommentByBlogID)
 	router.POST("/comments/:id", handler.CheckUserRole, handler.CreateCommentBlog)
-	router.GET("/comments/:id", handler.GetAllCommentByBlogID)
 	router.DELETE("/comments/:id", handler.CheckUserRole, handler.DeleteCommentByID)
 
 	srv := &http.Server{

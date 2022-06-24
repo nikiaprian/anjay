@@ -8,7 +8,7 @@ import (
 )
 
 func (repository *Repository) CreateCommentBlog(c *gin.Context, comment string, blog_id, user_id int) (*models.CommentBlog, error) {
-	
+
 	query := `INSERT INTO CommentBlog (comment, blog_id, user_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?);`
 
 	result, err := repository.db.Exec(query, comment, blog_id, user_id, time.Now(), time.Now())
@@ -29,7 +29,7 @@ func (repository *Repository) CreateCommentBlog(c *gin.Context, comment string, 
 	return &models.CommentBlog{
 		ID:        int(id),
 		Comment:   comment,
-		User: 	*user,
+		User:      *user,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}, nil
@@ -44,19 +44,19 @@ func (repository *Repository) GetAllCommentByBlogID(c *gin.Context, id int) ([]m
 			 JOIN Users ON Comments.user_id = Users.id 
 			 WHERE Comments.blog_id = ?;`
 
-	rows, err := repository.db.Query(query, c.Param("id"))
+	rows, err := repository.db.Query(query, id)
 	if err != nil {
 		return nil, err
 	}
 
 	defer rows.Close()
 
-	var comment models.CommentBlog
 	var comments []models.CommentBlog
-	var User models.User
-	
+
 	for rows.Next() {
-		
+		var comment models.CommentBlog
+		var User models.User
+
 		err := rows.Scan(&comment.ID, &comment.Comment, &comment.CreatedAt, &comment.UpdatedAt,
 			&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
 

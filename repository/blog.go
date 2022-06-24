@@ -68,6 +68,9 @@ func (repository *Repository) GetAllBlog(c *gin.Context) ([]models.Blog, error) 
 
 		blog.BlogsLikes = *blog_likes
 
+		blog_comments, _ := repository.GetAllCommentByBlogID(c, int(blog.ID))
+		blog.TotalComment = len(blog_comments)
+
 		blogs = append(blogs, blog)
 	}
 
@@ -190,6 +193,9 @@ func (repository *Repository) GetBlogByID(c *gin.Context, id int) (*models.Blog,
 	}
 
 	blog.User = User
+
+	blog_comments, _ := repository.GetAllCommentByBlogID(c, int(blog.ID))
+	blog.TotalComment = len(blog_comments)
 
 	return &blog, nil
 }
