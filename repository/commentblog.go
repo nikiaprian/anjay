@@ -42,7 +42,8 @@ func (repository *Repository) GetAllCommentByBlogID(c *gin.Context, id int) ([]m
 			 Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at
 		 	 FROM CommentBlog as Comments 
 			 JOIN Users ON Comments.user_id = Users.id 
-			 WHERE Comments.blog_id = ?;`
+			 WHERE Comments.blog_id = ?
+			 ORDER BY Comments.id desc;`
 
 	rows, err := repository.db.Query(query, id)
 	if err != nil {
@@ -52,6 +53,12 @@ func (repository *Repository) GetAllCommentByBlogID(c *gin.Context, id int) ([]m
 	defer rows.Close()
 
 	var comments []models.CommentBlog
+	var UserDataLogin models.User
+	userLogin, isUser := c.Get("user")
+
+	if isUser == true {
+		UserDataLogin = *userLogin.(*models.User)
+	}
 
 	for rows.Next() {
 		var comment models.CommentBlog
@@ -63,6 +70,20 @@ func (repository *Repository) GetAllCommentByBlogID(c *gin.Context, id int) ([]m
 		if err != nil {
 			return nil, err
 		}
+		blog_comment_likes, err := repository.GetAllLikeByBlogCommentID(c, comment.ID)
+		comment.TotalLikes = len(*blog_comment_likes)
+
+		for _, blog_like := range *blog_comment_likes {
+			if isUser == true {
+				if blog_like.User.ID == UserDataLogin.ID {
+					comment.IsYouLike = true
+					break
+				}
+			}
+		}
+
+		comment.BlogCommentLikes = *blog_comment_likes
+
 		comment.User = User
 		comments = append(comments, comment)
 	}
