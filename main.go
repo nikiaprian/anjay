@@ -44,6 +44,7 @@ func main() {
 		AllowCredentials: true,
 	}))
 
+	// Auth //
 	router.GET("/auth/check-token", handler.CheckToken)
 	router.POST("/auth/login", handler.UserLogin)
 	router.POST("/auth/register", handler.UserRegister)
@@ -52,40 +53,54 @@ func main() {
 	router.GET("/testing-middleware-admin", handler.CheckAdminRole, handler.TestingMiddlewareAdmin)
 	router.GET("/auth/callback/:provider", handler.UserLoginByProviderCallback)
 
+	// User //
 	router.GET("/users", handler.UserList)
 	router.POST("/users/:id", handler.UserProfileUpdate)
 
+	// Blog - Like //
 	router.POST("/like/blog/:id", handler.CheckUserRole, handler.CreateLikeByBlogId)
 	router.DELETE("/like/blog/:id", handler.CheckUserRole, handler.DeleteLikeByBlogId)
 
+	// Blog //
 	router.GET("/blogs", handler.CheckUserLoginOptional, handler.GetAllBlog)
 	router.GET("/blogs/:id", handler.CheckUserLoginOptional, handler.GetBlogByID)
 	router.POST("/blogs/new", handler.CheckUserRole, handler.CreateBlog)
 	// router.PUT("/blogs/:id", handler.CheckUserRole, handler.UpdateBlog)
 	router.DELETE("/blogs/:id", handler.CheckUserRole, handler.DeleteBlog)
 
+	// Forum - Like //
 	router.POST("/like/forum/:id", handler.CheckUserRole, handler.CreateLikeByForumId)
 	router.DELETE("/like/forum/:id", handler.CheckUserRole, handler.DeleteLikeByForumId)
 
+	// Forum //
 	router.GET("/forums", handler.CheckUserLoginOptional, handler.GetAllForum)
 	router.GET("/forums/:id", handler.CheckUserLoginOptional, handler.GetForumById)
 	router.POST("/forums/new", handler.CheckUserRole, handler.CreateForum)
 	// router.PUT("/forums/:id", handler.CheckUserRole, handler.UpdateForum)
 	router.DELETE("/forums/:id", handler.CheckUserRole, handler.DeleteForum)
 
+	// Forum Comment - Like //
 	router.POST("/like/forum/comment/:id", handler.CheckUserRole, handler.CreateLikeByForumCommentId)
 	router.DELETE("/like/forum/comment/:id", handler.CheckUserRole, handler.DeleteLikeByForumCommentId)
 
+	// Forum Comment - Selected Answer //
 	router.PATCH("/forum/comment/:id/selected-answer", handler.CheckUserRole, handler.SelectedCommentAnswer)
 
+	// Forum Comment //
 	router.GET("/commentsforum/:id", handler.CheckUserLoginOptional, handler.GetAllCommentByForumID)
 	router.POST("/commentsforum/:id", handler.CheckUserRole, handler.CreateCommentForum)
 	router.DELETE("/commentsforum/:id", handler.CheckUserRole, handler.DeleteCommentForum)
 
+	// Blog Comment - Like //
+	router.POST("/like/blog/comment/:id", handler.CheckUserRole, handler.CreateLikeByBlogCommentId)
+	router.DELETE("/like/blog/comment/:id", handler.CheckUserRole, handler.DeleteLikeByBlogCommentId)
+
+	// Blog Comment //
 	router.GET("/comments/:id", handler.CheckUserLoginOptional, handler.GetAllCommentByBlogID)
 	router.POST("/comments/:id", handler.CheckUserRole, handler.CreateCommentBlog)
 	router.DELETE("/comments/:id", handler.CheckUserRole, handler.DeleteCommentByID)
 
+	// Setup Server //
 	srv := &http.Server{
 		Handler: router,
 		Addr:    "127.0.0.1:9090",
