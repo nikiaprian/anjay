@@ -70,7 +70,8 @@ func (repository *Repository) GetAllForum(c *gin.Context) ([]models.Forum, error
 		}
 
 		forum.ForumsLikes = *forum_likes
-
+                forum_comments, _ := repository.GetAllCommentByForumID(c, forum.ID)
+                forum.TotalComment = len(forum_comments)
 		forums = append(forums, forum)
 	}
 
