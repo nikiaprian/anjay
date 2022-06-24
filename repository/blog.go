@@ -178,6 +178,7 @@ func (repository *Repository) GetBlogByID(c *gin.Context, id int) (*models.Blog,
 
 	blog_likes, _ := repository.GetAllLikeByBlogID(c, int(blog.ID))
 	blog.TotalLikes = len(*blog_likes)
+	blog.BlogsLikes = *blog_likes
 
 	for _, forum_like := range *blog_likes {
 		if isUser == true {
