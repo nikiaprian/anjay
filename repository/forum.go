@@ -24,20 +24,27 @@ func (repository *Repository) GetAllForum(c *gin.Context) ([]models.Forum, error
 	defer rows.Close()
 
 	var forums []models.Forum
-	var User models.User
+	var UserForum models.User
+
+	var UserDataLogin models.User
+	userLogin, isUser := c.Get("user")
+
+	if isUser == true {
+		UserDataLogin = *userLogin.(*models.User)
+	}
 
 	for rows.Next() {
 		var forum models.Forum
 		forum.IsYouLike = false
 
 		err := rows.Scan(&forum.ID, &forum.Title, &forum.Content, &forum.CreatedAt, &forum.UpdatedAt,
-			&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
+			&UserForum.ID, &UserForum.Username, &UserForum.Email, &UserForum.Role, &UserForum.CreatedAt, &UserForum.UpdatedAt)
 
 		if err != nil {
 			return nil, err
 		}
 
-		forum.User = User
+		forum.User = UserForum
 
 		forum_tags, _ := repository.GetForumTagByForumID(c, int64(forum.ID))
 
@@ -54,9 +61,11 @@ func (repository *Repository) GetAllForum(c *gin.Context) ([]models.Forum, error
 		forum.TotalLikes = len(*forum_likes)
 
 		for _, forum_like := range *forum_likes {
-			if forum_like.User.ID == User.ID {
-				forum.IsYouLike = true
-				break
+			if isUser == true {
+				if forum_like.User.ID == UserDataLogin.ID {
+					forum.IsYouLike = true
+					break
+				}
 			}
 		}
 
@@ -157,9 +166,15 @@ func (repository *Repository) GetForumById(c *gin.Context, id int) (*models.Foru
 	forum_likes, _ := repository.GetAllLikeByForumID(c, forum.ID)
 	forum.TotalLikes = len(*forum_likes)
 	forum.ForumsLikes = *forum_likes
+	var UserDataLogin models.User
+	userLogin, isUser := c.Get("user")
+
+	if isUser == true {
+		UserDataLogin = *userLogin.(*models.User)
+	}
 
 	for _, forum_like := range *forum_likes {
-		if forum_like.User.ID == User.ID {
+		if forum_like.User.ID == UserDataLogin.ID {
 			forum.IsYouLike = true
 			break
 		}

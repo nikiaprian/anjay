@@ -64,11 +64,11 @@ func main() {
 	router.POST("/like/forum/:id", handler.CheckUserRole, handler.CreateLikeByForumId)
 	router.DELETE("/like/forum/:id", handler.CheckUserRole, handler.DeleteLikeByForumId)
 
-	router.GET("/forums", handler.GetAllForum)
+	router.GET("/forums", handler.CheckUserLoginOptional, handler.GetAllForum)
+	router.GET("/forums/:id", handler.CheckUserLoginOptional, handler.GetForumById)
 	router.POST("/forums/new", handler.CheckUserRole, handler.CreateForum)
 	// router.PUT("/forums/:id", handler.CheckUserRole, handler.UpdateForum)
 	router.DELETE("/forums/:id", handler.CheckUserRole, handler.DeleteForum)
-	router.GET("/forums/:id", handler.GetForumById)
 
 	router.PATCH("/forum/comment/:id/selected-answer", handler.CheckUserRole, handler.SelectedCommentAnswer)
 
