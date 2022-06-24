@@ -88,6 +88,15 @@ func (handler *Handler) CheckUserRole(c *gin.Context) {
 	return
 }
 
+func (handler *Handler) CheckUserLoginOptional(c *gin.Context) {
+	user, _ := handler.GetUserByToken(c)
+	if user != nil {
+		c.Set("user", user)
+	}
+	c.Next()
+	return
+}
+
 func (handler *Handler) TestingMiddlewareAdmin(c *gin.Context) {
 	user, _ := c.Get("user")
 	c.JSON(200, gin.H{
