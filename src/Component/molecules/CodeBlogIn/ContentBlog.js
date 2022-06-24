@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CardBlog from './CardBlog';
 import { useBlogStore } from '../../store/ProductStore';
+import gambar from '../../../Assets/fotoProfil.png';
 function ContentBlog(props) {
   const { filter } = props;
   const [dataBlogs, setDataBlogs] = useState(null);
@@ -13,35 +14,34 @@ function ContentBlog(props) {
     temp = dataBlogs;
   } else {
     let tempData = [];
-    dataBlogs && dataBlogs.map((item) =>
-         {
-          return item?.tag.forEach((element) => {
-            if (element.tag.toLowerCase() === filter.toLowerCase()) {
-              tempData.push(item);
-            }
-          });
-        }
-      );
+    dataBlogs &&
+      dataBlogs.map((item) => {
+        return item?.tag.forEach((element) => {
+          if (element.tag.toLowerCase() === filter.toLowerCase()) {
+            tempData.push(item);
+          }
+        });
+      });
     temp = tempData;
   }
   return (
     <>
       <div className="my-3 flex flex-col items-center gap-4">
-        {temp && temp.map((data, index) => (
+        {temp &&
+          temp.map((data, index) => (
             <CardBlog
               key={index}
               id={data.id}
               title={data.title}
               content={data.content}
-              date={(data.created_at).substring(0, 10)}
-            //   answer={data.answer}
-            //   like={data.like}
+              date={data.created_at.substring(0, 10)}
+              //   answer={data.answer}
+              //   like={data.like}
               img={data.photo}
-            //   profileImg={data.profileImg}
+              profileImg={gambar}
               user={data.user.username}
               tags={data.tag}
             />
-            
           ))}
       </div>
     </>

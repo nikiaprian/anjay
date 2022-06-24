@@ -9,7 +9,6 @@ import Footer from '../molecules/Footer';
 import ScrollButton from '../atoms/ScrollButton';
 import { useParams } from 'react-router-dom';
 import { useBlogStore } from '../store/ProductStore';
-import axios from 'axios';
 function DetailBlogPage() {
   let { idblog } = useParams();
   const [inputMarkdown, setInputMarkdown] = useState({});
@@ -17,46 +16,16 @@ function DetailBlogPage() {
 
   const fetchBlogId = useBlogStore((state) => state.fetchBlogId);
   const blog = useBlogStore((state) => state.blogId);
-  const setComment = useBlogStore((state) => state.setComment);
-  const changeComment = useBlogStore((state) => state.changeComment);
+  const fetchSetComment = useBlogStore((state) => state.fetchSetComment);
+  const fetchCommentInput = useBlogStore((state) => state.fetchCommentInput);
   useEffect(() => {
-    const handleApi = async () => {
-      await axios
-      .get(`https://be.codein.studio/comments/${idblog}`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        })
-        .then((res) => {
-          setComment(res.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      };
-      fetchBlogId(`https://be.codein.studio/blogs/${idblog}`);
-      handleApi();
-      //eslint-disable-next-line
+    fetchBlogId(`https://be.codein.studio/blogs/${idblog}`);
+    fetchSetComment(idblog);
+    //eslint-disable-next-line
   }, [idblog, fetchBlogId, key]);
 
   const handleClick = async () => {
-    await axios
-      .post(
-        `https://be.codein.studio/comments/${idblog}`,
-        inputMarkdown,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${key}`,
-          },
-        }
-      )
-      .then((res) => {
-        changeComment(res?.data?.data)
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    fetchCommentInput(idblog, inputMarkdown, key);
   };
 
   return (

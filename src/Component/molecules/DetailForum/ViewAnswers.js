@@ -17,6 +17,8 @@ function ViewAnswers(props) {
                 date={data?.created_at}
                 comment={data?.comment}
                 user={data?.user?.username}
+                checked={data?.is_answer}
+                id={data?.id}
                 // profileImg={data.profileImg}
                 // like={data.like}
               />

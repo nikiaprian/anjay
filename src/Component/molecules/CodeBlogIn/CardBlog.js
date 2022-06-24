@@ -5,7 +5,7 @@ import ViewTag from '../ViewTag';
 function CardBlog(props) {
   return (
     <>
-      <div className="border-2 p-3 bg-[#f2f2f2] border-gray-300 w-full rounded-md shadow-md flex flex-col gap-3">
+      <div className="border-2 p-3 bg-[#f2f2f2] border-gray-300 w-full rounded-md shadow-md flex flex-col gap-3 hover:bg-[#E9E8E8]">
         <Link to={`/blog/detailblog/${props.id}`}>
           <div className="flex flex-col  md:flex-row  m-2 gap-2 ">
             <div className="w-50 mr-3 shadow-md md:max-h-28">

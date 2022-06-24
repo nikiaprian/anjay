@@ -10,25 +10,25 @@ function Footer() {
     <>
       <footer className='bg-slate-700 mt-12 pt-12 pb-5 border-t-8 border-orange-500'>
         <div className='container max-w-full'>
-          <div className='flex flex-col md:flex-row md:justify-around mx-5'>
+          <div className='flex flex-col  md:flex-row md:justify-around mx-5'>
             <div className='w-full px-4 mb-12 md:w-1/3'>
-              <img src={logo} alt='logo' className='w-40'/>
-              <p className='text-white text-sm ml-3 mt-1'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  </p>
+              <img src={logo} alt='logo' className='w-52'/>
+              <p className='text-white text-base ml-3 mt-1'>Platform ini dibuat untuk memberikan kemudahan bagi Programmer Indonesia untuk Tanya Jawab ataupun memberikan informasi yang bermanfaat bagi programmer lainnya.  </p>
             </div>
             <div className='w-full px-4 mb-12 md:w-1/3 ml-3'>
-              <h3 className='font-semibold text-xl text-white mb-3'>Company</h3>
+              <h3 className='font-semibold text-xl text-white mb-3'>Feature</h3>
               <ul className='text-slate-200'>
                 <li>
-                  <Link to='/' className='inline-block text-base hover:text-orange-500 mb-2'>About Us</Link>
+                  <Link to='/forum' className='inline-block text-base hover:text-orange-500 mb-2'>Forum CodeIn</Link>
                 </li>
                 <li>
-                  <Link to='/' className='inline-block text-base hover:text-orange-500 mb-2'>Legal Information</Link>
+                  <Link to='/blog' className='inline-block text-base hover:text-orange-500 mb-2'>Blog CodeIn</Link>
                 </li>
                 <li>  
-                  <Link to='/' className='inline-block text-base hover:text-orange-500 mb-2'>Contact Us</Link>
+                  <Link to='/about' className='inline-block text-base hover:text-orange-500 mb-2'>About CodeIn</Link>
                 </li>
                 <li>  
-                  <Link to='/' className='inline-block text-base hover:text-orange-500 mb-2'>Blogs</Link>
+                  <Link to='/faq' className='inline-block text-base hover:text-orange-500 mb-2'>FaQ CodeIn</Link>
                 </li>
               </ul>
             </div>
@@ -56,13 +56,13 @@ function Footer() {
               <h3 className='font-semibold text-xl text-white mb-3'>Contact Info</h3>
               <ul className='text-slate-200'>
                 <li>
-                  <p className='inline-block text-base mb-2'>Phone: 1234567890</p>
+                  <p className='inline-block text-base mb-2'>Phone: +62423424234</p>
                 </li>
                 <li>
-                  <p className='inline-block text-base mb-2'>Email: company@email.com</p>
+                  <p className='inline-block text-base mb-2'>Email: CodeIn@email.com</p>
                 </li>
                 <li>
-                  <p className='inline-block text-base mb-2'>Location: 100 Smart Street, LA, USA</p>
+                  <p className='inline-block text-base mb-2'>Location: Jakarta</p>
                 </li>
                 <li className='flex flex-row mt-4'>
                   <Link to='/'><img href='#' src={fb} alt='fb' className='w-7' /></Link>

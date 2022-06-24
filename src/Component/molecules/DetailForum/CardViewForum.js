@@ -1,8 +1,8 @@
 import React from 'react';
 import LikeUnlike from '../LikeUnlike';
 import CheckedCard from './CheckedCard';
+import gambar from '../../../Assets/fotoProfil.png'
 function CardViewForum(props) {
-  console.log(props)
   return (
     <>
       <div className="flex flex-col gap-6 rounded-md shadow-lg font-poppins border-2 bg-[#f2f2f2] border-gray-300 p-4">
@@ -10,7 +10,7 @@ function CardViewForum(props) {
           <div className="flex gap-3 items-center">
             <img
               className="w-10 h-10 object-cover border-2 border-orange-500 rounded-full shadow-md"
-              src={props?.profileImg}
+              src={gambar}
               alt=""
             />
             <div className="flex flex-col">
@@ -21,7 +21,7 @@ function CardViewForum(props) {
           <div className="flex gap-3 items-center">
             <div className="flex items-center gap-6">
               <LikeUnlike like={props.like} />
-              <CheckedCard />
+              <CheckedCard checked={props.checked} id={props.id}/>
             </div>
           </div>
         </div>

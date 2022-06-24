@@ -23,6 +23,41 @@ const storeBlog = (set) => ({
       }
     }),
 
+  fetchSetComment: async (id) => {
+    await axios
+      .get(`https://be.codein.studio/comments/${id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((res) => {
+        set((state) => {
+          state.setComment(res?.data);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+
+  fetchCommentInput: async (id, data, token) => {
+    await axios
+      .post(`https://be.codein.studio/comments/${id}`, data, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        set((state) => {
+          state.changeComment(res?.data?.data);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+
   setComment: (data) => set((state) => ({ comments: data.data })),
   changeComment: (data) =>
     set((state) => {
@@ -40,18 +75,69 @@ const storeForum = (set) => ({
   forums: null || [],
   forumId: null || {},
   answers: null || [],
-  fetchForums: async (url) => {
-    const response = await axios.get(url);
-    set({ forums: await response.data.data });
+  fetchForums: async (token) => {
+    await axios
+      .get('https://be.codein.studio/forums', {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        set({ forums: res.data.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
-  fetchForumId: async (url) => {
-    const response = await axios.get(url);
+
+  fetchForumId: async (url, token) => {
+    const response = await axios.get(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
     set({ forumId: await response.data.data });
   },
 
+  fetchsetAnswer: async (id) => {
+    await axios
+      .get(`https://be.codein.studio/commentsforum/${id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((res) => {
+        set((state) => {
+          state.setAnswer(res?.data);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+
+  fetchAnswerInput: async (id, data, token) => {
+    await axios
+      .post(`https://be.codein.studio/commentsforum/${id}`, data, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        set((state) => {
+          state.changeAnswer(res?.data?.data);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
   setAnswer: (data) => set((state) => ({ answers: data.data })),
   changeAnswer: (data) =>
-  set((state) => {
+    set((state) => {
       if (state.answers === null) {
         set({ answers: [data] });
       } else {

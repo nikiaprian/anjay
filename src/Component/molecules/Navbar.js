@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../Assets/logo.svg';
 import icon from '../../Assets/bars-solid.svg';
 import iconX from '../../Assets/x.svg';
-import gambar from '../../Assets/fotoProfil.jpg';
+import gambar from '../../Assets/fotoProfil.png';
 import Swal from 'sweetalert2';
 import useAuthStore from '../store/AuthStore';
 
@@ -29,6 +29,7 @@ function Navbar() {
     setIsLoggedIn(false);
     setUser({});
     window.localStorage.removeItem('key');
+    window.localStorage.removeItem('idUser');
     Swal.fire('Berhasil!', 'Anda Telah Berhasil Logout!', 'success').then(
       (result) => {
         if (result.isConfirmed) {

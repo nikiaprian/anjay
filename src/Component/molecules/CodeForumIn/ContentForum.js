@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CardForum from './CardForum';
 import { useForumStore } from '../../store/ProductStore';
+import gambar from '../../../Assets/fotoProfil.png'
 function ContentForum(props) {
   const { filter } = props;
   const [dataForums, setDataForums] = useState(null);
@@ -35,8 +36,8 @@ function ContentForum(props) {
               content={data.content}
               date={(data.created_at).substring(0, 10)}
               answer={5}
-              like={3}
-              // profileImg={data.profileImg}
+              like={data?.total_likes}
+              profileImg={gambar}
               user={data.user.username}
               tags={data.tag}
             />

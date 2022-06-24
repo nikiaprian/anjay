@@ -1,5 +1,5 @@
 import React from 'react';
-
+import gambar from '../../../Assets/fotoProfil.png'
 function CardViewBlog(props) {
   return (
     <>
@@ -9,7 +9,7 @@ function CardViewBlog(props) {
         <div className="flex justify-end gap-3 items-center font-poppins">
           <img
             className="w-10 h-10 object-cover border-2 border-orange-500 rounded-full shadow-md"
-            src={props.profileImg}
+            src={gambar}
             alt=""
           />
           <div className="flex flex-col">

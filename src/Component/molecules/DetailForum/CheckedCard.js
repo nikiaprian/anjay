@@ -1,25 +1,53 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { CheckCircleIcon as CheckCircleIconSolid } from '@heroicons/react/solid';
-function CheckedCard() {
-  let fakeApi = {
-    Checked: false,
-  };
-  const [Checked, setChecked] = useState(false);
+import axios from 'axios';
+import { useForumStore } from '../../store/ProductStore';
+function CheckedCard(props) {
+  let key = window.localStorage.getItem('key');
+  let idUser = window.localStorage.getItem('idUser');
+  const [checked, setChecked] = useState('');
+  const forum = useForumStore((state) => state.forumId);
+  // console.log(props)
+
   useEffect(() => {
-    setChecked(fakeApi.Checked);
-  }, [fakeApi.Checked]);
+    setChecked(props?.checked);
+  }, [props.checked]);
+  
+  const getApI = async (checked) => {
+    console.log(checked)
+    await axios
+      .patch(
+        `https://be.codein.studio/forum/comment/${props.id}/selected-answer`,
+        { is_answer: checked },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${key}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const handleChecked = () => {
-    if (Checked) {
+    if (checked && forum.user.id === +idUser && key) {
       setChecked(false);
-    } else {
+      getApI(!checked);
+    } else if (!checked && forum.user.id === +idUser && key) {
       setChecked(true);
+      getApI(!checked);
     }
   };
+
   return (
     <>
       <div className="flex items-center gap-1">
-        {Checked ? (
+        {checked ? (
           <CheckCircleIconSolid
             className="h-7 w-7 text-teal-700 cursor-pointer"
             onClick={handleChecked}

@@ -5,7 +5,7 @@ import { HeartIcon, ChatAltIcon } from '@heroicons/react/solid';
 function CardForum(props) {
   return (
     <>
-      <div className="border-2 px-5 bg-[#f2f2f2] border-gray-300 w-full rounded-md shadow-lg flex flex-col gap-3">
+      <div className="border-2 px-5 bg-[#f2f2f2] border-gray-300 w-full rounded-md shadow-lg flex flex-col gap-3 hover:bg-[#E9E8E8]">
         <Link to={`/forum/detailforum/${props.id}`}>
           <div className="flex mt-2 ml-2 gap-2  pr-8 md:pr-0">
             <div className="flex flex-col pt-10 pr-5">

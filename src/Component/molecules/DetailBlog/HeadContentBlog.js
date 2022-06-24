@@ -1,5 +1,5 @@
-import React,{useState,useEffect} from 'react';
-import profile from '../../../Assets/fotoProfil.jpg';
+import React from 'react';
+import profile from '../../../Assets/fotoProfil.png';
 //import LikeUnlike from '../LikeUnlike';
 //import { ChatAltIcon } from '@heroicons/react/outline';
 // import icon from '../../../Assets/Vector.svg';

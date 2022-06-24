@@ -70,7 +70,7 @@ function ProfilePage() {
                 <div className="flex flex-col space-y-1">
                   <h3 className="font-lg text-gray-500">ForumIn</h3>
                   <span className="font-semibold text-2xl text-gray-600">
-                    3
+                    0
                   </span>
                 </div>
               </div>
@@ -81,7 +81,7 @@ function ProfilePage() {
                 <div className="flex flex-col space-y-1">
                   <h3 className="font-lg text-gray-500">BlogIn</h3>
                   <span className="font-semibold text-2xl text-gray-600">
-                    4
+                    0
                   </span>
                 </div>
               </div>

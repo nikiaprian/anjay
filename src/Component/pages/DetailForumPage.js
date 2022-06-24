@@ -9,7 +9,6 @@ import Footer from '../molecules/Footer';
 import ScrollButton from '../atoms/ScrollButton';
 import { useParams } from 'react-router-dom';
 import { useForumStore } from '../store/ProductStore';
-import axios from 'axios';
 function DetailForumPage() {
   let { idforum } = useParams();
   const [inputMarkdown, setInputMarkdown] = useState({});
@@ -17,46 +16,16 @@ function DetailForumPage() {
 
   const fetchForumId = useForumStore((state) => state.fetchForumId);
   const forum = useForumStore((state) => state.forumId);
-  const setAnswer = useForumStore((state) => state.setAnswer);
-  const changeAnswer = useForumStore((state) => state.changeAnswer);
+  const fetchsetAnswer = useForumStore((state) => state.fetchsetAnswer);
+  const fetchAnswerInput = useForumStore((state) => state.fetchAnswerInput);
   useEffect(() => {
-    const handleApi = async () => {
-      await axios
-        .get(`https://be.codein.studio/commentsforum/${idforum}`, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-        .then((res) => {
-          setAnswer(res.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-    fetchForumId(`https://be.codein.studio/forums/${idforum}`);
-    handleApi();
+    fetchForumId(`https://be.codein.studio/forums/${idforum}`,key);
+    fetchsetAnswer(idforum);
     //eslint-disable-next-line
   }, [fetchForumId, idforum, key]);
 
   const handleClick = async () => {
-    await axios
-      .post(
-        `https://be.codein.studio/commentsforum/${idforum}`,
-        inputMarkdown,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${key}`,
-          },
-        }
-      )
-      .then((res) => {
-        changeAnswer(res?.data?.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    fetchAnswerInput(idforum, inputMarkdown, key);
   };
   return (
     <>
@@ -68,10 +37,6 @@ function DetailForumPage() {
             <div className="my-10 flex flex-col gap-6 ">
               <p className="font-semibold text-3xl">{forum?.title}</p>
               <HeadContentForum
-                user={forum.user?.username}
-                date={forum?.created_at}
-                // like={api.like}
-                // answer={api.answer}
               />
               <ViewTag tags={forum.tag} />
               <div

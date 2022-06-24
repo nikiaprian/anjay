@@ -7,11 +7,12 @@ import Head from '../molecules/Head';
 import Navbar from '../molecules/Navbar';
 import { useForumStore } from '../store/ProductStore';
 function ForumPage() {
+  let key = window.localStorage.getItem('key');
   const [filter, setFilter] = useState('');
   const fetchForums = useForumStore((state) => state.fetchForums);
   useEffect(() => {
-    fetchForums('https://be.codein.studio/forums');
-  }, [fetchForums]);
+    fetchForums(key);
+  }, [fetchForums, key]);
   return (
     <>
       <div className="w-screen h-screen overflow-x-hidden">
