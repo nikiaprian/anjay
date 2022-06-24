@@ -8,7 +8,7 @@ import (
 )
 
 func (repository *Repository) GetAllBlog(c *gin.Context) ([]models.Blog, error) {
-	
+
 	query := `SELECT Blogs.id, Blogs.photo, Blogs.title, Blogs.content, Blogs.created_at, Blogs.updated_at,
 			  Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at
 			  FROM Blogs 
@@ -24,10 +24,17 @@ func (repository *Repository) GetAllBlog(c *gin.Context) ([]models.Blog, error) 
 	var blogs []models.Blog
 	var User models.User
 
+	var UserDataLogin models.User
+	userLogin, isUser := c.Get("user")
+
+	if isUser == true {
+		UserDataLogin = *userLogin.(*models.User)
+	}
+
 	for rows.Next() {
 		var blog models.Blog
 		err := rows.Scan(&blog.ID, &blog.Photo, &blog.Title, &blog.Content, &blog.CreatedAt, &blog.UpdatedAt,
-				&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
+			&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
 		if err != nil {
 			return nil, err
 		}
@@ -37,6 +44,7 @@ func (repository *Repository) GetAllBlog(c *gin.Context) ([]models.Blog, error) 
 		if err != nil {
 			continue
 		}
+
 		for _, blog_tag := range *blog_tags {
 			tag, err := repository.GetTagByID(c, int64(blog_tag.TagID))
 			if err != nil {
@@ -44,6 +52,21 @@ func (repository *Repository) GetAllBlog(c *gin.Context) ([]models.Blog, error) 
 			}
 			blog.Tags = append(blog.Tags, *tag)
 		}
+
+		blog_likes, _ := repository.GetAllLikeByBlogID(c, int(blog.ID))
+		blog.TotalLikes = len(*blog_likes)
+
+		for _, forum_like := range *blog_likes {
+			if isUser == true {
+				if forum_like.User.ID == UserDataLogin.ID {
+					blog.IsYouLike = true
+					break
+				}
+			}
+		}
+
+		blog.BlogsLikes = *blog_likes
+
 		blogs = append(blogs, blog)
 	}
 
@@ -109,7 +132,6 @@ func (repository *Repository) CreateBlog(c *gin.Context, req models.BlogRequest,
 // 	}, nil
 // }
 
-
 func (repository *Repository) DeleteBlog(c *gin.Context, id int) error {
 	query := "DELETE from Blogs where id=?"
 	_, err := repository.db.Exec(query, id)
@@ -132,7 +154,7 @@ func (repository *Repository) GetBlogByID(c *gin.Context, id int) (*models.Blog,
 	row := repository.db.QueryRow(query, id)
 	err := row.Scan(&blog.ID, &blog.Photo, &blog.Title, &blog.Content, &blog.CreatedAt, &blog.UpdatedAt,
 		&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
-	
+
 	if err != nil {
 		return nil, err
 	}
@@ -144,6 +166,25 @@ func (repository *Repository) GetBlogByID(c *gin.Context, id int) (*models.Blog,
 			continue
 		}
 		blog.Tags = append(blog.Tags, *tag)
+	}
+
+	var UserDataLogin models.User
+	userLogin, isUser := c.Get("user")
+
+	if isUser == true {
+		UserDataLogin = *userLogin.(*models.User)
+	}
+
+	blog_likes, _ := repository.GetAllLikeByBlogID(c, int(blog.ID))
+	blog.TotalLikes = len(*blog_likes)
+
+	for _, forum_like := range *blog_likes {
+		if isUser == true {
+			if forum_like.User.ID == UserDataLogin.ID {
+				blog.IsYouLike = true
+				break
+			}
+		}
 	}
 
 	blog.User = User
