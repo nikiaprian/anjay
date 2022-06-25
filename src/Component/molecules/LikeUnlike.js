@@ -12,7 +12,7 @@ function LikeUnlike(props) {
   useEffect(() => {
     if (props.type === 'likeForum') {
       setState(forumsId);
-    } else if (props.type === 'blogForum') {
+    } else if (props.type === 'likeBlog') {
       setState(blogId);
     }
     //eslint-disable-next-line
@@ -21,7 +21,7 @@ function LikeUnlike(props) {
   let tempApi;
   if (props.type === 'likeForum') {
     tempApi = forumsId;
-  } else if (props.type === 'blogForum') {
+  } else if (props.type === 'likeBlog') {
     tempApi = blogId;
   }
 
@@ -69,7 +69,47 @@ function LikeUnlike(props) {
           });
       }
     } else if (props.type === 'likeBlog') {
-      console.log('otw');
+      if (state?.is_you_like) {
+        await axios
+          .delete(`https://be.codein.studio/like/blog/${tempApi.id}`, {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${key}`,
+            },
+          })
+          .then((res) => {
+            setState({
+              ...state,
+              is_you_like: false,
+              total_likes: state.total_likes - 1,
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        await axios
+          .post(
+            `https://be.codein.studio/like/blog/${tempApi.id}`,
+            {},
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${key}`,
+              },
+            }
+          )
+          .then((res) => {
+            setState({
+              ...state,
+              is_you_like: true,
+              total_likes: state.total_likes + 1,
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     }
   };
   return (

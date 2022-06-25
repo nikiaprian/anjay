@@ -35,7 +35,7 @@ function ContentForum(props) {
               title={data.title}
               content={data.content}
               date={(data.created_at).substring(0, 10)}
-              answer={5}
+              answer={data?.total_comment}
               like={data?.total_likes}
               profileImg={gambar}
               user={data.user.username}

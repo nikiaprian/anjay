@@ -638,11 +638,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-bottom: 0.75rem;
 }
 
-.my-7{
-  margin-top: 1.75rem;
-  margin-bottom: 1.75rem;
-}
-
 .ml-1{
   margin-left: 0.25rem;
 }
@@ -867,8 +862,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 100%;
 }
 
-.w-40{
-  width: 10rem;
+.w-52{
+  width: 13rem;
 }
 
 .w-7{
@@ -893,10 +888,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .w-2\/3{
   width: 66.666667%;
-}
-
-.w-52{
-  width: 13rem;
 }
 
 .w-72{
@@ -1101,12 +1092,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .overflow-x-hidden{
   overflow-x: hidden;
-}
-
-.truncate{
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .text-ellipsis{
@@ -1949,10 +1934,6 @@ code {
     max-height: 7rem;
   }
 
-  .md\:max-h-24{
-    max-height: 6rem;
-  }
-
   .md\:w-1\/3{
     width: 33.333333%;
   }
@@ -2160,10 +2141,6 @@ code {
 
   .xl\:w-72{
     width: 18rem;
-  }
-
-  .xl\:flex-row{
-    flex-direction: row;
   }
 
   .xl\:overflow-x-auto{

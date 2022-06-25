@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import CardBlog from './CardBlog';
 import { useBlogStore } from '../../store/ProductStore';
 import gambar from '../../../Assets/fotoProfil.png';
+import Spiner from '../../../Assets/Spinners/Spiner';
 function ContentBlog(props) {
   const { filter } = props;
   const [dataBlogs, setDataBlogs] = useState(null);

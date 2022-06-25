@@ -19,7 +19,7 @@ function DetailBlogPage() {
   const fetchSetComment = useBlogStore((state) => state.fetchSetComment);
   const fetchCommentInput = useBlogStore((state) => state.fetchCommentInput);
   useEffect(() => {
-    fetchBlogId(`https://be.codein.studio/blogs/${idblog}`);
+    fetchBlogId(`https://be.codein.studio/blogs/${idblog}`,key);
     fetchSetComment(idblog);
     //eslint-disable-next-line
   }, [idblog, fetchBlogId, key]);
@@ -44,12 +44,7 @@ function DetailBlogPage() {
                 />
               </div>
               <p className="font-semibold text-3xl">{blog.title}</p>
-              <HeadContentBlog
-                user={blog.user?.username}
-                date={blog?.created_at}
-                // like={api.like}
-                // comment={api.comment}
-              />
+              <HeadContentBlog/>
               <ViewTag tags={blog.tag} />
               <div
                 className="border-2 bg-[#f2f2f2] border-gray-300 p-4 font-poppins rounded-md shadow-lg"

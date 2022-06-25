@@ -8,10 +8,11 @@ import { useBlogStore } from '../store/ProductStore';
 
 function BlogPage() {
   const [filter, setFilter] = useState('');
+  const key = window.localStorage.getItem('key');
   const fetchBlogs = useBlogStore((state) => state.fetchBlogs);
   useEffect(() => {
-    fetchBlogs('https://be.codein.studio/blogs');
-  }, [fetchBlogs]);
+    fetchBlogs('https://be.codein.studio/blogs',key);
+  }, [fetchBlogs,key]);
   return (
     <>
       <div className="w-screen h-screen overflow-x-hidden">

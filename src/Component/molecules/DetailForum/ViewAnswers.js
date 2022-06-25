@@ -19,8 +19,9 @@ function ViewAnswers(props) {
                 user={data?.user?.username}
                 checked={data?.is_answer}
                 id={data?.id}
+                status_like={data?.is_you_like}
+                total_like={data?.total_likes}
                 // profileImg={data.profileImg}
-                // like={data.like}
               />
             ))}
         </div>

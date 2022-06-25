@@ -1,9 +1,11 @@
 import React from 'react';
 import profile from '../../../Assets/fotoProfil.png';
-//import LikeUnlike from '../LikeUnlike';
+import LikeUnlike from '../LikeUnlike';
 //import { ChatAltIcon } from '@heroicons/react/outline';
 // import icon from '../../../Assets/Vector.svg';
+import { useBlogStore } from '../../store/ProductStore';
 function HeadContentBlog(props) {
+  const blog = useBlogStore((state) => state.blogId);
   return (
     <>
       <div className="flex items-center justify-between ">
@@ -14,13 +16,13 @@ function HeadContentBlog(props) {
             alt=""
           />
           <div className="">
-            <p className="text-md font-semibold">{props?.user}</p>
-            <p className="text-xs">Dibuat {(props?.date)?.substring(0, 10)}</p>
+            <p className="text-md font-semibold">{blog?.user?.username}</p>
+            <p className="text-xs">Dibuat {(blog.created_at)?.substring(0, 10)}</p>
           </div>
         </div>
         <div>
           <div className="flex items-center gap-6">
-            {/* <LikeUnlike like={props.like} /> */}
+            <LikeUnlike type="likeBlog" />
             {/* <div className="flex items-center gap-1">
               <ChatAltIcon className="h-5 w-5 text-red-600" />
               <p className="">{props.comment}</p>

@@ -1,5 +1,5 @@
 import React from 'react';
-import LikeUnlike from '../LikeUnlike';
+import LikeUnlike from '../../molecules/DetailForum/LikeUnlikeAnswer';
 import CheckedCard from './CheckedCard';
 import gambar from '../../../Assets/fotoProfil.png'
 function CardViewForum(props) {
@@ -20,7 +20,7 @@ function CardViewForum(props) {
           </div>
           <div className="flex gap-3 items-center">
             <div className="flex items-center gap-6">
-              <LikeUnlike like={props.like} />
+              <LikeUnlike id={props.id} status_like={props.status_like} total_like={props.total_like}/>
               <CheckedCard checked={props.checked} id={props.id}/>
             </div>
           </div>

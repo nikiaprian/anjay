@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CheckCircleIcon as CheckCircleIconSolid } from '@heroicons/react/solid';
 import axios from 'axios';
 import { useForumStore } from '../../store/ProductStore';

@@ -6,12 +6,22 @@ const storeBlog = (set) => ({
   blogs: null || [],
   blogId: null || {},
   comments: null || [],
-  fetchBlogs: async (url) => {
-    const response = await axios.get(url);
+  fetchBlogs: async (url,token) => {
+    const response = await axios.get(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
     set({ blogs: await response.data.data });
   },
-  fetchBlogId: async (url) => {
-    const response = await axios.get(url);
+  fetchBlogId: async (url,token) => {
+    const response = await axios.get(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
     set({ blogId: await response.data.data });
   },
   changeBlog: (data) =>
@@ -101,11 +111,12 @@ const storeForum = (set) => ({
     set({ forumId: await response.data.data });
   },
 
-  fetchsetAnswer: async (id) => {
+  fetchsetAnswer: async (id,key) => {
     await axios
       .get(`https://be.codein.studio/commentsforum/${id}`, {
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${key}`,
         },
       })
       .then((res) => {
