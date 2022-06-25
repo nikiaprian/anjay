@@ -71,8 +71,8 @@ func (repository *Repository) GetLikeByUserIDAndForumID(c *gin.Context, user_id,
 }
 
 func (repository *Repository) CreateLikeByForumId(c *gin.Context, user_id, forum_id int) (*models.ForumsLikesResponse, error) {
-	_, err := repository.GetForumById(c, forum_id)
-	if err == sql.ErrNoRows {
+	data, err := repository.GetForumById(c, forum_id)
+	if data == nil && err == nil {
 		return nil, errors.New("Forum not found")
 	}
 
