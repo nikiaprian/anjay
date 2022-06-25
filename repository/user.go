@@ -37,7 +37,7 @@ func (repository *Repository) UserList(c *gin.Context, pagination models.Paginat
 
 	offset := (pagination.PageActive - 1) * pagination.Limit
 	query := `
-		SELECT id, email, username, created_at, updated_at FROM Users 
+		SELECT id, email, username, photo, created_at, updated_at FROM Users 
 		WHERE email LIKE ? OR username LIKE ?
 		ORDER BY created_at DESC
 		LIMIT ? 
@@ -52,7 +52,7 @@ func (repository *Repository) UserList(c *gin.Context, pagination models.Paginat
 
 	for rows.Next() {
 		var user models.User
-		err := rows.Scan(&user.ID, &user.Email, &user.Username, &user.CreatedAt, &user.UpdatedAt)
+		err := rows.Scan(&user.ID, &user.Email, &user.Username, &user.Photo, &user.CreatedAt, &user.UpdatedAt)
 		if err != nil {
 			return nil, err
 		}
@@ -63,7 +63,7 @@ func (repository *Repository) UserList(c *gin.Context, pagination models.Paginat
 }
 
 func (repository *Repository) GetUserById(c *gin.Context, id int64) (*models.User, error) {
-	query := `SELECT id, email, username, created_at, updated_at FROM Users WHERE id = ? limit 1`
+	query := `SELECT id, email, username, photo, created_at, updated_at FROM Users WHERE id = ? limit 1`
 	row := repository.db.QueryRow(query, id)
 
 	if row.Err() != nil {
@@ -71,7 +71,7 @@ func (repository *Repository) GetUserById(c *gin.Context, id int64) (*models.Use
 	}
 
 	var user models.User
-	err := row.Scan(&user.ID, &user.Email, &user.Username, &user.CreatedAt, &user.UpdatedAt)
+	err := row.Scan(&user.ID, &user.Email, &user.Username, &user.Photo, &user.CreatedAt, &user.UpdatedAt)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return &user, errors.New("User not found")
@@ -83,7 +83,7 @@ func (repository *Repository) GetUserById(c *gin.Context, id int64) (*models.Use
 }
 
 func (repository *Repository) GetUserByGoogleId(c *gin.Context, google_id string) (*models.User, error) {
-	query := `SELECT Users.id, email, username, Users.created_at, Users.updated_at FROM Users JOIN GoogleAccounts ON Users.id = GoogleAccounts.user_id WHERE GoogleAccounts.google_id = ? limit 1`
+	query := `SELECT Users.id, email, username, photo, Users.created_at, Users.updated_at FROM Users JOIN GoogleAccounts ON Users.id = GoogleAccounts.user_id WHERE GoogleAccounts.google_id = ? limit 1`
 	row := repository.db.QueryRow(query, google_id)
 
 	if row.Err() != nil {
@@ -91,7 +91,7 @@ func (repository *Repository) GetUserByGoogleId(c *gin.Context, google_id string
 	}
 
 	var user models.User
-	err := row.Scan(&user.ID, &user.Email, &user.Username, &user.CreatedAt, &user.UpdatedAt)
+	err := row.Scan(&user.ID, &user.Email, &user.Username, &user.Photo, &user.CreatedAt, &user.UpdatedAt)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return nil, errors.New("User not found")
@@ -116,6 +116,24 @@ func (repository *Repository) GetUserByEmail(c *gin.Context, email string) (*mod
 		if err == sql.ErrNoRows {
 			return &user, errors.New("User not found")
 		}
+		return nil, err
+	}
+
+	return &user, nil
+}
+
+func (repository *Repository) GetUserByUsername(c *gin.Context, username string) (*models.User, error) {
+	query := `SELECT id, email, password, created_at, updated_at FROM Users WHERE username = ? limit 1`
+	row := repository.db.QueryRow(query, username)
+
+	var user models.User
+	err := row.Scan(&user.ID, &user.Email, &user.Password, &user.CreatedAt, &user.UpdatedAt)
+
+	if err == sql.ErrNoRows {
+		return nil, nil
+	}
+
+	if err != nil {
 		return nil, err
 	}
 
@@ -198,6 +216,27 @@ func (repository *Repository) CreateUserGoogle(c *gin.Context, req models.UserGo
 	if err != nil {
 		return nil, err
 	}
+
+	return user, nil
+}
+
+func (repository *Repository) UserProfileUpdate(c *gin.Context, req models.UserUpdateProfileRequest) (*models.User, error) {
+	fileName := req.FileName
+	user := c.MustGet("user").(*models.User)
+
+	if fileName == nil || *fileName == "" {
+		req.FileName = user.Photo
+	}
+
+	query := `UPDATE Users SET  username = ?, photo = ?, updated_at = ? WHERE id = ?`
+	_, err := repository.db.Exec(query, req.Username, req.FileName, time.Now(), user.ID)
+
+	if err != nil {
+		return nil, err
+	}
+
+	user.Username = req.Username
+	user.Photo = req.FileName
 
 	return user, nil
 }

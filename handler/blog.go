@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func (blogHandler *Handler) GetAllBlog(c *gin.Context) {
@@ -23,20 +24,22 @@ func (blogHandler *Handler) GetAllBlog(c *gin.Context) {
 func (blogHandler *Handler) CreateBlog(c *gin.Context) {
 	user, _ := c.Get("user")
 	userData := user.(*models.User)
-	file, fileHeader, err := utils.GetFileUpload(c)
+	file, fileHeader, _, err := utils.GetFileUpload(c, true)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
 	}
 
-	fileName, err := utils.UploadToS3(userData.ID, blogHandler.Project.Storage, file, fileHeader)
-	fmt.Println("filename", fileName)
+	uuid_generate := uuid.New()
+	tempFileName := fmt.Sprintf("blog/user-%d/%d-%s", userData.ID, userData.ID, uuid_generate)
+	fileName, err := utils.UploadToS3(userData.ID, blogHandler.Project.Storage, file, fileHeader, tempFileName)
+
 	if err != nil {
 		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
 	}
 	c.Set("file", fileName)
 	data, err := blogHandler.Project.Usecase.CreateBlog(c)
-	fmt.Println(err)
+
 	if err != nil {
 		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
 		return
@@ -45,6 +48,7 @@ func (blogHandler *Handler) CreateBlog(c *gin.Context) {
 	c.JSON(http.StatusCreated, sendResponseSuccess{Success: true, Code: 201, Data: data})
 	return
 }
+
 // func (blogHandler *Handler) UpdateBlog(c *gin.Context) {
 // 	user, _ := c.Get("user")
 // 	userData := user.(*models.User)

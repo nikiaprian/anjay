@@ -5,43 +5,36 @@ import (
 	"errors"
 	"fmt"
 	"kel15/storage"
-	"log"
 	"mime/multipart"
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 )
 
-func GetFileUpload(c *gin.Context) (multipart.File, *multipart.FileHeader, error) {
+func GetFileUpload(c *gin.Context, isImageRequired bool) (multipart.File, *multipart.FileHeader, *bool, error) {
 	maxSize := int64(1024000) // allow only 1MB of file size
 
 	err := c.Request.ParseMultipartForm(maxSize)
 	if err != nil {
-		log.Println(err)
-
-		return nil, nil, errors.New("Image too large")
+		return nil, nil, nil, errors.New("Image too large")
 	}
 
 	file, fileHeader, err := c.Request.FormFile("file")
 	if err != nil {
-		return nil, nil, errors.New("Could not get uploaded file")
+		return nil, nil, &isImageRequired, errors.New("Could not get uploaded file")
 	}
 
-	return file, fileHeader, nil
+	return file, fileHeader, &isImageRequired, nil
 }
 
-func UploadToS3(user_id int, s *storage.StorageS3Stuct, file multipart.File, fileHeader *multipart.FileHeader) (string, error) {
+func UploadToS3(user_id int, s *storage.StorageS3Stuct, file multipart.File, fileHeader *multipart.FileHeader, tempFileName string) (string, error) {
 	defer file.Close()
-	uuid_generate := uuid.New()
+
 	size := fileHeader.Size
 	buffer := make([]byte, size)
 	file.Read(buffer)
-
-	// create a unique file name for the file
-	tempFileName := fmt.Sprintf("user/user-%d/profile/%d-%s", user_id, user_id, uuid_generate)
 
 	// config settings: this is where you choose the bucket,
 	// filename, content-type and storage class of the file

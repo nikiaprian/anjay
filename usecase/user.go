@@ -183,3 +183,38 @@ func (usecase *Usecase) UserLoginByProviderCallback(c *gin.Context) (*models.Use
 		Token: tokenString,
 	}, nil
 }
+
+func (usecase *Usecase) GetUserByUsername(c *gin.Context) (*models.User, error) {
+	username := c.Request.FormValue("username")
+	if username == "" {
+		return nil, errors.New("Username is required")
+	}
+	user, err := usecase.repository.GetUserByUsername(c, username)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}
+
+func (usecase *Usecase) UserProfileUpdate(c *gin.Context, fileName string) (*models.User, error) {
+	var payload models.UserUpdateProfileRequest
+
+	payload.Username = c.Request.FormValue("username")
+	payload.FileName = &fileName
+	validate := utils.NewValidator()
+	err := validate.Struct(&payload)
+
+	if err != nil {
+		return nil, errors.New(utils.MessageErrorByValidation(err))
+	}
+
+	user, err := usecase.repository.UserProfileUpdate(c, payload)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}

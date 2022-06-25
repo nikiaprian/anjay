@@ -10,7 +10,7 @@ import (
 func (repository *Repository) GetAllBlog(c *gin.Context) ([]models.Blog, error) {
 
 	query := `SELECT Blogs.id, Blogs.photo, Blogs.title, Blogs.content, Blogs.created_at, Blogs.updated_at,
-			  Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at
+			  Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at, Users.photo
 			  FROM Blogs 
 			  JOIN Users ON Blogs.user_id = Users.id
 			  ORDER BY Blogs.id DESC`
@@ -35,7 +35,7 @@ func (repository *Repository) GetAllBlog(c *gin.Context) ([]models.Blog, error) 
 	for rows.Next() {
 		var blog models.Blog
 		err := rows.Scan(&blog.ID, &blog.Photo, &blog.Title, &blog.Content, &blog.CreatedAt, &blog.UpdatedAt,
-			&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
+			&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt, &User.Photo)
 		if err != nil {
 			return nil, err
 		}
