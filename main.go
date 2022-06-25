@@ -55,6 +55,7 @@ func main() {
 
 	// User //
 	router.GET("/users", handler.UserList)
+	router.GET("/user/profile", handler.CheckUserRole, handler.GetUserProfile)
 	router.PATCH("/user/update-profile", handler.CheckUserRole, handler.UserProfileUpdate)
 
 	// Blog - Like //
