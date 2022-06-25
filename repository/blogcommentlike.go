@@ -72,8 +72,8 @@ func (repository *Repository) GetLikeByUserIDAndBlogCommentID(c *gin.Context, us
 }
 
 func (repository *Repository) CreateLikeByBlogCommentId(c *gin.Context, user_id, blog_comment_id int) (*models.BlogCommentLikesResponse, error) {
-	_, err := repository.GetCommentById(c, blog_comment_id)
-	if err == sql.ErrNoRows {
+	data, err := repository.GetCommentById(c, blog_comment_id)
+	if data == nil && err == nil {
 		return nil, errors.New("Comment not found")
 	}
 

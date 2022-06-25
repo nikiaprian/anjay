@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"database/sql"
 	"kel15/models"
 	"time"
 
@@ -158,6 +159,10 @@ func (repository *Repository) GetBlogByID(c *gin.Context, id int) (*models.Blog,
 	row := repository.db.QueryRow(query, id)
 	err := row.Scan(&blog.ID, &blog.Photo, &blog.Title, &blog.Content, &blog.CreatedAt, &blog.UpdatedAt,
 		&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
+
+	if err != nil && err == sql.ErrNoRows {
+		return nil, nil
+	}
 
 	if err != nil {
 		return nil, err
