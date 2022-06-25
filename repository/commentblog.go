@@ -39,7 +39,7 @@ func (repository *Repository) GetAllCommentByBlogID(c *gin.Context, id int) ([]m
 	// var comments []models.CommentBlog
 
 	query := `SELECT Comments.id, Comments.comment, Comments.created_at, Comments.updated_at,
-			 Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at
+			 Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at, Users.photo
 		 	 FROM CommentBlog as Comments 
 			 JOIN Users ON Comments.user_id = Users.id 
 			 WHERE Comments.blog_id = ?
@@ -65,7 +65,7 @@ func (repository *Repository) GetAllCommentByBlogID(c *gin.Context, id int) ([]m
 		var User models.User
 
 		err := rows.Scan(&comment.ID, &comment.Comment, &comment.CreatedAt, &comment.UpdatedAt,
-			&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
+			&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt, &User.Photo)
 
 		if err != nil {
 			return nil, err

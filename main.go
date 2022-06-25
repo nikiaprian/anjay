@@ -55,7 +55,7 @@ func main() {
 
 	// User //
 	router.GET("/users", handler.UserList)
-	router.POST("/users/:id", handler.UserProfileUpdate)
+	router.PATCH("/user/update-profile", handler.CheckUserRole, handler.UserProfileUpdate)
 
 	// Blog - Like //
 	router.POST("/like/blog/:id", handler.CheckUserRole, handler.CreateLikeByBlogId)

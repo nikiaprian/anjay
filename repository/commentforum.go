@@ -12,7 +12,7 @@ import (
 func (repository *Repository) GetCommentById(c *gin.Context, id int) (*models.CommentForum, error) {
 
 	query := `SELECT Comments.id, Comments.comment, Comments.forum_id, Comments.created_at, Comments.updated_at,
-			 Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at
+			 Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at, Users.photo
 		 	 FROM CommentForum as Comments 
 			JOIN Users ON Comments.user_id = Users.id
 			WHERE Comments.id = ?;`
@@ -23,7 +23,7 @@ func (repository *Repository) GetCommentById(c *gin.Context, id int) (*models.Co
 	var User models.User
 
 	err := row.Scan(&comment.ID, &comment.Comment, &comment.ForumId, &comment.CreatedAt, &comment.UpdatedAt,
-		&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
+		&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt, &User.Photo)
 	if err == sql.ErrNoRows {
 		return nil, nil
 	}
@@ -66,7 +66,7 @@ func (repository *Repository) CreateCommentForum(c *gin.Context, comment string,
 func (repository *Repository) GetAllCommentByForumID(c *gin.Context, id int) ([]models.CommentForum, error) {
 	var comments = make([]models.CommentForum, 0)
 	query := `SELECT Comments.id, Comments.comment, Comments.is_answer, Comments.created_at, Comments.updated_at,
-			 Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at
+			 Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at, Users.photo
 		 	 FROM CommentForum as Comments 
 			JOIN Users ON Comments.user_id = Users.id
 			WHERE Comments.forum_id = ?
@@ -92,7 +92,7 @@ func (repository *Repository) GetAllCommentByForumID(c *gin.Context, id int) ([]
 		var comment models.CommentForum
 
 		err := rows.Scan(&comment.ID, &comment.Comment, &comment.IsAnswer, &comment.CreatedAt, &comment.UpdatedAt,
-			&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
+			&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt, &User.Photo)
 
 		if err != nil {
 			return nil, err

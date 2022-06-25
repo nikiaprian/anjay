@@ -15,7 +15,7 @@ func (repository *Repository) GetAllLikeByBlogCommentID(c *gin.Context, id int) 
 	query := `
         SELECT 
             BlogCommentLikes.id, BlogCommentLikes.blog_comment_id, BlogCommentLikes.created_at, BlogCommentLikes.updated_at,
-            Users.id, Users.username, Users.email
+            Users.id, Users.username, Users.email, Users.photo
         FROM BlogCommentLikes 
         JOIN Users ON BlogCommentLikes.user_id = Users.id
         WHERE BlogCommentLikes.blog_comment_id = ?
@@ -33,7 +33,7 @@ func (repository *Repository) GetAllLikeByBlogCommentID(c *gin.Context, id int) 
 		var blogCommentLike models.BlogCommentLikesResponse
 		var user models.User
 
-		err := rows.Scan(&blogCommentLike.ID, &blogCommentLike.BlogCommentID, &blogCommentLike.CreatedAt, &blogCommentLike.UpdatedAt, &user.ID, &user.Username, &user.Email)
+		err := rows.Scan(&blogCommentLike.ID, &blogCommentLike.BlogCommentID, &blogCommentLike.CreatedAt, &blogCommentLike.UpdatedAt, &user.ID, &user.Username, &user.Email, &user.Photo)
 		if err != nil {
 			return nil, err
 		}
@@ -52,13 +52,13 @@ func (repository *Repository) GetLikeByUserIDAndBlogCommentID(c *gin.Context, us
 	query := `
         SELECT 
             BlogCommentLikes.id, BlogCommentLikes.blog_comment_id, BlogCommentLikes.created_at, BlogCommentLikes.updated_at,
-            Users.id, Users.username, Users.email
+            Users.id, Users.username, Users.email, Users.photo
         FROM BlogCommentLikes 
         JOIN Users ON BlogCommentLikes.user_id = Users.id
         WHERE user_id = ? AND blog_comment_id = ?
     `
 	row := repository.db.QueryRow(query, user_id, blog_comment_id)
-	err := row.Scan(&blogCommentLike.ID, &blogCommentLike.BlogCommentID, &blogCommentLike.CreatedAt, &blogCommentLike.UpdatedAt, &blogCommentLike.User.ID, &blogCommentLike.User.Username, &blogCommentLike.User.Email)
+	err := row.Scan(&blogCommentLike.ID, &blogCommentLike.BlogCommentID, &blogCommentLike.CreatedAt, &blogCommentLike.UpdatedAt, &blogCommentLike.User.ID, &blogCommentLike.User.Username, &blogCommentLike.User.Email, &blogCommentLike.User.Photo)
 
 	if err == sql.ErrNoRows {
 		return nil, nil

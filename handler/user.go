@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func (handler *Handler) UserList(c *gin.Context) {
@@ -76,24 +77,43 @@ func (handler *Handler) UserLoginByProviderCallback(c *gin.Context) {
 }
 
 func (handler *Handler) UserProfileUpdate(c *gin.Context) {
-	file, fileHeader, err := utils.GetFileUpload(c)
-
-	fmt.Println(handler.Project.Storage.BucketName)
-	var User models.UserRegisterRequest
-	User.Email = c.Request.FormValue("email")
-	User.Password = c.Request.FormValue("password")
-	User.Username = c.Request.FormValue("username")
-	if err != nil {
-		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
-		return
-	}
-
-	fileName, err := utils.UploadToS3(1, handler.Project.Storage, file, fileHeader)
+	userLogin := c.MustGet("user").(*models.User)
+	userByUsername, err := handler.Project.Usecase.GetUserByUsername(c)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, sendResponseSuccess{Success: true, Code: http.StatusOK, Message: "", Data: fileName})
+	if userByUsername != nil && userLogin.ID != userByUsername.ID {
+		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: "Username sudah digunakan"})
+		return
+	}
+
+	var fileName string
+	file, fileHeader, isRequired, err := utils.GetFileUpload(c, false)
+
+	if err != nil && isRequired == nil {
+		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
+		return
+	}
+
+	if err == nil {
+		uuid_generate := uuid.New()
+		tempFileName := fmt.Sprintf("user/user-%d/profile/%d-%s", userLogin.ID, userLogin.ID, uuid_generate)
+		fileName, err = utils.UploadToS3(userLogin.ID, handler.Project.Storage, file, fileHeader, tempFileName)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
+			return
+		}
+	}
+
+	data, err := handler.Project.Usecase.UserProfileUpdate(c, fileName)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, sendResponseError{Success: false, Code: 400, Message: err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, sendResponseSuccess{Success: true, Code: http.StatusOK, Message: "", Data: data})
 }

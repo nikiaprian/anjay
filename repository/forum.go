@@ -10,7 +10,7 @@ import (
 
 func (repository *Repository) GetAllForum(c *gin.Context) ([]models.Forum, error) {
 	query := `SELECT Forums.id, Forums.title, Forums.content, Forums.created_at, Forums.updated_at,
-			  Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at
+			  Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at, Users.photo
 			  FROM Forums 
 			  JOIN Users ON Forums.user_id = Users.id
 			  ORDER BY Forums.id DESC
@@ -38,7 +38,7 @@ func (repository *Repository) GetAllForum(c *gin.Context) ([]models.Forum, error
 		forum.IsYouLike = false
 
 		err := rows.Scan(&forum.ID, &forum.Title, &forum.Content, &forum.CreatedAt, &forum.UpdatedAt,
-			&UserForum.ID, &UserForum.Username, &UserForum.Email, &UserForum.Role, &UserForum.CreatedAt, &UserForum.UpdatedAt)
+			&UserForum.ID, &UserForum.Username, &UserForum.Email, &UserForum.Role, &UserForum.CreatedAt, &UserForum.UpdatedAt, &UserForum.Photo)
 
 		if err != nil {
 			return nil, err
@@ -146,14 +146,14 @@ func (repository *Repository) GetForumById(c *gin.Context, id int) (*models.Foru
 	var User models.User
 
 	query := `SELECT Forums.id, Forums.title, Forums.content, Forums.created_at, Forums.updated_at,
-			  Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at
+			  Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at, Users.photo
 			  FROM Forums
 			  JOIN Users ON Forums.user_id = Users.id
 			  WHERE Forums.id = ?`
 
 	row := repository.db.QueryRow(query, id)
 	err := row.Scan(&forum.ID, &forum.Title, &forum.Content, &forum.CreatedAt, &forum.UpdatedAt,
-		&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
+		&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt, &User.Photo)
 
 	if err == sql.ErrNoRows {
 		return nil, nil

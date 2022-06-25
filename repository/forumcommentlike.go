@@ -15,7 +15,7 @@ func (repository *Repository) GetAllLikeByForumCommentID(c *gin.Context, id int)
 	query := `
         SELECT 
             ForumCommentLikes.id, ForumCommentLikes.forum_comment_id, ForumCommentLikes.created_at, ForumCommentLikes.updated_at,
-            Users.id, Users.username, Users.email
+            Users.id, Users.username, Users.email, Users.photo
         FROM ForumCommentLikes 
         JOIN Users ON ForumCommentLikes.user_id = Users.id
         WHERE ForumCommentLikes.forum_comment_id = ?
@@ -33,7 +33,7 @@ func (repository *Repository) GetAllLikeByForumCommentID(c *gin.Context, id int)
 		var forumCommentLike models.ForumCommentLikesResponse
 		var user models.User
 
-		err := rows.Scan(&forumCommentLike.ID, &forumCommentLike.ForumCommentID, &forumCommentLike.CreatedAt, &forumCommentLike.UpdatedAt, &user.ID, &user.Username, &user.Email)
+		err := rows.Scan(&forumCommentLike.ID, &forumCommentLike.ForumCommentID, &forumCommentLike.CreatedAt, &forumCommentLike.UpdatedAt, &user.ID, &user.Username, &user.Email, &user.Photo)
 		if err != nil {
 			return nil, err
 		}
@@ -52,13 +52,13 @@ func (repository *Repository) GetLikeByUserIDAndForumCommentID(c *gin.Context, u
 	query := `
         SELECT 
             ForumCommentLikes.id, ForumCommentLikes.forum_comment_id, ForumCommentLikes.created_at, ForumCommentLikes.updated_at,
-            Users.id, Users.username, Users.email
+            Users.id, Users.username, Users.email, Users.photo
         FROM ForumCommentLikes 
         JOIN Users ON ForumCommentLikes.user_id = Users.id
         WHERE user_id = ? AND forum_comment_id = ?
     `
 	row := repository.db.QueryRow(query, user_id, forum_comment_id)
-	err := row.Scan(&forumCommentLike.ID, &forumCommentLike.ForumCommentID, &forumCommentLike.CreatedAt, &forumCommentLike.UpdatedAt, &forumCommentLike.User.ID, &forumCommentLike.User.Username, &forumCommentLike.User.Email)
+	err := row.Scan(&forumCommentLike.ID, &forumCommentLike.ForumCommentID, &forumCommentLike.CreatedAt, &forumCommentLike.UpdatedAt, &forumCommentLike.User.ID, &forumCommentLike.User.Username, &forumCommentLike.User.Email, &forumCommentLike.User.Photo)
 
 	if err == sql.ErrNoRows {
 		return nil, nil

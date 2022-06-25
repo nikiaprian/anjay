@@ -15,7 +15,7 @@ func (repository *Repository) GetAllLikeByForumID(c *gin.Context, id int) (*[]mo
 	query := `
         SELECT 
             ForumsLikes.id, ForumsLikes.forum_id, ForumsLikes.created_at, ForumsLikes.updated_at,
-            Users.id, Users.username, Users.email
+            Users.id, Users.username, Users.email, Users.photo
         FROM ForumsLikes 
         JOIN Users ON ForumsLikes.user_id = Users.id
         WHERE ForumsLikes.forum_id = ?
@@ -33,7 +33,7 @@ func (repository *Repository) GetAllLikeByForumID(c *gin.Context, id int) (*[]mo
 		var forumLike models.ForumsLikesResponse
 		var user models.User
 
-		err := rows.Scan(&forumLike.ID, &forumLike.ForumID, &forumLike.CreatedAt, &forumLike.UpdatedAt, &user.ID, &user.Username, &user.Email)
+		err := rows.Scan(&forumLike.ID, &forumLike.ForumID, &forumLike.CreatedAt, &forumLike.UpdatedAt, &user.ID, &user.Username, &user.Email, &user.Photo)
 		if err != nil {
 			return nil, err
 		}
@@ -51,13 +51,13 @@ func (repository *Repository) GetLikeByUserIDAndForumID(c *gin.Context, user_id,
 	query := `
         SELECT 
             ForumsLikes.id, ForumsLikes.forum_id, ForumsLikes.created_at, ForumsLikes.updated_at,
-            Users.id, Users.username, Users.email
+            Users.id, Users.username, Users.email, Users.photo
         FROM ForumsLikes 
         JOIN Users ON ForumsLikes.user_id = Users.id
         WHERE user_id = ? AND forum_id = ?
     `
 	row := repository.db.QueryRow(query, user_id, forum_id)
-	err := row.Scan(&forumLike.ID, &forumLike.ForumID, &forumLike.CreatedAt, &forumLike.UpdatedAt, &forumLike.User.ID, &forumLike.User.Username, &forumLike.User.Email)
+	err := row.Scan(&forumLike.ID, &forumLike.ForumID, &forumLike.CreatedAt, &forumLike.UpdatedAt, &forumLike.User.ID, &forumLike.User.Username, &forumLike.User.Email, &forumLike.User.Photo)
 
 	if err == sql.ErrNoRows {
 		return nil, nil
