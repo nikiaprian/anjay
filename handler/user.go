@@ -26,6 +26,14 @@ func (handler *Handler) UserList(c *gin.Context) {
 	return
 }
 
+func (handler *Handler) GetUserProfile(c *gin.Context) {
+	user := c.MustGet("user").(*models.User)
+
+	c.JSON(http.StatusCreated, sendResponseSuccess{Success: true, Code: http.StatusCreated, Message: "Success created Account", Data: user})
+	return
+
+}
+
 func (handler *Handler) UserLogin(c *gin.Context) {
 	data, err := handler.Project.Usecase.UserLogin(c)
 
