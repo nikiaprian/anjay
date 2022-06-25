@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import CardForum from './CardForum';
 import { useForumStore } from '../../store/ProductStore';
-import gambar from '../../../Assets/fotoProfil.png'
+import gambar from '../../../Assets/fotoProfil.png';
+import Spiner from '../../../Assets/Spinners/Spinners2';
 function ContentForum(props) {
   const { filter } = props;
+  const [loading, setLoading] = useState(false);
   const [dataForums, setDataForums] = useState(null);
   const forums = useForumStore((state) => state.forums);
   useEffect(() => {
     setDataForums(forums);
+    setLoading(true);
+    const myInterval = setInterval(() => {
+      setLoading(false);
+    }, [500]);
+    return () => {
+      clearInterval(myInterval);
+    };
   }, [forums]);
   let temp;
   if (filter === '') {
@@ -27,21 +36,25 @@ function ContentForum(props) {
   return (
     <>
       <div className="my-3 flex flex-col items-center gap-4">
-        {temp &&
+        {loading ? (
+          <Spiner />
+        ) : (
+          temp &&
           temp.map((data, index) => (
             <CardForum
               key={index}
               id={data.id}
               title={data.title}
               content={data.content}
-              date={(data.created_at).substring(0, 10)}
+              date={data.created_at.substring(0, 10)}
               answer={data?.total_comment}
               like={data?.total_likes}
               profileImg={gambar}
               user={data.user.username}
               tags={data.tag}
             />
-          ))}
+          ))
+        )}
       </div>
     </>
   );

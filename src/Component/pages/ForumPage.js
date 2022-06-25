@@ -21,7 +21,7 @@ function ForumPage() {
           <Head
             titleHead="Code ForumIn"
             contentHead="Tempat berkomunikasi para programmer dengan cara mengajukan dan menjawab sebuah pertanyaan"
-            nameButton="Create Pertanyaan"
+            nameButton="Buat Pertanyaan"
             path="/forum/createforum"
             setFilter={setFilter}
           />

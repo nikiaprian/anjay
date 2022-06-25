@@ -2,13 +2,21 @@ import React, { useState, useEffect } from 'react';
 import CardBlog from './CardBlog';
 import { useBlogStore } from '../../store/ProductStore';
 import gambar from '../../../Assets/fotoProfil.png';
-import Spiner from '../../../Assets/Spinners/Spiner';
+import Spiner from '../../../Assets/Spinners/Spinners2';
 function ContentBlog(props) {
   const { filter } = props;
   const [dataBlogs, setDataBlogs] = useState(null);
+  const [loading, setLoading] = useState(false);
   const blogs = useBlogStore((state) => state.blogs);
   useEffect(() => {
+    setLoading(true);
     setDataBlogs(blogs);
+    const myInterval = setInterval(() => {
+      setLoading(false);
+    }, [500]);
+    return () => {
+      clearInterval(myInterval);
+    };
   }, [blogs]);
   let temp;
   if (filter === '') {
@@ -28,7 +36,10 @@ function ContentBlog(props) {
   return (
     <>
       <div className="my-3 flex flex-col items-center gap-4">
-        {temp &&
+        {loading ? (
+          <Spiner />
+        ) : (
+          temp &&
           temp.map((data, index) => (
             <CardBlog
               key={index}
@@ -43,7 +54,8 @@ function ContentBlog(props) {
               user={data.user.username}
               tags={data.tag}
             />
-          ))}
+          ))
+        )}
       </div>
     </>
   );

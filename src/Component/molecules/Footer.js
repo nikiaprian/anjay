@@ -11,12 +11,12 @@ function Footer() {
       <footer className='bg-slate-700 mt-12 pt-12 pb-5 border-t-8 border-orange-500'>
         <div className='container max-w-full'>
           <div className='flex flex-col  md:flex-row md:justify-around mx-5'>
-            <div className='w-full px-4 mb-12 md:w-1/3'>
+            <div className='w-full px-4 mb-12 md:w-2/3'>
               <img src={logo} alt='logo' className='w-52'/>
               <p className='text-white text-base ml-3 mt-1'>Platform ini dibuat untuk memberikan kemudahan bagi Programmer Indonesia untuk Tanya Jawab ataupun memberikan informasi yang bermanfaat bagi programmer lainnya.  </p>
             </div>
             <div className='w-full px-4 mb-12 md:w-1/3 ml-3'>
-              <h3 className='font-semibold text-xl text-white mb-3'>Feature</h3>
+              <h3 className='font-semibold text-xl text-white mb-3'>Fitur</h3>
               <ul className='text-slate-200'>
                 <li>
                   <Link to='/forum' className='inline-block text-base hover:text-orange-500 mb-2'>Forum CodeIn</Link>
@@ -33,22 +33,19 @@ function Footer() {
               </ul>
             </div>
             <div className='w-full px-4 mb-12 md:w-1/3 ml-3 '>
-              <h3 className='font-semibold text-xl text-white mb-3'>Help Center</h3>
+              <h3 className='font-semibold text-xl text-white mb-3'>Pusat Bantuan</h3>
               <ul className='text-slate-200'>
                 <li>
-                <Link to='/' className='inline-block text-base hover:text-orange-500 mb-2'>Find a Property</Link>
-                </li>
-                <li>
-                <Link to='/' className='inline-block text-base hover:text-orange-500 mb-2'>How To Hosts?</Link>
+                <Link to='/' className='inline-block text-base hover:text-orange-500 mb-2'>Temukan Produk</Link>
                 </li>
                 <li>  
-                <Link to='/' className='inline-block text-base hover:text-orange-500 mb-2'>Why Us</Link>
+                <Link to='/' className='inline-block text-base hover:text-orange-500 mb-2'>Kenapa Kami</Link>
                 </li>
                 <li>  
-                <Link to='/' className='inline-block text-base hover:text-orange-500 mb-2'>FAQs</Link>
+                <Link to='/' className='inline-block text-base hover:text-orange-500 mb-2'>FAQ</Link>
                 </li>
                 <li>  
-                <Link to='/' className='inline-block text-base hover:text-orange-500 mb-2'>Rental Guides</Link>
+                <Link to='/' className='inline-block text-base hover:text-orange-500 mb-2'>Panduan Penggunaan</Link>
                 </li>
               </ul>
             </div>
@@ -62,7 +59,7 @@ function Footer() {
                   <p className='inline-block text-base mb-2'>Email: CodeIn@email.com</p>
                 </li>
                 <li>
-                  <p className='inline-block text-base mb-2'>Location: Jakarta</p>
+                  <p className='inline-block text-base mb-2'>Location:  West Tebet, Tebet, South Jakarta City, Jakarta</p>
                 </li>
                 <li className='flex flex-row mt-4'>
                   <Link to='/'><img href='#' src={fb} alt='fb' className='w-7' /></Link>
@@ -76,7 +73,7 @@ function Footer() {
           </div>
           <div className='w-full pt-5 mt-5 border-t border-white'>
             <p className='text-white text-center'>
-              © 2022 CodeIn | All rights reserved
+              © 2022 CodeIn | Semua hak dilindungi undang-undang
             </p>
           </div>
         </div>

@@ -77,7 +77,7 @@ function Navbar() {
                     onClick={() => handleLogout()}
                     className="px-4 py-1.5 w-2/3 bg-white rounded-3xl border-orange-500 border-2 text-orange-500 font-bold hover:bg-orange-600 hover:text-white hover:border-neutral-700"
                   >
-                    Logout
+                    Keluar
                   </button>
                   <div>
                     <Link to="/profile">
@@ -93,12 +93,12 @@ function Navbar() {
                 <div className="flex mb-8 flex-col gap-6 items-center mx-auto md:hidden">
                   <Link to="/register" className='flex justify-center px-6 py-1.5 w-2/3 bg-orange-600 rounded-3xl border-orange-600 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-700'>
                     <button className='font-bold'>
-                      Register
+                      Daftar
                     </button>
                   </Link>
                   <Link to="/login" className="flex justify-center px-4 py-1.5 w-2/3 bg-white rounded-3xl border-orange-500 border-2 text-orange-500 font-bold hover:bg-orange-600 hover:text-white hover:border-orange-700">
                     <button className='font-bold'>
-                      Login
+                      Masuk
                     </button>
                   </Link>
                 </div>
@@ -122,7 +122,7 @@ function Navbar() {
                 onClick={() => handleLogout()}
                 className="px-6 shadow-md py-1.5 bg-orange-500 rounded-md border-orange-500 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-500"
               >
-                Logout
+                Keluar
               </button>
               <div>
                 <Link to="/profile">
@@ -138,12 +138,12 @@ function Navbar() {
             <div className="hidden md:flex md:items-center md:justify-between md:gap-3 md:mr-5">
               <Link to="/register">
                 <button className="px-4 shadow-md py-1.5 bg-white rounded-md border-orange-500 border-2 text-orange-500 font-bold hover:bg-orange-500 hover:text-white hover:border-orange-500">
-                  Register
+                  Daftar
                 </button>
               </Link>
               <Link to="/login">
                 <button className="px-6 shadow-md py-1.5 bg-orange-500 rounded-md border-orange-500 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-500">
-                  Login
+                  Masuk
                 </button>
               </Link>
             </div>

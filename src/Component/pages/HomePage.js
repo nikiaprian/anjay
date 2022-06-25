@@ -48,7 +48,7 @@ function HomePage() {
         </div>
         <div className="bg-white flex flex-col justify-center items-center pt-20">
           <div data-aos="zoom-in" data-aos-offset="200" data-aos-delay="800" className="text-center font-poppins">
-            <p className="text-green-800 text-3xl font-semibold">Product</p>
+            <p className="text-green-800 text-3xl font-semibold">Produk</p>
             <p className="text-gray-900 text-base font-medium">
               Memberikan Manfaat Untuk Anda
             </p>

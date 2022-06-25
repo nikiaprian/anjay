@@ -21,7 +21,7 @@ function BlogPage() {
           <Head
             titleHead="Code BlogIn"
             contentHead="Tempat para programmer menulis seputar wawasan dunia teknologi dan komputer"
-            nameButton="Create Blog"
+            nameButton="Buat Blog"
             path="/blog/createblog"
             setFilter={setFilter}
           />
