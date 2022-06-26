@@ -151,14 +151,14 @@ func (repository *Repository) GetBlogByID(c *gin.Context, id int) (*models.Blog,
 	var User models.User
 
 	query := `SELECT Blogs.id, Blogs.photo, Blogs.title, Blogs.content, Blogs.created_at, Blogs.updated_at,
-			  Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at
+			  Users.id, Users.username, Users.email, Users.role, Users.created_at, Users.updated_at, Users.photo
 			  FROM Blogs
 			  JOIN Users ON Blogs.user_id = Users.id
 			  WHERE Blogs.id = ?`
 
 	row := repository.db.QueryRow(query, id)
 	err := row.Scan(&blog.ID, &blog.Photo, &blog.Title, &blog.Content, &blog.CreatedAt, &blog.UpdatedAt,
-		&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt)
+		&User.ID, &User.Username, &User.Email, &User.Role, &User.CreatedAt, &User.UpdatedAt, &User.Photo)
 
 	if err != nil && err == sql.ErrNoRows {
 		return nil, nil
