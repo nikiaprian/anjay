@@ -14,6 +14,7 @@
 - **API Testing:** [Postman](https://www.getpostman.com/)
 - **API Docs:** [Swagger](https://swagger.io/)
 - **Deployment:** [EC2](https://aws.amazon.com/ec2/)
+- **Object Cloud:** [S3](https://aws.amazon.com/s3/)
 - **Code Editor:** [Visual Studio Code](https://code.visualstudio.com/)
 
 ## Entity Relationship Diagram
