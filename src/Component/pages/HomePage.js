@@ -96,9 +96,6 @@ function HomePage() {
               src={gambar4}
               alt=""
             />
-            {/* <div className='w-60'>
-              <Sliders />
-            </div> */}
             <div className="px-6 w-4/5 md:px-0 flex flex-col gap-1 text-center lg:text-left">
               <p data-aos="fade-left" data-aos-offset="200" data-aos-delay="700" data-aos-duration="500" data-aos-easing="ease-in-out" className="font-semibold text-xl text-green-800 drop-shadow-md">
                 Testimonial
@@ -130,7 +127,7 @@ function HomePage() {
             {faqList.map((faq) => (
               <div
                 data-aos="zoom-in" data-aos-offset="200" data-aos-delay="700" data-aos-duration="500" data-aos-easing="ease-in-out"
-                key={faq.question}
+                key={faq?.question}
                 className="relative w-full overflow-hidden border-b-2 border-grey-500 py-6"
               >
                 <input
@@ -138,14 +135,14 @@ function HomePage() {
                   className="absolute top-0 inset-x-0 w-full h-12 opacity-0 z-10 cursor-pointer peer jus"
                 />
                 <div className=" h-5 w-10/12  flex items-center">
-                  <h1 className="text-lg font-semibold">{faq.question}</h1>
+                  <h1 className="text-lg font-semibold">{faq?.question}</h1>
                 </div>
                 <div className="absolute top-3 right-3 mt-2 text-white transition-transform duration-500 rotate-0 peer-checked:rotate-90 ">
                   <img src={RightIcons} alt="righticon" />
                 </div>
                 <div className="bg-white overflow-hidden transition-all duration-500 max-h-0 peer-checked:max-h-40">
                   <div className="p-4">
-                    <p>{faq.answer}</p>
+                    <p>{faq?.answer}</p>
                   </div>
                 </div>
               </div>

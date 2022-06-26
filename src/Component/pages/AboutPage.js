@@ -39,26 +39,26 @@ function AboutPage() {
                   <div key={index} className="border-2 gap-3 flex flex-col items-center justify-center w-72 bg-[#f2f2f2] border-gray-300 rounded-md shadow-lg font-poppins px-3 py-10 ">
                     <img
                       className="w-28 h-28 drop-shadow-md rounded-full border-2 border-slate-300 object-cover object-top"
-                      src={item.image}
+                      src={item?.image}
                       alt="gambar"
                     />
                     <div className=" flex flex-col items-center justify-center">
                       <p className="font-poppins font-semibold text-sm">
-                        {item.name}
+                        {item?.name}
                       </p>
-                      <p className="font-poppins text-xs">{item.role}</p>
+                      <p className="font-poppins text-xs">{item?.role}</p>
                     </div>
                     <div className="flex flex-row">
-                      <a href={item.linkGithub}>
+                      <a href={item?.linkGithub}>
                         <img
-                          src={item.github}
+                          src={item?.github}
                           className="w-10 h-10 drop-shadow-md"
                           alt="gambar"
                         />
                       </a>
-                      <a href={item.linkLinkedin}>
+                      <a href={item?.linkLinkedin}>
                         <img
-                          src={item.linkedin}
+                          src={item?.linkedin}
                           className="w-10 h-10 drop-shadow-md"
                           alt="gambar"
                         />

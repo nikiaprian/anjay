@@ -1,12 +1,48 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ScrollButton from '../atoms/ScrollButton';
 import Footer from '../molecules/Footer';
 import Navbar from '../molecules/Navbar';
+//eslint-disable-next-line
 import { PhoneIcon, BriefcaseIcon, CubeIcon } from '@heroicons/react/outline';
-import gambarUser from '../../Assets/fotoProfil.jpg';
+import gambarUser from '../../Assets/fotoProfil.png';
+import axios from 'axios';
+import InputFile from '../molecules/InputFile';
+//import InputJudul from '../molecules/InputJudul';
+import Swal from 'sweetalert2';
+//import useAuthStore from '../store/AuthStore';
+
+import Spiner from '../../Assets/Spinners/Spiner';
 
 function ProfilePage() {
   const [isForum, setIsForum] = useState(false);
+  const [buttonUpdate, setButtonUpdate] = useState(false);
+  const [profile, setProfile] = useState({});
+  //const [inputUsername, setInputUsername] = useState('');
+  const [inputFile, setInputFile] = useState('');
+
+  const token = localStorage.getItem('key');
+  // const auth=useAuthStore(state=>state.users)
+  // console.log(auth)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await axios
+        .get('https://be.codein.studio/user/profile', {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          const { username, photo } = res.data.data;
+          setProfile({ photo: photo, username: username });
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    };
+    fetchData();
+  }, [profile, token]);
 
   const handleClickForum = () => {
     setIsForum(!isForum);
@@ -26,7 +62,44 @@ function ProfilePage() {
       setIsForum(false);
     }
   };
-  console.log(isForum);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let data = new FormData();
+    data.append('file', inputFile);
+    data.append('username', profile?.username);
+
+    await axios
+      .patch('https://be.codein.studio/user/update-profile', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        const { username, photo } = res?.data?.data;
+        setProfile({ photo: photo, username: username });
+        Swal.fire(
+          'Berhasil!',
+          'Anda Telah Berhasil Update Profile',
+          'success'
+        ).then((isConfirmed) => {
+          if (isConfirmed) setButtonUpdate(false);
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+        Swal.fire({
+          title: 'Gagal!',
+          text: 'Anda Tidak Berhasil update Profile',
+          icon: 'error',
+          confirmButtonText: 'ya, saya mencoba kembali',
+        });
+      });
+  };
+  if (Object.keys(profile).length === 0) {
+    return <Spiner />;
+  }
   return (
     <>
       <div className="w-screen h-screen overflow-x-hidden">
@@ -36,28 +109,45 @@ function ProfilePage() {
             <div className="order-1 lg:order-2 lg:col-span-2">
               <div className="shadow rounded-md bg-white">
                 <form>
-                  <div className="flex flex-col items-center px-5 py-4">
-                    {/* <h2 className="col-span-2 text-xl self-start text-gray-600 font-semibold">
-                      Profile
-                    </h2> */}
+                  <div className="flex flex-col gap-3 items-center px-5 py-4">
                     <img
-                      className="rounded-full w-32 h-32"
-                      src={gambarUser}
+                      className="rounded-full w-32 h-32 object-cover border-2 border-orange-600"
+                      src={
+                        profile?.photo === null ? gambarUser : profile?.photo
+                      }
                       alt=""
                     />
-                    <h4 className="text-lg font-medium mt-2">Alexandra11</h4>
-                    <div className="flex items-center text-gray-500">
-                      <PhoneIcon className="w-4 h-4" />
-                      <span className="text-sm ml-1">+62xx-xxx-xxx</span>
-                    </div>
-                    <div className="flex items-center text-gray-500">
-                      <BriefcaseIcon className="w-4 h-4" />
-                      <span className="text-sm ml-1">Fullstack Developer</span>
-                    </div>
-                    <p className="w-full text-sm text-gray-500 text-center italic mt-2 p-3 rounded border-2 border-dashed">
-                      Never loose hope. Stay strong always curious. Always fight
-                      for freedom.
-                    </p>
+                    <h4 className="text-lg font-medium mt-2">
+                      {profile.username}
+                    </h4>
+                    {buttonUpdate ? (
+                      <>
+                        <button
+                          onClick={() => setButtonUpdate(false)}
+                          className="py-2 px-4  bg-orange-600 rounded-full"
+                        >
+                          X
+                        </button>
+                        <InputFile
+                          title="Image Profile Picture"
+                          input={setInputFile}
+                          type="profilUpdate"
+                        />
+                        <button
+                          onClick={handleSubmit}
+                          className=" mt-2 shadow-lg px-6 py-1.5 bg-orange-500 rounded-md border-orange-500 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-500"
+                        >
+                          Kirim
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        onClick={() => setButtonUpdate(true)}
+                        className=" mt-2 shadow-lg px-6 py-1.5 bg-orange-500 rounded-md border-orange-500 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-500"
+                      >
+                        Update Foto
+                      </button>
+                    )}
                   </div>
                 </form>
               </div>

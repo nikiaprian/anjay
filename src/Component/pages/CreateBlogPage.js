@@ -64,7 +64,7 @@ function CreateBlogPage() {
               placeholder="Masukkan judul Blog"
             />
             <InputTags tag={inputTag} setTags={setInputTag} />
-            <InputFile input={setInputFile} />
+            <InputFile input={setInputFile} type="createBlog" />
             <InputMarkdown
               setEditorState={setInputMarkdown}
               deskripsi="Deskripsi"

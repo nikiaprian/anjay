@@ -14,7 +14,7 @@ function BreadCrumbs(props) {
                   className="text-md font-medium text-orange-500 hover:text-gray-900 cursor-pointer"
                   onClick={()=>navigate(-1)}
                 >
-                  {props.prev}
+                  {props?.prev}
                 </div>
               </div>
             </li>
@@ -33,7 +33,7 @@ function BreadCrumbs(props) {
                   ></path>
                 </svg>
                 <span className="ml-1 text-md font-medium text-gray-900 md:ml-2">
-                  {props.current}
+                  {props?.current}
                 </span>
               </div>
             </li>

@@ -50,16 +50,16 @@ function Footer() {
               </ul>
             </div>
             <div className='w-full px-4 mb-12 md:w-1/3 ml-3 '>
-              <h3 className='font-semibold text-xl text-white mb-3'>Contact Info</h3>
+              <h3 className='font-semibold text-xl text-white mb-3'>Info Kontak</h3>
               <ul className='text-slate-200'>
                 <li>
-                  <p className='inline-block text-base mb-2'>Phone: +62423424234</p>
+                  <p className='inline-block text-base mb-2'>Nomer: +62423424234</p>
                 </li>
                 <li>
                   <p className='inline-block text-base mb-2'>Email: CodeIn@email.com</p>
                 </li>
                 <li>
-                  <p className='inline-block text-base mb-2'>Location:  West Tebet, Tebet, South Jakarta City, Jakarta</p>
+                  <p className='inline-block text-base mb-2'>Lokasi:  West Tebet, Tebet, South Jakarta City, Jakarta</p>
                 </li>
                 <li className='flex flex-row mt-4'>
                   <Link to='/'><img href='#' src={fb} alt='fb' className='w-7' /></Link>

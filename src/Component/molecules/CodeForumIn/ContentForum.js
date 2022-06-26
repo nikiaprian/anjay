@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CardForum from './CardForum';
 import { useForumStore } from '../../store/ProductStore';
-import gambar from '../../../Assets/fotoProfil.png';
 import Spiner from '../../../Assets/Spinners/Spinners2';
 function ContentForum(props) {
   const { filter } = props;
@@ -49,7 +48,7 @@ function ContentForum(props) {
               date={data.created_at.substring(0, 10)}
               answer={data?.total_comment}
               like={data?.total_likes}
-              profileImg={gambar}
+              profileImg={data?.user?.photo}
               user={data.user.username}
               tags={data.tag}
             />

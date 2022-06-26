@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../Assets/logo.svg';
 import icon from '../../Assets/bars-solid.svg';
@@ -6,13 +6,14 @@ import iconX from '../../Assets/x.svg';
 import gambar from '../../Assets/fotoProfil.png';
 import Swal from 'sweetalert2';
 import useAuthStore from '../store/AuthStore';
+import axios from 'axios';
 
 function Navbar() {
   const [open, setOpen] = useState(false);
-  //eslint-disable-next-line
   const { isLoggedIn, setIsLoggedIn, setUser } = useAuthStore();
   let key = window.localStorage.getItem('key');
   const navigate = useNavigate();
+  const [dataUser, setDataUser] = useState({});
 
   let activeStyle = {
     color: '#0A5D31',
@@ -23,6 +24,22 @@ function Navbar() {
     { name: 'Tentang', link: '/about' },
     { name: 'FaQ', link: '/faq' },
   ];
+
+  useEffect(() => {
+    const getApiUser = async () => {
+      await axios
+        .get('https://be.codein.studio/user/profile', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${key}`,
+          },
+        })
+        .then((res) => {
+          setDataUser(res?.data?.data);
+        });
+    };
+    getApiUser();
+  }, [key]);
 
   const handleLogout = () => {
     console.log('test');
@@ -38,6 +55,7 @@ function Navbar() {
       }
     );
   };
+
   return (
     <>
       <div className="shadow-lg w-full fixed top-0 left-0 border-b-2  border-orange-400 z-50">
@@ -83,7 +101,9 @@ function Navbar() {
                     <Link to="/profile">
                       <img
                         className="w-10 h-10 object-cover border-2 border-white rounded-full shadow-md"
-                        src={gambar}
+                        src={
+                          dataUser?.photo === null ? gambar : dataUser?.photo
+                        }
                         alt=""
                       />
                     </Link>
@@ -91,15 +111,17 @@ function Navbar() {
                 </div>
               ) : (
                 <div className="flex mb-8 flex-col gap-6 items-center mx-auto md:hidden">
-                  <Link to="/register" className='flex justify-center px-6 py-1.5 w-2/3 bg-orange-600 rounded-3xl border-orange-600 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-700'>
-                    <button className='font-bold'>
-                      Daftar
-                    </button>
+                  <Link
+                    to="/register"
+                    className="flex justify-center px-6 py-1.5 w-2/3 bg-orange-600 rounded-3xl border-orange-600 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-700"
+                  >
+                    <button className="font-bold">Daftar</button>
                   </Link>
-                  <Link to="/login" className="flex justify-center px-4 py-1.5 w-2/3 bg-white rounded-3xl border-orange-500 border-2 text-orange-500 font-bold hover:bg-orange-600 hover:text-white hover:border-orange-700">
-                    <button className='font-bold'>
-                      Masuk
-                    </button>
+                  <Link
+                    to="/login"
+                    className="flex justify-center px-4 py-1.5 w-2/3 bg-white rounded-3xl border-orange-500 border-2 text-orange-500 font-bold hover:bg-orange-600 hover:text-white hover:border-orange-700"
+                  >
+                    <button className="font-bold">Masuk</button>
                   </Link>
                 </div>
               )}
@@ -128,7 +150,7 @@ function Navbar() {
                 <Link to="/profile">
                   <img
                     className="w-10 h-10 object-cover border-2 border-orange-500 rounded-full shadow-md"
-                    src={gambar}
+                    src={dataUser?.photo === null ? gambar : dataUser?.photo}
                     alt=""
                   />
                 </Link>

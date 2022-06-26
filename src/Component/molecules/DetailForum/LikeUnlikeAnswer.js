@@ -13,7 +13,7 @@ function LikeUnlikeAnswer(props) {
   const handleLike = async () => {
     if (state?.status_like) {
       await axios
-        .delete(`https://be.codein.studio/like/forum/comment/${state.id}`, {
+        .delete(`https://be.codein.studio/like/forum/comment/${state?.id}`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${key}`,
@@ -23,7 +23,7 @@ function LikeUnlikeAnswer(props) {
           setState({
             ...state,
             status_like: false,
-            total_like: state.total_like - 1,
+            total_like: state?.total_like - 1,
           });
         })
         .catch((error) => {
@@ -32,7 +32,7 @@ function LikeUnlikeAnswer(props) {
     } else {
       await axios
         .post(
-          `https://be.codein.studio/like/forum/comment/${state.id}`,
+          `https://be.codein.studio/like/forum/comment/${state?.id}`,
           {},
           {
             headers: {
@@ -58,20 +58,20 @@ function LikeUnlikeAnswer(props) {
       {state?.status_like ? (
         <div className="flex items-center gap-2">
           <HeartIconSolid
-            className="h-8 w-8 text-red-500 cursor-pointer"
+            className="h-6 w-6 text-red-500 cursor-pointer"
             onClick={key && handleLike}
           />
-          <p className="text-xl wl-8 font-medium font-poppins">
+          <p className="text-base wl-8 font-medium font-poppins">
             {state?.total_like}
           </p>
         </div>
       ) : (
         <div className="flex items-center gap-2">
           <HeartIconOutline
-            className="h-8 w-8 text-red-500 cursor-pointer"
+            className="h-6 w-6 text-red-500 cursor-pointer"
             onClick={key && handleLike}
           />
-          <p className="text-xl wl-8 font-medium font-poppins">
+          <p className="text-base wl-8 font-medium font-poppins">
             {state?.total_like}
           </p>
         </div>

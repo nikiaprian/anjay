@@ -12,12 +12,12 @@ function CheckedCard(props) {
   useEffect(() => {
     setChecked(props?.checked);
   }, [props.checked]);
-  
+
   const getApI = async (checked) => {
-    console.log(checked)
+    console.log(checked);
     await axios
       .patch(
-        `https://be.codein.studio/forum/comment/${props.id}/selected-answer`,
+        `https://be.codein.studio/forum/comment/${props?.id}/selected-answer`,
         { is_answer: checked },
         {
           headers: {
@@ -27,7 +27,7 @@ function CheckedCard(props) {
         }
       )
       .then((res) => {
-        console.log(res.data);
+        console.log(res?.data);
       })
       .catch((err) => {
         console.log(err);
@@ -35,26 +35,27 @@ function CheckedCard(props) {
   };
 
   const handleChecked = () => {
-    if (checked && forum.user.id === +idUser && key) {
+    if (checked && forum?.user?.id === +idUser && key) {
       setChecked(false);
       getApI(!checked);
-    } else if (!checked && forum.user.id === +idUser && key) {
+    } else if (!checked && forum?.user?.id === +idUser && key) {
       setChecked(true);
       getApI(!checked);
     }
   };
-
   return (
     <>
       <div className="flex items-center gap-1">
         {checked ? (
           <CheckCircleIconSolid
-            className="h-7 w-7 text-teal-700 cursor-pointer"
+            className="h-6 w-6 text-teal-700 cursor-pointer"
             onClick={handleChecked}
           />
         ) : (
           <CheckCircleIconSolid
-            className="h-7 w-7 text-gray-400 cursor-pointer"
+            className={`h-6 w-6 text-gray-400 cursor-pointer ${
+              forum?.user?.id === +idUser ? 'block' : 'hidden'
+            }`}
             onClick={handleChecked}
           />
         )}

@@ -100,13 +100,12 @@ const RegisterPage = (props) => {
       await axios
         .post(baseUrl, register, { withCredentials: false })
         .then((res) => {
-          setState(res.data);
+          setState(res?.data);
           setLoading(false);
           Swal.fire('Berhasil!', 'Anda telah berhasil Registrasi', 'success');
           navigate('/login');
         })
         .catch((error) => {
-          console.log(error);
           Swal.fire({
             title: 'Gagal!',
             text: 'Register Gagal!',
@@ -199,20 +198,6 @@ const RegisterPage = (props) => {
                 {passwordError.message}
               </p>
             </label>
-            {/* <label htmlFor="CPassword">
-              <span className="block font-semibold mb-1 after:content-['*'] after:ml-0.5 ">
-                Konfirmasi Password
-              </span>
-              <input
-                placeholder="********"
-                id="CPassword"
-                className="w-full block border rounded border-orange-400 bg-gray-100 p-2 mb-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500 "
-                type="password"
-                onChange={(e) => handleChange(e, 'Cpassword')}
-                required
-              />
-            </label> */}
-
             <input
               type="submit"
               className="w-full py-3 mt-8 bg-orange-500 hover:bg-orange-600 relative text-white shadow-md rounded-full"

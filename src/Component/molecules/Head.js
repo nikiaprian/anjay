@@ -19,21 +19,21 @@ function Head(props) {
       <div className=" w-full h-full flex justify-center items-start gap-6 flex-col md:items-center md:justify-between md:flex-row ">
         <div className="flex flex-col md:gap-2 ">
           <p className="font-poppins font-semibold text-3xl">
-            {props.titleHead}
+            {props?.titleHead}
           </p>
           <p className="text-md md:text-md font-poppins text-slate-800">
-            {props.contentHead}
+            {props?.contentHead}
           </p>
         </div>
 
         <button className="shadow-md flex flex-row items-center gap-3  px-6 py-1.5 bg-orange-500 rounded-lg border-neutral-300 border-2 text-white font-bold hover:bg-orange-600 hover:text-white ">
           <Link
             to={
-              isLoggedIn || key ? props.path : `/login?redirect=${props.path}`
+              isLoggedIn || key ? props.path : `/login?redirect=${props?.path}`
             }
           >
             <div className="flex flex-row items-center gap-3">
-              <p>{props.nameButton}</p>
+              <p>{props?.nameButton}</p>
               <PencilAltIcon className="w-5 h-5" />
             </div>
           </Link>

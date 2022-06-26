@@ -12,7 +12,7 @@ function BackSubmit(props) {
         >
           Kembali
         </button>
-        <button onClick={props.handleClick} className="shadow-lg px-6 py-1.5 bg-orange-500 rounded-md border-orange-500 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-500">
+        <button onClick={props?.handleClick} className="shadow-lg px-6 py-1.5 bg-orange-500 rounded-md border-orange-500 border-2 text-white font-bold hover:bg-orange-600 hover:text-white hover:border-orange-500">
           Kirim
         </button>
       </div>

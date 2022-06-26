@@ -43,12 +43,12 @@ function DetailBlogPage() {
                   className="rounded-t-3xl w-full md:h-96 md:object-cover md:object-top "
                 />
               </div>
-              <p className="font-semibold text-3xl">{blog.title}</p>
+              <p className="font-semibold text-3xl">{blog?.title}</p>
               <HeadContentBlog/>
-              <ViewTag tags={blog.tag} />
+              <ViewTag tags={blog?.tag} />
               <div
-                className="border-2 bg-[#f2f2f2] border-gray-300 p-4 font-poppins rounded-md shadow-lg"
-                dangerouslySetInnerHTML={{ __html: blog.content }}
+                className="border-2 overflow-x-auto bg-[#f2f2f2] border-gray-300 p-4 font-poppins rounded-md shadow-lg"
+                dangerouslySetInnerHTML={{ __html: blog?.content }}
               ></div>
               <ViewComments deskripsi="Komentar" />
               {key && key ? (

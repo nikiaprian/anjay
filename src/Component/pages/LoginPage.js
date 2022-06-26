@@ -8,7 +8,7 @@ import google from '../../Assets/google.svg';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import validator from 'validator';
-import useAuthStore from "../store/AuthStore";
+import useAuthStore from '../store/AuthStore';
 
 const LoginPage = () => {
   const baseUrl = 'https://be.codein.studio/auth/login';
@@ -16,8 +16,8 @@ const LoginPage = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   //eslint-disable-next-line
-  const [loading, setLoading] = useState(true);
-  const { setUser, setIsLoggedIn } = useAuthStore();
+  const setUser = useAuthStore((state) => state.setUser);
+  const setIsLoggedIn = useAuthStore((state) => state.setIsLoggedIn);
   const [emailError, setEmailError] = useState({ message: '', status: false });
   const handleChange = (e, type) => {
     if (type === 'email') {
@@ -44,18 +44,10 @@ const LoginPage = () => {
         .then((res) => {
           setUser(res.data.data);
           setIsLoggedIn(true);
-          window.localStorage.setItem('key', res.data.data.token);
-          window.localStorage.setItem('idUser', res.data.data.user.id);
-          setLoading(false);
+          window.localStorage.setItem('key', res?.data?.data?.token);
+          window.localStorage.setItem('idUser', res?.data?.data?.user?.id);
           Swal.fire('Berhasil!', 'Anda Telah Berhasil Login!', 'success');
           navigate(searchParams.get('redirect') ?? '/');
-          // .then(
-          //   (result) => {
-          //     if (result.isConfirmed) {
-          //       navigate(searchParams.get('redirect') ?? '/');
-          //     }
-          //   }
-          // );
         })
         .catch((error) => {
           console.log(error);

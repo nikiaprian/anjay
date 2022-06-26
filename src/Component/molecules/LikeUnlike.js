@@ -10,26 +10,26 @@ function LikeUnlike(props) {
   const blogId = useBlogStore((state) => state.blogId);
 
   useEffect(() => {
-    if (props.type === 'likeForum') {
+    if (props?.type === 'likeForum') {
       setState(forumsId);
-    } else if (props.type === 'likeBlog') {
+    } else if (props?.type === 'likeBlog') {
       setState(blogId);
     }
     //eslint-disable-next-line
   }, [forumsId, blogId]);
 
   let tempApi;
-  if (props.type === 'likeForum') {
+  if (props?.type === 'likeForum') {
     tempApi = forumsId;
-  } else if (props.type === 'likeBlog') {
+  } else if (props?.type === 'likeBlog') {
     tempApi = blogId;
   }
 
   const handleLike = async () => {
-    if (props.type === 'likeForum') {
+    if (props?.type === 'likeForum') {
       if (state?.is_you_like) {
         await axios
-          .delete(`https://be.codein.studio/like/forum/${tempApi.id}`, {
+          .delete(`https://be.codein.studio/like/forum/${tempApi?.id}`, {
             headers: {
               'Content-Type': 'application/json',
               Authorization: `Bearer ${key}`,
@@ -48,7 +48,7 @@ function LikeUnlike(props) {
       } else {
         await axios
           .post(
-            `https://be.codein.studio/like/forum/${tempApi.id}`,
+            `https://be.codein.studio/like/forum/${tempApi?.id}`,
             {},
             {
               headers: {
@@ -71,7 +71,7 @@ function LikeUnlike(props) {
     } else if (props.type === 'likeBlog') {
       if (state?.is_you_like) {
         await axios
-          .delete(`https://be.codein.studio/like/blog/${tempApi.id}`, {
+          .delete(`https://be.codein.studio/like/blog/${tempApi?.id}`, {
             headers: {
               'Content-Type': 'application/json',
               Authorization: `Bearer ${key}`,
@@ -90,7 +90,7 @@ function LikeUnlike(props) {
       } else {
         await axios
           .post(
-            `https://be.codein.studio/like/blog/${tempApi.id}`,
+            `https://be.codein.studio/like/blog/${tempApi?.id}`,
             {},
             {
               headers: {
@@ -117,20 +117,20 @@ function LikeUnlike(props) {
       {state?.is_you_like ? (
         <div className="flex items-center gap-2">
           <HeartIconSolid
-            className="h-8 w-8 text-red-500 cursor-pointer"
+            className="h-6 w-6 text-red-500 cursor-pointer"
             onClick={key && handleLike}
           />
-          <p className="text-xl wl-8 font-medium font-poppins">
+          <p className="text-base wl-8 font-medium font-poppins">
             {state?.total_likes}
           </p>
         </div>
       ) : (
         <div className="flex items-center gap-2">
           <HeartIconOutline
-            className="h-8 w-8 text-red-500 cursor-pointer"
+            className="h-6 w-6 text-red-500 cursor-pointer"
             onClick={key && handleLike}
           />
-          <p className="text-xl wl-8 font-medium font-poppins">
+          <p className="text-base wl-8 font-medium font-poppins">
             {state?.total_likes}
           </p>
         </div>

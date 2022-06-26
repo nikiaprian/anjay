@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CardBlog from './CardBlog';
 import { useBlogStore } from '../../store/ProductStore';
-import gambar from '../../../Assets/fotoProfil.png';
 import Spiner from '../../../Assets/Spinners/Spinners2';
 function ContentBlog(props) {
   const { filter } = props;
@@ -47,10 +46,8 @@ function ContentBlog(props) {
               title={data.title}
               content={data.content}
               date={data.created_at.substring(0, 10)}
-              //   answer={data.answer}
-              //   like={data.like}
               img={data.photo}
-              profileImg={gambar}
+              profileImg={data?.user?.photo}
               user={data.user.username}
               tags={data.tag}
             />

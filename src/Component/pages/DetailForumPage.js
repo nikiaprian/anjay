@@ -38,9 +38,9 @@ function DetailForumPage() {
               <p className="font-semibold text-3xl">{forum?.title}</p>
               <HeadContentForum
               />
-              <ViewTag tags={forum.tag} />
+              <ViewTag tags={forum?.tag} />
               <div
-                className="border-2 bg-[#f2f2f2] border-gray-300 p-4 font-poppins rounded-md shadow-lg"
+                className="border-2 overflow-x-auto bg-[#f2f2f2] border-gray-300 p-4 font-poppins rounded-md shadow-lg"
                 dangerouslySetInnerHTML={{ __html: forum?.content }}
               ></div>
               <ViewAnswers deskripsi="Jawaban" />

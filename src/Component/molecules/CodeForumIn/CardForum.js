@@ -1,6 +1,7 @@
 import React from 'react';
 import ViewTag from '../ViewTag';
 import { Link } from 'react-router-dom';
+import gambar from '../../../Assets/fotoProfil.png';
 import { HeartIcon, ChatAltIcon } from '@heroicons/react/solid';
 function CardForum(props) {
   return (
@@ -10,11 +11,11 @@ function CardForum(props) {
           <div className="flex mt-2 ml-2 gap-2  pr-8 md:pr-0">
             <div className="flex flex-col pt-10 pr-5">
               <div className="flex flex-col items-center ">
-                <p className="font-bold text-xl text-black">{props.like}</p>
+                <p className="font-bold text-xl text-black">{props?.like}</p>
                 <HeartIcon className="h-6 w-6 text-red-600" />
               </div>
               <div className="flex flex-col items-center">
-                <p className="font-bold text-xl text-black">{props.answer}</p>
+                <p className="font-bold text-xl text-black">{props?.answer}</p>
                 <ChatAltIcon className="h-6 w-6 text-blue-600" />
               </div>
             </div>
@@ -24,21 +25,21 @@ function CardForum(props) {
               </p>
               <p
                 className="text-sm font-poppins break-words text-ellipsis overflow-hidden max-h-10 w-10/12 "
-                dangerouslySetInnerHTML={{ __html: props.content }}
+                dangerouslySetInnerHTML={{ __html: props?.content }}
               ></p>
               <div className="">
-                <ViewTag tags={props.tags} />
+                <ViewTag tags={props?.tags} />
               </div>
             </div>
           </div>
           <div className="flex mb-5 mr-5 justify-end gap-3 items-center font-poppins mt-4">
             <div className="flex flex-col text-right">
-              <p className="text-md font-semibold">{props.user}</p>
-              <p className="text-xs">{props.date}</p>
+              <p className="text-md font-semibold">{props?.user}</p>
+              <p className="text-xs">{props?.date}</p>
             </div>
             <img
               className="w-10 h-10 object-cover border-2 border-orange-500 rounded-full shadow-md"
-              src={props.profileImg}
+              src={props?.profileImg === null ? gambar : props?.profileImg}
               alt=""
             />
           </div>

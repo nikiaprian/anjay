@@ -2,7 +2,7 @@ import React from 'react';
 
 function InputFile(props) {
   const handleChange = (e) => {
-    props.input(e.target.files[0]);
+    props?.input(e.target.files[0]);
   };
 
   return (
@@ -12,14 +12,14 @@ function InputFile(props) {
           className="block mb-2 text-sm text-gray-900 font-bold"
           htmlFor="file_input"
         >
-          Upload Image Banner Blog
+          {props?.type === 'createBlog' ? 'Upload Image Banner Blog' : null}
         </label>
         <div className="flex justify-center items-center w-full">
           <label
             htmlFor="dropzone-file"
             className="border-2 bg-[#f2f2f2] border-gray-300 shadow-md flex flex-col justify-center items-center w-full h-64  rounded-lg   cursor-pointer  hover:bg-gray-100 "
           >
-            <div className="flex flex-col justify-center items-center pt-5 pb-6">
+            <div className="flex flex-col justify-center items-center px-6 pt-5 pb-6">
               <svg
                 className="mb-3 w-10 h-10 text-gray-400"
                 fill="none"

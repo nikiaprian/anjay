@@ -20,10 +20,10 @@ function InputMarkdown(props) {
     //const getMark = editorRef.current.getInstance().getMarkdown();
     const getHtml = editorRef.current.getInstance().getHTML();
     //setEditorState({ html: getHtml, md: getMark });
-    if (props?.type === 'comment' || props.type === 'answer') {
-      props.setEditorState(JSON.stringify({ comment: getHtml }));
+    if (props?.type === 'comment' || props?.type === 'answer') {
+      props?.setEditorState(JSON.stringify({ comment: getHtml }));
     } else if (props?.type === 'createBlog' || props?.type === 'createForum') {
-      props.setEditorState(getHtml);
+      props?.setEditorState(getHtml);
     }
   };
 
@@ -31,7 +31,7 @@ function InputMarkdown(props) {
     <>
       <div className="">
         <p className="block mb-2 text-sm text-gray-900 font-bold">
-          {props.deskripsi}
+          {props?.deskripsi}
         </p>
         <div className="border-2 bg-[#f2f2f2] border-gray-300 p-0 font-poppins rounded-md shadow-lg">
           <Editor
