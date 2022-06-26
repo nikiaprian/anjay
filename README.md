@@ -16,6 +16,12 @@
 - **Deployment:** [EC2](https://aws.amazon.com/ec2/)
 - **Code Editor:** [Visual Studio Code](https://code.visualstudio.com/)
 
+## Entity Relationship Diagram
+
+[`^ kembali ke atas ^`](#table-of-contents)
+
+![ERD](./assets/CodeIn-ERD.png)
+
 ## Architectural Pattern
 
 [`^ kembali ke atas ^`](#table-of-contents)
