@@ -35,7 +35,7 @@ Architectural pattern yang digunakan adalah Clean Architecture, dimana aplikasi 
 
 [`^ kembali ke atas ^`](#table-of-contents)
 
-https://app.swaggerhub.com/apis/sultanfariz/Pinjem/1.0.0
+https://app.swaggerhub.com/apis/rchmatagung/CodeIn/1.0.0
 
 ## Server URL
 
