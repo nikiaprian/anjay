@@ -23,6 +23,13 @@
   </p>
 </p>
 
+<div align="center">
+    <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/rg-km/final-project-engineering-15?style=for-the-badge">
+    <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/rg-km/final-project-engineering-15?style=for-the-badge">
+    <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/rg-km/final-project-engineering-15?style=for-the-badge">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/rg-km/final-project-engineering-15?style=for-the-badge">
+</div>
+
 ## Table of Contents
 
 | [Tech Stack](#tech-stack) | [Getting Started](#getting-started) | [Wesbite Page](#website-page) | [Mockup Design](#mockup-design) | [Entity Relationship Diagram](#entity-relationship-diagram) | [Architectural Pattern](#architectural-pattern) | [Swagger OpenAPI Docs](#swagger-openapi-docs) | [Server URL](#server-url) |
