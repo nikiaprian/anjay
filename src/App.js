@@ -9,6 +9,7 @@ import { Routes, Route } from 'react-router-dom';
 import AboutPage from './Component/pages/AboutPage';
 import ProfilePage from './Component/pages/ProfilePage';
 import ProtectedRoute from './Component/protected/ProtectedRoute';
+import GoogleAuthCallback from './Component/pages/GoogleAuthCallback';
 const HomePage = React.lazy(() => import('./Component/pages/HomePage'));
 const DetailForumPage = React.lazy(() =>
   import('./Component/pages/DetailForumPage')
@@ -217,6 +218,22 @@ function App() {
               }
             >
               <RegisterPage />
+            </React.Suspense>
+          }
+        />
+
+        {/* LoginGoogle */}
+        <Route
+          path="auth/google/callback"
+          element={
+            <React.Suspense
+              fallback={
+                <div>
+                  <Spiner />
+                </div>
+              }
+            >
+              <GoogleAuthCallback/>
             </React.Suspense>
           }
         />

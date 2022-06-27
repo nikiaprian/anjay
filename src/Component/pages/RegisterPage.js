@@ -40,7 +40,7 @@ const RegisterPage = (props) => {
         setEmailError({ message: 'Email sudah benar', status: true });
       } else {
         if (e.target.value === '') {
-          setEmailError({ message: '', status: false });
+          setEmailError({ message: 'Email tidak boleh kosong', status: false });
         } else {
           setEmailError({ message: 'Email harus lengkap', status: false });
         }
@@ -71,7 +71,7 @@ const RegisterPage = (props) => {
             status: false,
           });
         } else if (e.target.value === '') {
-          setUserNameError({ message: '', status: false });
+          setUserNameError({ message: 'Username tidak boleh kosong', status: false });
         }
       }
       setRegister({ ...register, username: e.target.value });
@@ -85,14 +85,11 @@ const RegisterPage = (props) => {
             status: false,
           });
         } else {
-          setPasswordError({ message: '', status: false });
+          setPasswordError({ message: 'Password tidak boleh kosong', status: false });
         }
       }
       setRegister({ ...register, password: e.target.value });
     }
-    // else {
-    //   setRegister({ ...register, confirmPassword: e.target.value });
-    // }
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -147,7 +144,7 @@ const RegisterPage = (props) => {
                 className="w-full  block border rounded border-orange-400 bg-gray-100 p-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500 "
                 type="email"
                 onChange={(e) => handleChange(e, 'email')}
-                required
+                
               />
               <p
                 className={`mb-0 text-sm ${
@@ -168,7 +165,7 @@ const RegisterPage = (props) => {
                 type="text"
                 name="username"
                 onChange={(e) => handleChange(e, 'username')}
-                required
+                
               />
               <p
                 className={`mb-0 text-sm ${
@@ -188,7 +185,7 @@ const RegisterPage = (props) => {
                 className=" w-full block border rounded border-orange-400 bg-gray-100 p-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500 "
                 type="password"
                 onChange={(e) => handleChange(e, 'password')}
-                required
+                
               />
               <p
                 className={`mb-0 text-sm ${
@@ -206,20 +203,20 @@ const RegisterPage = (props) => {
 
             <p className="text-center mt-4">
               Sudah Punya Account ?
-              <Link to="/login" className="font-bold">
+              <Link to="/login" className="font-bold pl-2 text-red-600">
                 Login
               </Link>
             </p>
 
-            <button className="py-3 px-3 mt-8 mb-4 w-full justify-center rounded-2xl bg-blue-50 hover:bg-blue-100 focus:bg-blue-100 active:bg-blue-200 flex">
+          </form>
+            {/* <button className="py-3 px-3 mt-8 mb-4 w-full justify-center rounded-2xl bg-blue-50 hover:bg-blue-100 focus:bg-blue-100 active:bg-blue-200 flex">
               <div className="flex gap-4 justify-center max-w-sm">
                 <img src={google} className="w-5" alt="google" />
                 <span className="block w-max font-medium tracking-wide text-sm text-blue-700">
                   with Google
                 </span>
               </div>
-            </button>
-          </form>
+            </button> */}
         </div>
       </div>
       <Footer />

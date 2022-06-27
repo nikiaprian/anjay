@@ -16,8 +16,6 @@ import 'aos/dist/aos.css';
 AOS.init();
 
 function HomePage() {
-
-  
   return (
     <>
       <div className="w-screen h-screen">

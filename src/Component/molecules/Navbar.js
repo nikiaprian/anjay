@@ -24,25 +24,26 @@ function Navbar() {
     { name: 'Tentang', link: '/about' },
     { name: 'FaQ', link: '/faq' },
   ];
-
+  
   useEffect(() => {
-    const getApiUser = async () => {
-      await axios
-        .get('https://be.codein.studio/user/profile', {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${key}`,
-          },
-        })
-        .then((res) => {
-          setDataUser(res?.data?.data);
-        });
-    };
-    getApiUser();
+    if(key!=null){
+      const getApiUser = async () => {
+        await axios
+          .get('https://be.codein.studio/user/profile', {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${key}`,
+            },
+          })
+          .then((res) => {
+            setDataUser(res?.data?.data);
+          });
+      };
+      getApiUser();
+    }
   }, [key]);
 
   const handleLogout = () => {
-    console.log('test');
     setIsLoggedIn(false);
     setUser({});
     window.localStorage.removeItem('key');

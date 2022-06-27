@@ -25,7 +25,7 @@ const LoginPage = () => {
         setEmailError({ message: 'Email sudah benar', status: true });
       } else {
         if (e.target.value === '') {
-          setEmailError({ message: '', status: false });
+          setEmailError({ message: 'Email tidak boleh kosong', status: false });
         } else {
           setEmailError({ message: 'Email harus lengkap', status: false });
         }
@@ -68,6 +68,7 @@ const LoginPage = () => {
       });
     }
   };
+
   return (
     <>
       <Navbar />
@@ -91,7 +92,6 @@ const LoginPage = () => {
                 onChange={(e) => handleChange(e, 'email')}
                 className="w-full  block border rounded border-orange-400 bg-gray-100 p-2 focus:outline-none focus:ring-orange-500 focus:border-orange-500"
                 type="email"
-                required
               />
               <p
                 className={`mb-0 text-sm ${
@@ -111,7 +111,6 @@ const LoginPage = () => {
                 onChange={(e) => handleChange(e, 'password')}
                 className="w-full block border rounded border-orange-400 bg-gray-100 p-2 mb-2 focus:outline-none focus:ring-orange-500 focus:border-orange-50"
                 type="password"
-                required
               />
             </label>
 
@@ -128,8 +127,8 @@ const LoginPage = () => {
             />
 
             <p className="text-center mt-4">
-              Belum Punya Account ?{' '}
-              <Link to="/register" className="font-bold">
+              Belum Punya Account ? 
+              <Link to="/register" className="font-bold pl-2 text-red-600">
                 Daftar
               </Link>
             </p>
@@ -137,7 +136,14 @@ const LoginPage = () => {
             <div className="flex flex-row justify-center">
               <div></div>
             </div>
-            <button className="py-3 px-3 mt-8 mb-4 w-full justify-center rounded-2xl bg-blue-50 hover:bg-blue-100 focus:bg-blue-100 active:bg-blue-200 flex">
+          </form>
+          <Link to="/auth/google/callback">
+            <button
+              onClick={() =>
+                (window.location = 'https://be.codein.studio/auth/login/google')
+              }
+              className="py-3 px-3 mt-8 mb-4 w-full justify-center rounded-2xl bg-blue-50 hover:bg-blue-100 focus:bg-blue-100 active:bg-blue-200 flex"
+            >
               <div className="flex gap-4 justify-center max-w-sm ">
                 <img src={google} className="w-5 " alt="google" />
                 <span className="block w-max font-medium tracking-wide text-sm text-blue-700">
@@ -145,7 +151,7 @@ const LoginPage = () => {
                 </span>
               </div>
             </button>
-          </form>
+          </Link>
         </div>
       </div>
       <Footer />
@@ -153,4 +159,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default React.memo(LoginPage);
