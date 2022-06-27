@@ -7,9 +7,7 @@
   <h3 align="center">Find Your Solution Here!</h3>
 
   <p align="center">
-    Semakin bertumbuhnya teknologi, maka semakin bertambah pengguna dari teknologi tersebut, juga disertai dengan kondisi dimana tidak <br /> 
-    memungkinkan kita dalam melakukan interaksi secara langsung terkhususnya untuk bertanya dalam dunia pemrograman <br /> 
-    oleh sebab itu  kami melakukan pembuatan website yang bernama <strong> Codein </strong>. <br /> 
+    Semakin bertumbuhnya teknologi, maka semakin bertambah pengguna dari teknologi tersebut, juga disertai dengan kondisi dimana tidak memungkinkan kita dalam melakukan interaksi secara langsung terkhususnya untuk bertanya dalam dunia pemrograman oleh sebab itu  kami melakukan pembuatan website yang bernama <strong> Codein </strong>. <br /> 
     <br />
     <strong> CodeIn </strong> merupakan platform yang dibuat untuk memberikan kemudahan bagi Programmer Indonesia untuk berinteraksi menyelesaikan permasalahan ataupun memberikan informasi yang bermanfaat bagi programmer lainnya
     <br />
