@@ -21,8 +21,9 @@
 
 ## Table of Contents
 
-| [Tech Stack](#tech-stack) | [Wesbite Page](#website-page) | [Mockup Design](#mockup-design) | [Entity Relationship Diagram](#entity-relationship-diagram) | [Architectural Pattern](#architectural-pattern) | [Swagger OpenAPI Docs](#swagger-openapi-docs) | [Server URL](#server-url) |
-| :-----------------------: | :---------------------------: | :-----------------------------: | :---------------------------------------------------------: | :---------------------------------------------: | --------------------------------------------- | ------------------------- |
+| [Tech Stack](#tech-stack) | [Getting Started](#getting-started) | [Wesbite Page](#website-page) | [Mockup Design](#mockup-design) | [Entity Relationship Diagram](#entity-relationship-diagram) | [Architectural Pattern](#architectural-pattern) | [Swagger OpenAPI Docs](#swagger-openapi-docs) | [Server URL](#server-url) |
+| :-----------------------: | :---------------------------------: | :---------------------------: | :-----------------------------: | :---------------------------------------------------------: | :---------------------------------------------: | --------------------------------------------- | ------------------------- |
+
 
 ## Tech Stack
 
@@ -52,6 +53,8 @@
 - **Code Editor:** [Visual Studio Code](https://code.visualstudio.com/)
 
 ## Getting Started
+
+[`^ kembali ke atas ^`](#table-of-contents)
 
 ### Frontend
 
@@ -96,6 +99,8 @@ go run main.go
 ```
 
 ## Website Page
+
+[`^ kembali ke atas ^`](#table-of-contents)
 
 - **Home Page**
 - **Forum Page**
