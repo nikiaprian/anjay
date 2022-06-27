@@ -3,26 +3,29 @@ import ScrollButton from '../atoms/ScrollButton';
 import Footer from '../molecules/Footer';
 import Navbar from '../molecules/Navbar';
 //eslint-disable-next-line
-import { PhoneIcon, BriefcaseIcon, CubeIcon } from '@heroicons/react/outline';
+import { CubeIcon } from '@heroicons/react/outline';
 import gambarUser from '../../Assets/fotoProfil.png';
 import axios from 'axios';
 import InputFile from '../molecules/InputFile';
-//import InputJudul from '../molecules/InputJudul';
 import Swal from 'sweetalert2';
-//import useAuthStore from '../store/AuthStore';
-
+import { useBlogStore, useForumStore } from '../store/ProductStore';
 import Spiner from '../../Assets/Spinners/Spiner';
+import CardForum from '../molecules/CodeForumIn/CardForum';
+import CardBlog from '../molecules/CodeBlogIn/CardBlog';
 
 function ProfilePage() {
-  const [isForum, setIsForum] = useState(false);
+  const [isForum, setIsForum] = useState(true);
   const [buttonUpdate, setButtonUpdate] = useState(false);
   const [profile, setProfile] = useState({});
-  //const [inputUsername, setInputUsername] = useState('');
   const [inputFile, setInputFile] = useState('');
-
   const token = localStorage.getItem('key');
-  // const auth=useAuthStore(state=>state.users)
-  // console.log(auth)
+  const idUser = localStorage.getItem('idUser');
+
+  const fetchBlogs = useBlogStore((state) => state.fetchBlogs);
+  const blog = useBlogStore((state) => state.blogs);
+
+  const fetchForums = useForumStore((state) => state.fetchForums);
+  const forum = useForumStore((state) => state.forums);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,8 +44,12 @@ function ProfilePage() {
           console.log(e);
         });
     };
+    fetchBlogs('https://be.codein.studio/blogs', token);
+    fetchForums('https://be.codein.studio/forums', token);
     fetchData();
-  }, [profile, token]);
+  }, [token, fetchBlogs, fetchForums]);
+
+  //console.log(forum)
 
   const handleClickForum = () => {
     setIsForum(!isForum);
@@ -104,10 +111,10 @@ function ProfilePage() {
     <>
       <div className="w-screen h-screen overflow-x-hidden">
         <Navbar />
-        <div className="  mt-40 w-7/12  mx-auto flex flex-col items-center gap-10 justify-center">
+        <div className="  mt-40 w-7/12  mx-auto flex flex-col items-center justify-center">
           <div className="w-full">
             <div className="order-1 lg:order-2 lg:col-span-2">
-              <div className="shadow rounded-md bg-white">
+              <div className="rounded-md bg-white">
                 <form>
                   <div className="flex flex-col gap-3 items-center px-5 py-4">
                     <img
@@ -153,33 +160,9 @@ function ProfilePage() {
               </div>
             </div>
           </div>
-          <div className="flex flex-row gap-3">
-            <div className="rounded-md shadow bg-white flex flex-col">
-              <div className="flex space-x-4 items-center px-4 py-3">
-                <CubeIcon className='"w-10 h-10 text-gray-400"' />
-                <div className="flex flex-col space-y-1">
-                  <h3 className="font-lg text-gray-500">ForumIn</h3>
-                  <span className="font-semibold text-2xl text-gray-600">
-                    0
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div className="rounded-md shadow bg-white flex flex-col">
-              <div className="flex space-x-4 items-center px-4 py-3">
-                <CubeIcon className='"w-10 h-10 text-gray-400"' />
-                <div className="flex flex-col space-y-1">
-                  <h3 className="font-lg text-gray-500">BlogIn</h3>
-                  <span className="font-semibold text-2xl text-gray-600">
-                    0
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
           <div className="w-screen h-full">
-            <div className="flex flex-col md:p-12 md:flex-row md:mt-15 mt-0 pt-0">
-              <div className="w-7/12 mx-auto flex flex-col gap-4">
+            <div className="flex flex-col md:p-12 md:flex-row mt-0 pt-0">
+              <div className="w-11/12 md:w-7/12 mx-auto flex flex-col gap-4">
                 <div className="text-center flex flex-row justify-center mb-6 ">
                   <button
                     style={isForum ? activeStyle : null}
@@ -199,9 +182,44 @@ function ProfilePage() {
                 <div className="border-t-2 border-gray-200 max-w-120"></div>
                 <div className="mt-6">
                   {isForum ? (
-                    <div className="flex w-11/12 flex-col gap-4 mx-auto"></div>
+                    <div className="flex w-11/12 flex-col gap-4 mx-auto">
+                      {forum &&
+                        forum
+                          .filter((data) => data?.user?.id === +idUser)
+                          .map((data, index) => (
+                            <CardForum
+                              key={index}
+                              id={data.id}
+                              title={data.title}
+                              content={data.content}
+                              date={data.created_at.substring(0, 10)}
+                              answer={data?.total_comment}
+                              like={data?.total_likes}
+                              profileImg={data?.user?.photo}
+                              user={data.user.username}
+                              tags={data.tag}
+                            />
+                          ))}
+                    </div>
                   ) : (
-                    <div className="flex w-11/12 flex-col gap-4 mx-auto"></div>
+                    <div className="flex w-11/12 flex-col gap-4 mx-auto">
+                      {blog &&
+                        blog
+                          .filter((data) => data?.user?.id === +idUser)
+                          .map((data, index) => (
+                            <CardBlog
+                              key={index}
+                              id={data.id}
+                              title={data.title}
+                              content={data.content}
+                              date={data.created_at.substring(0, 10)}
+                              img={data.photo}
+                              profileImg={data?.user?.photo}
+                              user={data.user.username}
+                              tags={data.tag}
+                            />
+                          ))}
+                    </div>
                   )}
                 </div>
               </div>
@@ -215,4 +233,4 @@ function ProfilePage() {
   );
 }
 
-export default ProfilePage;
+export default React.memo(ProfilePage);

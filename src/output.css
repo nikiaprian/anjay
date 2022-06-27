@@ -1918,6 +1918,10 @@ code {
     margin-top: 5rem;
   }
 
+  .md\:mt-1{
+    margin-top: 0.25rem;
+  }
+
   .md\:flex{
     display: flex;
   }
@@ -1968,6 +1972,10 @@ code {
 
   .md\:w-10\/12{
     width: 83.333333%;
+  }
+
+  .md\:w-7\/12{
+    width: 58.333333%;
   }
 
   .md\:max-w-lg{
