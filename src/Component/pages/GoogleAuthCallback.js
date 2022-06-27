@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import useAuthStore from '../store/AuthStore';
 
 function GoogleAuthCallback() {
-//   const [auth, setAuth] = useState();
+  //   const [auth, setAuth] = useState();
   const location = useLocation();
   const navigate = useNavigate();
   const setIsLoggedIn = useAuthStore((state) => state.setIsLoggedIn);
@@ -20,10 +20,12 @@ function GoogleAuthCallback() {
         window.localStorage.setItem('key', res?.data?.data?.token);
         window.localStorage.setItem('idUser', res?.data?.data?.user?.id);
         navigate('/');
-      }).catch((err)=>{
-        console.log(err)
+      })
+      .catch((err) => {
+        console.log(err);
         navigate('/');
       });
+    //eslint-disable-next-line
   }, []);
 }
 

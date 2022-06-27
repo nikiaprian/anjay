@@ -4,7 +4,6 @@ import registerImage from '../../Assets/signup.svg';
 import logo from '../../Assets/logo.svg';
 import Navbar from '../molecules/Navbar';
 import Footer from '../molecules/Footer';
-import google from '../../Assets/google.svg';
 import axios from 'axios';
 import validator from 'validator';
 import Swal from 'sweetalert2';
