@@ -1,13 +1,17 @@
 <br />
 <p align="center">
   <a href="https://github.com/rg-km/final-project-engineering-15">
-    <img src="./assets/logo2-01.png" alt="Logo" width="200" height="80">
+    <img src="./assets/logo2-01.png" alt="Logo" width="200" height="100">
   </a>  
   
   <h3 align="center">Find Your Solution Here!</h3>
 
   <p align="center">
-    Semakin bertumbuhnya teknologi, maka semakin bertambah pengguna dari teknologi tersebut, juga disertai dengan kondisi dimana tidak memungkinkan kita dalam melakukan interaksi secara langsung terkhususnya untuk bertanya dalam dunia pemrograman oleh sebab itu kami melakukan pembuatan website yang bernama Codein. CodeIn merupakan platform yang dibuat untuk memberikan kemudahan bagi Programmer Indonesia untuk berinteraksi menyelesaikan permasalahan ataupun memberikan informasi yang bermanfaat bagi programmer lainnya
+    Semakin bertumbuhnya teknologi, maka semakin bertambah pengguna dari teknologi tersebut, juga disertai dengan kondisi dimana tidak <br /> 
+    memungkinkan kita dalam melakukan interaksi secara langsung terkhususnya untuk bertanya dalam dunia pemrograman <br /> 
+    oleh sebab itu  kami melakukan pembuatan website yang bernama <strong> Codein </strong>. <br /> 
+    <br />
+    <strong> CodeIn </strong> merupakan platform yang dibuat untuk memberikan kemudahan bagi Programmer Indonesia untuk berinteraksi menyelesaikan permasalahan ataupun memberikan informasi yang bermanfaat bagi programmer lainnya
     <br />
     <a href="https://docs.google.com/presentation/d/1zMoOK3sKTzY6oitYUy-qlqJskLaAwqnW/edit?usp=sharing&ouid=115204411593671225594&rtpof=true&sd=true"><strong>Explore the docs »</strong></a>
     <br />
@@ -34,10 +38,6 @@
 - **Deployment:** [EC2](https://aws.amazon.com/ec2/)
 - **Object Cloud:** [S3](https://aws.amazon.com/s3/)
 - **Code Editor:** [Visual Studio Code](https://code.visualstudio.com/)
-- **Running App:** 
-  - **Start:** npm start
-  - **Start Tailwind:** npm run css
-  - **Build:** npm run build
 
 ### Backend Engineering
 
@@ -50,10 +50,50 @@
 - **Deployment:** [EC2](https://aws.amazon.com/ec2/)
 - **Object Cloud:** [S3](https://aws.amazon.com/s3/)
 - **Code Editor:** [Visual Studio Code](https://code.visualstudio.com/)
-- **Running App:** 
-  - **Build:** go get
-  - **Migrate Database:** sql-migrate up
-  - **Start:** go run main.go
+
+## Getting Started
+
+### Frontend
+
+1. Clone Repository
+```sh
+git clone https://github.com/rg-km/final-project-engineering-15.git
+```
+2. Go to Frontend Folder
+```sh
+cd frontend
+```
+3. Install Module Packages
+```sh
+npm install
+``` 
+4. Run Code
+```sh
+npm start
+```
+
+### Backend
+
+1. Clone Repository
+  ```sh
+  git clone https://github.com/rg-km/final-project-engineering-15.git
+  ```
+2. Go to Backend Folder
+```sh
+cd backend
+```
+3. Build Module
+```sh
+go get
+```
+4. Migrate Database
+```sh
+sql-migrate up
+```
+5. Run Code
+```sh
+go run main.go
+```
 
 ## Website Page
 
