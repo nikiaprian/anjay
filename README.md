@@ -1,6 +1,19 @@
-# CodeIn
+<br />
+<p align="center">
+  <a href="https://github.com/rg-km/final-project-engineering-15">
+    <img src="./assets/logo2-01.png" alt="Logo" width="200" height="80">
+  </a>  
+  
+  <h3 align="center">Find Your Solution Here!</h3>
 
-Semakin bertumbuhnya teknologi, maka semakin bertambah pengguna dari teknologi tersebut, juga disertai dengan kondisi dimana tidak memungkinkan kita dalam melakukan interaksi secara langsung terkhususnya untuk bertanya dalam dunia pemrograman oleh sebab itu kami melakukan pembuatan website yang bernama Codein. CodeIn merupakan platform yang dibuat untuk memberikan kemudahan bagi Programmer Indonesia untuk berinteraksi menyelesaikan permasalahan ataupun memberikan informasi yang bermanfaat bagi programmer lainnya
+  <p align="center">
+    Semakin bertumbuhnya teknologi, maka semakin bertambah pengguna dari teknologi tersebut, juga disertai dengan kondisi dimana tidak memungkinkan kita dalam melakukan interaksi secara langsung terkhususnya untuk bertanya dalam dunia pemrograman oleh sebab itu kami melakukan pembuatan website yang bernama Codein. CodeIn merupakan platform yang dibuat untuk memberikan kemudahan bagi Programmer Indonesia untuk berinteraksi menyelesaikan permasalahan ataupun memberikan informasi yang bermanfaat bagi programmer lainnya
+    <br />
+    <a href="https://docs.google.com/presentation/d/1zMoOK3sKTzY6oitYUy-qlqJskLaAwqnW/edit?usp=sharing&ouid=115204411593671225594&rtpof=true&sd=true"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+  </p>
+</p>
 
 ## Table of Contents
 
