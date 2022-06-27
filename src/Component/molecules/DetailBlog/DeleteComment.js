@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 function DeleteComment(props) {
   const [state, setState] = useState({});
-  let key = window.localStorage.getItem('key');
+  let key = window.localStorage.getItem('ACCESS_KEY');
   const navigate = useNavigate();
   let idUser = window.localStorage.getItem('idUser');
 

@@ -6,7 +6,7 @@ import useAuthStore from '../store/AuthStore';
 function Head(props) {
   const [input, setInput] = useState('');
   const { isLoggedIn } = useAuthStore();
-  let key = window.localStorage.getItem('key');
+  let key = window.localStorage.getItem('ACCESS_KEY');
 
   const handleChange = (event) => {
     setInput(event.target.value);

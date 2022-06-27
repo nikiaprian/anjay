@@ -12,7 +12,7 @@ import { useForumStore } from '../store/ProductStore';
 function DetailForumPage() {
   let { idforum } = useParams();
   const [inputMarkdown, setInputMarkdown] = useState({});
-  const key = window.localStorage.getItem('key');
+  const key = window.localStorage.getItem('ACCESS_KEY');
 
   const fetchForumId = useForumStore((state) => state.fetchForumId);
   const forum = useForumStore((state) => state.forumId);

@@ -4,7 +4,7 @@ import { HeartIcon as HeartIconSolid } from '@heroicons/react/solid';
 import axios from 'axios';
 function LikeUnlikeAnswer(props) {
   const [state, setState] = useState({});
-  let key = window.localStorage.getItem('key');
+  let key = window.localStorage.getItem('ACCESS_KEY');
   useEffect(() => {
     setState(props);
     //eslint-disable-next-line

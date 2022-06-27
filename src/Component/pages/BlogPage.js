@@ -8,7 +8,7 @@ import { useBlogStore } from '../store/ProductStore';
 
 function BlogPage() {
   const [filter, setFilter] = useState('');
-  const key = window.localStorage.getItem('key');
+  const key = window.localStorage.getItem('ACCESS_KEY');
   const fetchBlogs = useBlogStore((state) => state.fetchBlogs);
   useEffect(() => {
     fetchBlogs('https://be.codein.studio/blogs',key);

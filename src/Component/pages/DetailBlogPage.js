@@ -12,7 +12,7 @@ import { useBlogStore } from '../store/ProductStore';
 function DetailBlogPage() {
   let { idblog } = useParams();
   const [inputMarkdown, setInputMarkdown] = useState({});
-  const key = window.localStorage.getItem('key');
+  const key = window.localStorage.getItem('ACCESS_KEY');
 
   const fetchBlogId = useBlogStore((state) => state.fetchBlogId);
   const blog = useBlogStore((state) => state.blogId);

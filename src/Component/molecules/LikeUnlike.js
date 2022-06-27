@@ -5,7 +5,7 @@ import { useForumStore, useBlogStore } from '../store/ProductStore';
 import axios from 'axios';
 function LikeUnlike(props) {
   const [state, setState] = useState({});
-  let key = window.localStorage.getItem('key');
+  let key = window.localStorage.getItem('ACCESS_KEY');
   const forumsId = useForumStore((state) => state.forumId);
   const blogId = useBlogStore((state) => state.blogId);
 

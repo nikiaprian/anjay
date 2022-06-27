@@ -11,7 +11,7 @@ import axios from 'axios';
 function Navbar() {
   const [open, setOpen] = useState(false);
   const { isLoggedIn, setIsLoggedIn, setUser } = useAuthStore();
-  let key = window.localStorage.getItem('key');
+  let key = window.localStorage.getItem('ACCESS_KEY');
   const navigate = useNavigate();
   const [dataUser, setDataUser] = useState({});
 
@@ -46,7 +46,7 @@ function Navbar() {
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUser({});
-    window.localStorage.removeItem('key');
+    window.localStorage.removeItem('ACCESS_KEY');
     window.localStorage.removeItem('idUser');
     Swal.fire('Berhasil!', 'Anda Telah Berhasil Logout!', 'success').then(
       (result) => {

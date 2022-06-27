@@ -18,7 +18,7 @@ function ProfilePage() {
   const [buttonUpdate, setButtonUpdate] = useState(false);
   const [profile, setProfile] = useState({});
   const [inputFile, setInputFile] = useState('');
-  const token = localStorage.getItem('key');
+  const token = localStorage.getItem('ACCESS_KEY');
   const idUser = localStorage.getItem('idUser');
 
   const fetchBlogs = useBlogStore((state) => state.fetchBlogs);

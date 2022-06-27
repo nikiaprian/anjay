@@ -7,7 +7,7 @@ import Head from '../molecules/Head';
 import Navbar from '../molecules/Navbar';
 import { useForumStore } from '../store/ProductStore';
 function ForumPage() {
-  let key = window.localStorage.getItem('key');
+  let key = window.localStorage.getItem('ACCESS_KEY');
   const [filter, setFilter] = useState('');
   const fetchForums = useForumStore((state) => state.fetchForums);
   useEffect(() => {

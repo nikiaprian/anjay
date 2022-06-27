@@ -3,12 +3,14 @@ import './App.css';
 import './output.css';
 import Spiner from './Assets/Spinners/Spiner';
 
-
 //Routing
 import { Routes, Route } from 'react-router-dom';
 import AboutPage from './Component/pages/AboutPage';
 import ProfilePage from './Component/pages/ProfilePage';
-import ProtectedRoute from './Component/protected/ProtectedRoute';
+import {
+  ProtectedRoute,
+  ProtectedRouteLogRes,
+} from './Component/protected/ProtectedRoute';
 import GoogleAuthCallback from './Component/pages/GoogleAuthCallback';
 const HomePage = React.lazy(() => import('./Component/pages/HomePage'));
 const DetailForumPage = React.lazy(() =>
@@ -29,7 +31,6 @@ const CreateForumPage = React.lazy(() =>
 const FaqPage = React.lazy(() => import('./Component/pages/FaqPage'));
 const LoginPage = React.lazy(() => import('./Component/pages/LoginPage'));
 const RegisterPage = React.lazy(() => import('./Component/pages/RegisterPage'));
-
 
 function App() {
   return (
@@ -92,7 +93,7 @@ function App() {
                   </div>
                 }
               >
-                <DetailForumPage  />
+                <DetailForumPage />
               </React.Suspense>
             }
           />
@@ -192,35 +193,39 @@ function App() {
         />
 
         {/* LoginPage */}
-        <Route
-          path="login"
-          element={
-            <React.Suspense
-              fallback={
-                <div>
-                  <Spiner />
-                </div>
-              }
-            >
-              <LoginPage />
-            </React.Suspense>
-          }
-        />
+        <Route element={<ProtectedRouteLogRes />}>
+          <Route
+            path="login"
+            element={
+              <React.Suspense
+                fallback={
+                  <div>
+                    <Spiner />
+                  </div>
+                }
+              >
+                <LoginPage />
+              </React.Suspense>
+            }
+          />
+        </Route>
         {/* RegisterPage */}
-        <Route
-          path="register"
-          element={
-            <React.Suspense
-              fallback={
-                <div>
-                  <Spiner />
-                </div>
-              }
-            >
-              <RegisterPage />
-            </React.Suspense>
-          }
-        />
+        <Route element={<ProtectedRouteLogRes />}>
+          <Route
+            path="register"
+            element={
+              <React.Suspense
+                fallback={
+                  <div>
+                    <Spiner />
+                  </div>
+                }
+              >
+                <RegisterPage />
+              </React.Suspense>
+            }
+          />
+        </Route>
 
         {/* LoginGoogle */}
         <Route
@@ -233,7 +238,7 @@ function App() {
                 </div>
               }
             >
-              <GoogleAuthCallback/>
+              <GoogleAuthCallback />
             </React.Suspense>
           }
         />

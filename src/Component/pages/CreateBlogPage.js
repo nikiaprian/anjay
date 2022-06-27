@@ -22,7 +22,7 @@ function CreateBlogPage() {
 
   const navigate = useNavigate();
 
-  const token = localStorage.getItem('key');
+  const token = localStorage.getItem('ACCESS_KEY');
   const handleClick = async (e) => {
     let data = new FormData();
     data.append('file', inputFile);
@@ -42,6 +42,11 @@ function CreateBlogPage() {
         navigate('/blog');
       })
       .catch((error) => {
+        if (error?.response?.status === 401) {
+          window.localStorage.removeItem('ACCESS_KEY')
+          window.localStorage.removeItem("idUser")
+          navigate('/')
+        }
         Swal.fire({
           title: 'Gagal!',
           text: 'Anda Tidak Berhasil membuat Blog',

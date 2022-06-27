@@ -6,7 +6,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 function DeleteContent(props) {
   const [state, setState] = useState({});
-  let key = window.localStorage.getItem('key');
+  let key = window.localStorage.getItem('ACCESS_KEY');
   const forumsId = useForumStore((state) => state.forumId);
   const blogId = useBlogStore((state) => state.blogId);
   const navigate = useNavigate();

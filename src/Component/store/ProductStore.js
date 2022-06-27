@@ -15,6 +15,7 @@ const storeBlog = (set) => ({
     });
     set({ blogs: await response.data.data });
   },
+  
   fetchBlogId: async (url,token) => {
     const response = await axios.get(url, {
       headers: {

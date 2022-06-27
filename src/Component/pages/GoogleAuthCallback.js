@@ -17,7 +17,7 @@ function GoogleAuthCallback() {
       .then((res) => {
         // setAuth(res?.data.data);
         setIsLoggedIn(true);
-        window.localStorage.setItem('key', res?.data?.data?.token);
+        window.localStorage.setItem('ACCESS_KEY', res?.data?.data?.token);
         window.localStorage.setItem('idUser', res?.data?.data?.user?.id);
         navigate('/');
       })

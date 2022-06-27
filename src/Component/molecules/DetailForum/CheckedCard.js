@@ -3,7 +3,7 @@ import { CheckCircleIcon as CheckCircleIconSolid } from '@heroicons/react/solid'
 import axios from 'axios';
 import { useForumStore } from '../../store/ProductStore';
 function CheckedCard(props) {
-  let key = window.localStorage.getItem('key');
+  let key = window.localStorage.getItem('ACCESS_KEY');
   let idUser = window.localStorage.getItem('idUser');
   const [checked, setChecked] = useState('');
   const forum = useForumStore((state) => state.forumId);

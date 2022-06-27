@@ -44,7 +44,7 @@ const LoginPage = () => {
         .then((res) => {
           setUser(res.data.data);
           setIsLoggedIn(true);
-          window.localStorage.setItem('key', res?.data?.data?.token);
+          window.localStorage.setItem('ACCESS_KEY', res?.data?.data?.token);
           window.localStorage.setItem('idUser', res?.data?.data?.user?.id);
           Swal.fire('Berhasil!', 'Anda Telah Berhasil Login!', 'success');
           navigate(searchParams.get('redirect') ?? '/');
