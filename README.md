@@ -4,8 +4,8 @@ Semakin bertumbuhnya teknologi, maka semakin bertambah pengguna dari teknologi t
 
 ## Table of Contents
 
-| [Tech Stack](#tech-stack) | [Entity Relationship Diagram](#entity-relationship-diagram) | [Architectural Pattern](#architectural-pattern) | [Swagger OpenAPI Docs](#swagger-openapi-docs) | [Server URL](#server-url) |
-| :-----------------------: | :---------------------------------------------------------: | :---------------------------------------------: | --------------------------------------------- | ------------------------- |
+| [Tech Stack](#tech-stack) | [Wesbite Page](#website-page) | [Mockup Design](#mockup-design) | [Entity Relationship Diagram](#entity-relationship-diagram) | [Architectural Pattern](#architectural-pattern) | [Swagger OpenAPI Docs](#swagger-openapi-docs) | [Server URL](#server-url) |
+| :-----------------------: | :---------------------------: | :-----------------------------: | :---------------------------------------------------------: | :---------------------------------------------: | --------------------------------------------- | ------------------------- |
 
 ## Tech Stack
 
@@ -22,9 +22,9 @@ Semakin bertumbuhnya teknologi, maka semakin bertambah pengguna dari teknologi t
 - **Object Cloud:** [S3](https://aws.amazon.com/s3/)
 - **Code Editor:** [Visual Studio Code](https://code.visualstudio.com/)
 - **Running App:** 
-  - **Start: npm start**
-  - **Start Tailwind: npm run css**
-  - **Build: npm run build**
+  - Start: npm start
+  - Start Tailwind: npm run css
+  - Build: npm run build
 
 ### Backend Engineering
 
