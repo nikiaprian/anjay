@@ -1,6 +1,12 @@
 <br />
 <p align="center">
   <a href="https://github.com/rg-km/final-project-engineering-15">
+    <img src="./frontend/src/Assets/banner.png" alt="Logo" width="864" height="375">
+  </a>
+
+<br />
+<p align="center">
+  <a href="https://github.com/rg-km/final-project-engineering-15">
     <img src="./frontend/src/Assets/logo2-01.png" alt="Logo" width="200" height="100">
   </a>  
   
