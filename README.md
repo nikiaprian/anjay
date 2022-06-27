@@ -107,7 +107,7 @@ go run main.go
 - **Blog Page**
   - Create Blog Page
   - Detail Blog Page
-- **Profile Page**
+- **Dashboard Profile Page**
 - **FAQ Page**
 - **About Page**
 
