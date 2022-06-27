@@ -22,9 +22,9 @@ Semakin bertumbuhnya teknologi, maka semakin bertambah pengguna dari teknologi t
 - **Object Cloud:** [S3](https://aws.amazon.com/s3/)
 - **Code Editor:** [Visual Studio Code](https://code.visualstudio.com/)
 - **Running App:** 
-  - Start: npm start
-  - Start Tailwind: npm run css
-  - Build: npm run build
+  - **Start:** npm start
+  - **Start Tailwind:** npm run css
+  - **Build:** npm run build
 
 ### Backend Engineering
 
@@ -37,6 +37,10 @@ Semakin bertumbuhnya teknologi, maka semakin bertambah pengguna dari teknologi t
 - **Deployment:** [EC2](https://aws.amazon.com/ec2/)
 - **Object Cloud:** [S3](https://aws.amazon.com/s3/)
 - **Code Editor:** [Visual Studio Code](https://code.visualstudio.com/)
+- **Running App:** 
+  - **Build:** go get
+  - **Migrate Database:** sql-migrate up
+  - **Start:** go run main.go
 
 ## Website Page
 
