@@ -4,7 +4,7 @@ servers:
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/rchmatagung/CodeIn/1.0.0
   - description: Local Development
-    url: http://35.78.122.62:9090/api/v1
+    url: http://35.78.251.144:9090/api/v1
 info:
   description: Platform Forum Tanya Jawab dan Blog Seputar Dunia Programing
   version: 1.0.0
