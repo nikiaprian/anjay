@@ -1,9 +1,9 @@
 import github from '../Assets/github.svg';
 import linkedin from '../Assets/linkedIn.svg';
 import fahmi from '../Assets/About/fahmi.jpg';
-import rachmat from '../Assets/About/rachmat.jpg';
-import nico from '../Assets/About/nico.jpg';
-import kevin from '../Assets/About/kevin.jpg';
+import niki from '../Assets/About/niki.jpg';
+import eve from '../Assets/About/eve.jpg';
+import shena from '../Assets/About/shena.jpg';
 import winnie from '../Assets/About/winnie.jpg';
 import yusuf from '../Assets/About/yusuf.jpg';
 
@@ -19,31 +19,31 @@ const listTeam = [
       'https://www.linkedin.com/in/muhammad-fahmi-ady-susilo-ba05a41b0/',
   },
   {
-    name: 'Nicolas Sanjaya',
+    name: 'Eva Anastasia',
     role: 'Frontend Developer',
-    image: nico,
+    image: eve,
     github: github,
     linkedin: linkedin,
-    linkGithub: 'https://github.com/nicolsan',
-    linkLinkedin: 'https://www.linkedin.com/in/nicolas-sanjaya/',
+    linkGithub: 'https://github.com/',
+    linkLinkedin: 'https://www.linkedin.com/',
   },
   {
-    name: 'Rachmat Agung Ananda',
-    role: 'Backend Developer',
-    image: rachmat,
+    name: 'Niki Aprian',
+    role: 'DevOps',
+    image: niki,
     github: github,
     linkedin: linkedin,
-    linkGithub: 'https://github.com/rchmatagung',
-    linkLinkedin: 'https://www.linkedin.com/in/rachmat-agung-ananda-013725173/',
+    linkGithub: 'https://github.com/nikichaww',
+    linkLinkedin: 'https://www.instagram.com/nikiaprn',
   },
   {
-    name: 'Kevin Maulana Nasrullah',
+    name: 'Shena Aprilia',
     role: 'Backend Developer',
-    image: kevin,
+    image: shena,
     github: github,
     linkedin: linkedin,
-    linkGithub: 'https://github.com/kevinmaulanan',
-    linkLinkedin: 'https://www.linkedin.com/in/kevin-maulana-nasrullah/',
+    linkGithub: 'https://github.com/',
+    linkLinkedin: 'https://www.linkedin.com/',
   },
   {
     name: 'Winnie Monica',

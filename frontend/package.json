@@ -7,7 +7,7 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
-    "@toast-ui/editor": "^3.1.7",
+    "@toast-ui/editor": "^3.2.1",
     "@toast-ui/editor-plugin-code-syntax-highlight": "^3.0.0",
     "@toast-ui/editor-plugin-color-syntax": "^3.0.3",
     "@toast-ui/react-editor": "^3.1.7",
@@ -27,7 +27,7 @@
     "zustand": "^4.0.0-rc.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set \"GENERATE_SOURCEMAP=false\" && react-scripts start",
     "css": "tailwindcss -i ./src/index.css -o ./src/output.css --watch",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -1,9 +1,9 @@
 import fahmi from './fahmi.jpg';
-import kevin from './kevin.jpg';
-import nico from './nico.jpg';
+import shena from './shena.jpg';
+import eve from './eve.jpg';
 import yusuf from './yusuf.jpg';
 import winnie from './winnie.jpg';
-import rachmat from './rachmat.jpg';
+import niki from './niki.jpg';
 import github from '../github.svg';
 import linkedin from '../linkedIn.svg';
 
@@ -19,27 +19,27 @@ const listTeam = () => [
             linkLinkedin: ''
         },
         {
-            name: 'Rachmat Agung Ananda',
-            role: 'Backend Developer',
-            image: rachmat,
+            name: 'Niki Aprian',
+            role: 'DevOps',
+            image: niki,
             github: github,
             linkedin: linkedin,
             linkGithub: '',
             linkLinkedin: ''
         }, 
         {
-            name: 'Nicolas Sanjaya',
+            name: 'Eva Anastasia',
             role: 'Frontend Developer',
-            image: nico,
+            image: eve,
             github: github,
             linkedin: linkedin,
             linkGithub: '',
             linkLinkedin: ''
         },
         {
-            name: 'Kevin Maulana Nasrullah',
-            role: 'Backend Developer',
-            image: kevin,
+            name: 'Shena Aprilia',
+            role: 'Frontend Developer',
+            image: shena,
             github: github,
             linkedin: linkedin,
             linkGithub: '',

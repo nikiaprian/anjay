@@ -13,7 +13,7 @@ func NewGoogle() *oauth2.Config {
 	oauthConfGoogle := &oauth2.Config{
 		ClientID:     clientId,
 		ClientSecret: clientSecret,
-		RedirectURL:  "http://localhost:3000/auth/google/callback",
+		RedirectURL:  "http://35.78.122.62:3000/auth/google/callback",
 		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email"},
 		Endpoint:     google.Endpoint,
 	}
